@@ -761,7 +761,7 @@ void UpdateNPCs()
             if(NPC[A].Type == 22)
                 NPC[A].Projectile = false;
         }
-        else if(!(NPCIsCheep[NPC[A].Type] && Maths::iRound(NPC[A].Special) == 2) && !(NPC[A].Type == 12))
+        else if(!(NPCIsCheep[NPC[A].Type] && Maths::iRound(NPC[A].Special) == 2) && !(NPC[A].Type == 12) && !(NPC[A].Type == 347))
         {
             if(GameMenu == false && NPC[A].Location.Y > level[NPC[A].Section].Height + 16)
                 NPCHit(A, 9);
@@ -805,7 +805,7 @@ void UpdateNPCs()
             // water check
 
             // Things immune to water's effects
-            if(NPC[A].Type == 12 || NPC[A].Type == 17 || NPC[A].Type == 18 || NPC[A].Type == 30 || NPC[A].Type == 38 || NPC[A].Type == 42 || NPC[A].Type == 43 || NPC[A].Type == 44 || NPC[A].Type == 85 || NPC[A].Type == 87 || NPC[A].Type == 108 || NPC[A].Type == 171 || NPC[A].Type == 292 || NPC[A].Type == 197 || NPC[A].Type == 202 || NPC[A].Type == 210 || NPC[A].Type == 225 || NPC[A].Type == 226 || NPC[A].Type == 227 || NPC[A].Type == 47 || NPC[A].Type == 284 || NPC[A].Type == 179 || NPC[A].Type == 270 || NPC[A].Type == 269 || (NPCIsACoin[NPC[A].Type] && NPC[A].Special == 0) || NPC[A].Type == 266 || NPC[A].Type == 259 || NPC[A].Type == 260)
+            if(NPC[A].Type == 12 || NPC[A].Type == 17 || NPC[A].Type == 347 || NPC[A].Type == 18 || NPC[A].Type == 30 || NPC[A].Type == 38 || NPC[A].Type == 42 || NPC[A].Type == 43 || NPC[A].Type == 44 || NPC[A].Type == 85 || NPC[A].Type == 87 || NPC[A].Type == 108 || NPC[A].Type == 171 || NPC[A].Type == 292 || NPC[A].Type == 197 || NPC[A].Type == 202 || NPC[A].Type == 210 || NPC[A].Type == 225 || NPC[A].Type == 226 || NPC[A].Type == 227 || NPC[A].Type == 47 || NPC[A].Type == 284 || NPC[A].Type == 179 || NPC[A].Type == 270 || NPC[A].Type == 269 || (NPCIsACoin[NPC[A].Type] && NPC[A].Special == 0) || NPC[A].Type == 266 || NPC[A].Type == 259 || NPC[A].Type == 260)
             {
                 NPC[A].Wet = 0;
                 NPC[A].Quicksand = 0;

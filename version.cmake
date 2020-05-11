@@ -9,7 +9,7 @@ set(THEXTECH_VERSION_4 1)
 # Type of version: "-alpha","-beta","-dev", or "" aka "release"
 set(THEXTECH_VERSION_REL "")
 
-set(NSMBX_VERSION_STRING "1.0")
+set(NSMBX_VERSION_STRING "1.1")
 
 add_definitions(-DTHEXTECH_VERSION_1=${THEXTECH_VERSION_1})
 add_definitions(-DTHEXTECH_VERSION_2=${THEXTECH_VERSION_2})

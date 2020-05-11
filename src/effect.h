@@ -28,6 +28,9 @@
 
 #include "location.h"
 
+void UpdateEffectFrames();
+
+
 void UpdateEffects();
 // Public Sub NewEffect(A As Integer, Location As Location, Optional Direction As Single = 1, Optional NewNpc As Integer = 0, Optional Shadow As Boolean = False)  'Create an effect
 // Create an effect

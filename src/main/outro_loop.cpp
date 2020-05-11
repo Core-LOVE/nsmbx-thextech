@@ -128,7 +128,7 @@ void SetupCredits()
     AddCredit("'Wohlstand'");
     AddCredit("");
     AddCredit("");
-    AddCredit("NSMBX By:");
+    AddCredit("New NSMBX Team:");
     AddCredit("");
     AddCredit("Ekaterina Bolyakova");
     AddCredit("'Core'");
@@ -136,6 +136,9 @@ void SetupCredits()
     AddCredit("Josh Oliver");
     AddCredit("'Josh Oliver'");
     AddCredit("");
+    AddCredit("SetaYoshi");
+    AddCredit("MrDoubleA");
+    AddCredit("Wohlstand");
     AddCredit("");
 #endif
 

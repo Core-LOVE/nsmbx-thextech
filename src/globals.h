@@ -1625,25 +1625,22 @@ extern RangeArrI<int, 0, maxBlockType, 0> BonusWidth;
 //Public BonusHeight(1 To 100) As Integer 'Bonus type height
 extern RangeArrI<int, 0, maxBlockType, 0> BonusHeight;
 //Public EffectWidth(1 To maxEffectType) As Integer 'Effect width
-extern RangeArrI<int, 0, maxBlockType, 0> EffectWidth;
+extern RangeArrI<int, 0, maxEffectType, 0> EffectWidth;
 //Public EffectHeight(1 To maxEffectType) As Integer 'Effect height
-extern RangeArrI<int, 0, maxBlockType, 0> EffectHeight;
-extern RangeArrI<int, 0, maxNPCType, 0> EffectFrame;
-extern RangeArrI<int, 0, maxNPCType, 0> EffectFrameSpeed;
-extern RangeArrI<int, 0, maxNPCType, 0> EffectFrameStyle;
+extern RangeArrI<int, 0, maxEffectType, 0> EffectHeight;
+extern RangeArrI<int, 0, maxEffectType, 0> EffectFrameAmount;
+extern RangeArrI<int, 0, maxEffectType, 0> EffectFrameSpeed;
 
 //Public Type EffectDefaults
-struct EffectDefaults
+struct EffectDefaults_t
 {
-//    EffectWidth(1 To maxEffectType) As Integer
     RangeArrI<int, 1, maxEffectType, 0> EffectWidth;
-//    EffectHeight(1 To maxEffectType) As Integer
     RangeArrI<int, 1, maxEffectType, 0> EffectHeight;
-//End Type
+    RangeArrI<int, 0, maxEffectType, 0> EffectFrameAmount;
+    RangeArrI<int, 0, maxEffectType, 0> EffectFrameSpeed;
 };
+extern EffectDefaults_t EffectDefaults;
 
-//Public EffectDefaults As EffectDefaults
-extern EffectDefaults effectDefaults;
 //Public SceneWidth(1 To 100) As Integer 'Scene width
 extern RangeArrI<int, 1, maxSceneType, 0> SceneWidth;
 //Public SceneHeight(1 To 100) As Integer 'Scene height

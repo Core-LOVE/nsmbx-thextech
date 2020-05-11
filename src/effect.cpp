@@ -30,6 +30,463 @@
 #include "game_main.h"
 #include "collision.h"
 
+void UpdateEffectFrames()
+{
+    if(FreezeNPCs)
+    return;
+
+    For(A, 1, numEffects)
+    {
+        auto &e = Effect[A];
+        e.Life -= 1;
+
+        if(e.Type == 111)
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 4)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+                if(e.Frame == 7)
+                    e.Frame = 0;
+                if(e.Frame >= 14)
+                    e.Frame = 7;
+            }
+        }
+        else if(e.Type == 108)
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 4)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+            }
+            if(e.Frame >= 7)
+                e.Life = 0;
+        }
+        else if(e.Type == 136) // RotoDisk
+        {
+            e.Frame = e.Frame + 1;
+            if(e.Frame >= 5)
+                e.Frame = 0;
+        }
+        else if(e.Type == 69) // bomb
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 2)
+            {
+                e.FrameCount = 0;
+                if(e.Frame == 0)
+                    e.Frame = 1;
+                else
+                    e.Frame = 0;
+            }
+        }
+        else if(e.Type == 1 || e.Type == 21 || e.Type == 30 || e.Type == 51
+        || e.Type == 100 || e.Type == 135 || e.Type == 170) // Block break
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 3)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+                if(e.Frame == 4)
+                    e.Frame = 0;
+            }
+        }
+        else if(e.Type == 140 || e.Type == 150) // larry & wendy's shell
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 4)
+            {
+                e.Frame = e.Frame + 1;
+                e.FrameCount = 0;
+            }
+            if(e.Frame > 7)
+                e.Frame = 0;
+        }
+        else if(e.Type == 151) // Red pow
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 4)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+                if(e.Frame == 5)
+                    e.Life = 0;
+            }
+        }
+        else if(e.Type == 114) // Splash
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount < 8)
+                e.Frame = 0;
+            else if(e.FrameCount < 16)
+                e.Frame = 1;
+            else if(e.FrameCount < 24)
+                e.Frame = 2;
+            else if(e.FrameCount < 32)
+                e.Frame = 3;
+            else if(e.FrameCount < 40)
+                e.Frame = 4;
+            else
+                e.Life = 0;
+            if(e.FrameCount % 3 == 0)
+            {
+                e.Frame = 5;
+            }
+        }
+        else if(e.Type == 113) // Water Bubbles
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount < 4)
+                e.Frame = 0;
+            else if(e.FrameCount < 6)
+                e.Frame = 1;
+            else
+            {
+                e.FrameCount = 0;
+                e.Frame = 0;
+            }
+        }
+        else if(e.Type == 145 || e.Type == 110 || e.Type == 127 || e.Type == 4 || e.Type == 143 || e.Type == 142 || e.Type == 7 || e.Type == 22 || e.Type == 31 || e.Type == 33 || e.Type == 34 || e.Type == 38 || e.Type == 40 || e.Type == 42 || e.Type == 44 || e.Type == 46 || e.Type == 53 || e.Type == 117) // Goomba air ride of dooom
+        {
+            e.FrameCount += 1;
+            if(e.Type == 110 || e.Type == 143)
+                e.FrameCount += 1;
+            if(e.FrameCount >= 8)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+                if(e.Frame == 2)
+                    e.Frame = 0;
+            }
+        }
+        else if(e.Type == 104) // Blaarg eyes
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 16)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+                if(e.Frame == 2)
+                    e.Frame = 0;
+            }
+        }
+        else if(e.Type == 61) // Beack Koopa
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 15)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame - 1;
+            }
+            else if(e.FrameCount == 8)
+                e.Frame = e.Frame + 1;
+        }
+        else if(e.Type == 26 || e.Type == 101 || e.Type == 102 || e.Type == 167) // Goombas shoes
+        {
+            e.Location.SpeedY = e.Location.SpeedY + 0.5;
+            if(e.Location.SpeedY >= 10)
+                e.Location.SpeedY = 10;
+        }
+        else if(e.Type == 10 || e.Type == 131) // SMW / SMB3 Puff of smoke
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 3)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+                if(e.Frame == 4)
+                    e.Life = 0;
+            }
+        }
+        else if(e.Type == 147) // SMB2 Puff of smoke
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 6)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+                if(e.Frame == 4)
+                    e.Life = 0;
+            }
+        }
+        else if(e.Type == 132) // stomp stars
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 3)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+                if(e.Frame == 2)
+                {
+                    e.Life = 0;
+                    NewEffect(133, e.Location);
+                }
+            }
+        }
+        else if(e.Type == 133) // stomp stars
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 1)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+                if(e.Frame == 4)
+                    e.Frame = 0;
+            }
+        }
+        else if(e.Type == 73) // Tail whack
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 2)
+            {
+                e.Frame = e.Frame + 1;
+                if(e.Frame > 3)
+                {
+                    e.Frame = 0;
+                    e.Life = 0;
+                }
+                e.FrameCount = 0;
+            }
+        }
+        else if(e.Type == 75) // Whack
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 4)
+            {
+                e.Frame = e.Frame + 1;
+                if(e.Frame > 1)
+                    e.Life = 0;
+                e.FrameCount = 0;
+            }
+        }
+        else if(e.Type == 74) // Slide Smoke
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 4)
+            {
+                e.Frame = e.Frame + 1;
+                e.FrameCount = 0;
+                if(e.Frame > 2)
+                    e.Life = 0;
+            }
+        }
+        else if(e.Type == 63) // Zelda Smoke
+        {
+            e.Location.X = e.Location.X + e.Location.SpeedX;
+            e.FrameCount += 1;
+            if(e.FrameCount >= 4)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+                if(e.Frame == 4)
+                    e.Life = 0;
+            }
+        }
+        else if(e.Type == 11) // Coin out of block effect
+        {
+            if(e.Life <= 2)
+            {
+                e.Frame = 6;
+            }
+            else if(e.Life <= 4)
+            {
+                e.Frame = 5;
+            }
+            else if(e.Life <= 6)
+            {
+                e.Frame = 4;
+            }
+            else
+            {
+                e.FrameCount += 1;
+                if(e.FrameCount >= 3)
+                {
+                    e.FrameCount = 0;
+                    e.Frame = e.Frame + 1;
+                    if(e.Frame >= 4)
+                        e.Frame = 0;
+                }
+            }
+        }
+        else if(e.Type == 12) // Big Fireball Tail
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 4)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+            }
+        }
+        else if(e.Type == 78) // Coin
+        {
+            e.Location.SpeedX = 0;
+            e.Location.SpeedY = 0;
+            e.FrameCount += 1;
+            if(e.FrameCount >= 5)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+                if(e.Frame == 3)
+                    e.Life = 0;
+            }
+        }
+        else if(e.Type == 82) // Spinning block
+        {
+            if(e.Life % 8 == 0) {
+                e.Frame = e.Frame + 1;
+                if(e.Frame >= 4)
+                    e.Frame = 0;
+            }
+        }
+        else if(e.Type == 80 || e.Type == 152 || e.Type == 160) // Twinkle
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 8)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+                if(e.Frame == 3)
+                    e.Life = 0;
+            }
+        }
+        else if(e.Type == 77 || e.Type == 139) // Small Fireball Tail
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 4)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+                if(e.Frame == 3 || e.Frame == 6 || e.Frame == 9 || e.Frame == 12 || e.Frame == 15)
+                    e.Life = 0;
+            }
+        }
+        else if(e.Type == 13 || e.Type == 174) // Big Fireball Tail
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 6)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+                e.FrameCount = 0;
+            }
+        }
+        else if(e.Type == 14) // Dead Big Koopa
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 2)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+                e.FrameCount = 0;
+                if(e.Frame >= 4)
+                    e.Frame = 0;
+            }
+        }
+        else if(e.Type == 70) // SMB3 Bomb Part 1
+        {
+            if(e.FrameCount == 0)
+            {
+                NewEffect(71, e.Location, static_cast<float>(e.Frame));
+                e.Frame = e.Frame + 1;
+                if(e.Frame >= 4)
+                    e.Frame = 0;
+            }
+            else if(e.FrameCount >= 6)
+                e.FrameCount = -1;
+            e.FrameCount += 1;
+        }
+        else if(e.Type == 71 || e.Type == 148) // SMB3 Bomb Part 2
+        {
+            e.FrameCount += 1;
+                if(e.FrameCount >= 4)
+                {
+                    e.FrameCount = 0;
+                    e.Frame = e.Frame + 1;
+                    if(e.Frame >= 4)
+                        e.Frame = 0;
+                }
+        }
+        else if(e.Type == 125) // POW Block
+        {
+            e.FrameCount += 1;
+                if(e.FrameCount >= 4)
+                {
+                    e.FrameCount = 0;
+                    e.Frame = e.Frame + 1;
+                    if(e.Frame >= 4)
+                    {
+                        e.Life = 0;
+                        e.Frame = 3;
+                    }
+                }
+        }
+        else if(e.Type == 54 || e.Type == 55 || e.Type == 59 || e.Type == 103) // door
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount > 60)
+                e.Life = 0;
+            else if(e.FrameCount > 55)
+                e.Frame = 0;
+            else if(e.FrameCount > 50)
+                e.Frame = 1;
+            else if(e.FrameCount > 45)
+                e.Frame = 2;
+            else if(e.FrameCount > 40)
+                e.Frame = 3;
+            else if(e.FrameCount > 20)
+                e.Frame = 4;
+            else if(e.FrameCount > 15)
+                e.Frame = 3;
+            else if(e.FrameCount > 10)
+                e.Frame = 2;
+            else if(e.FrameCount > 5)
+                e.Frame = 1;
+        }
+        else if(e.Type == 128)
+        {
+            e.FrameCount += 1;
+            e.Frame = 5;
+            if(e.FrameCount >= 16)
+            {
+                e.FrameCount = 0;
+                e.Frame = 5;
+            }
+            else if(e.FrameCount > 8)
+                e.Frame = 4;
+        }
+        else if(e.Type == 85 || e.Type == 86 || e.Type == 161 || e.Type == 163 || e.Type == 164 || e.Type == 87 || e.Type == 88 || e.Type == 97 || e.Type == 115 || e.Type == 122 || e.Type == 116 || e.Type == 118 || e.Type == 119 || e.Type == 120 || e.Type == 121 || e.Type == 137) // Rex / mega mole / smw goomba free falling
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 8)
+            {
+                e.FrameCount = 0;
+                if(e.Frame == 0)
+                    e.Frame = 1;
+                else if(e.Frame == 1)
+                    e.Frame = 0;
+                else if(e.Frame == 2)
+                    e.Frame = 3;
+                else
+                    e.Frame = 2;
+            }
+        }
+        else if(e.Type == 107)
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 4)
+            {
+                e.Frame = e.Frame + 1;
+                e.FrameCount = 0;
+            }
+            if(e.Frame >= 3)
+                e.Life = 0;
+        }
+    }
+}
+
 // Updates the effects
 void UpdateEffects()
 {
@@ -41,6 +498,8 @@ void UpdateEffects()
 //    bool DontResetMusic = false;
     bool tempBool = false;
     int CoinCount = 0;
+
+    UpdateEffectFrames();
 
     if(FreezeNPCs)
         return;
@@ -103,47 +562,11 @@ void UpdateEffects()
         else if(e.Type == 111)
         {
             e.Location.SpeedY = e.Location.SpeedY + 0.5;
-            e.FrameCount += 1;
-            if(e.FrameCount >= 4)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame + 1;
-                if(e.Frame == 7)
-                    e.Frame = 0;
-                if(e.Frame >= 14)
-                    e.Frame = 7;
-            }
-        }
-        else if(e.Type == 108)
-        {
-            e.FrameCount += 1;
-            if(e.FrameCount >= 4)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame + 1;
-            }
-            if(e.Frame >= 7)
-                e.Life = 0;
         }
         else if(e.Type == 136) // RotoDisk
         {
             if(e.Location.SpeedX != 0.0 || e.Location.SpeedY != 0.0)
                 e.Location.SpeedY = e.Location.SpeedY + 0.5;
-            e.Frame = e.Frame + 1;
-            if(e.Frame >= 5)
-                e.Frame = 0;
-        }
-        else if(e.Type == 69) // bomb
-        {
-            e.FrameCount += 1;
-            if(e.FrameCount >= 2)
-            {
-                e.FrameCount = 0;
-                if(e.Frame == 0)
-                    e.Frame = 1;
-                else
-                    e.Frame = 0;
-            }
         }
         else if(e.Type == 1 || e.Type == 21 || e.Type == 30 || e.Type == 51 || e.Type == 100 || e.Type == 135 || e.Type == 170) // Block break
         {
@@ -162,51 +585,10 @@ void UpdateEffects()
         }
         else if(e.Type == 140 || e.Type == 150) // larry & wendy's shell
         {
-            e.FrameCount += 1;
-            if(e.FrameCount >= 4)
-            {
-                e.Frame = e.Frame + 1;
-                e.FrameCount = 0;
-            }
-            if(e.Frame > 7)
-                e.Frame = 0;
-
             if(e.Life == 100)
             {
                 e.Location.SpeedY = -8;
                 PlaySound(63);
-            }
-
-        }
-        else if(e.Type == 151) // Red pow
-        {
-            e.FrameCount += 1;
-            if(e.FrameCount >= 4)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame + 1;
-                if(e.Frame == 5)
-                    e.Life = 0;
-            }
-        }
-        else if(e.Type == 114) // Splash
-        {
-            e.FrameCount += 1;
-            if(e.FrameCount < 8)
-                e.Frame = 0;
-            else if(e.FrameCount < 16)
-                e.Frame = 1;
-            else if(e.FrameCount < 24)
-                e.Frame = 2;
-            else if(e.FrameCount < 32)
-                e.Frame = 3;
-            else if(e.FrameCount < 40)
-                e.Frame = 4;
-            else
-                e.Life = 0;
-            if(e.FrameCount % 3 == 0)
-            {
-                e.Frame = 5;
             }
         }
         else if(e.Type == 113) // Water Bubbles
@@ -230,16 +612,6 @@ void UpdateEffects()
                 if(tempBool == false)
                     e.Life = 0;
             }
-            e.FrameCount += 1;
-            if(e.FrameCount < 4)
-                e.Frame = 0;
-            else if(e.FrameCount < 6)
-                e.Frame = 1;
-            else
-            {
-                e.FrameCount = 0;
-                e.Frame = 0;
-            }
             e.Location.Y -= 2;
             e.Location.X += dRand() * 2.0 - 1.0;
         }
@@ -257,16 +629,6 @@ void UpdateEffects()
             e.Location.SpeedY = e.Location.SpeedY + 0.5;
             if(e.Location.SpeedY >= 10)
                 e.Location.SpeedY = 10;
-            e.FrameCount += 1;
-            if(e.Type == 110 || e.Type == 143)
-                e.FrameCount += 1;
-            if(e.FrameCount >= 8)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame + 1;
-                if(e.Frame == 2)
-                    e.Frame = 0;
-            }
         }
         else if(e.Type == 104) // Blaarg eyes
         {
@@ -281,28 +643,12 @@ void UpdateEffects()
                 e.Location.SpeedY = 2;
             else
                 e.Life = 0;
-            e.FrameCount += 1;
-            if(e.FrameCount >= 16)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame + 1;
-                if(e.Frame == 2)
-                    e.Frame = 0;
-            }
         }
         else if(e.Type == 61) // Beack Koopa
         {
             e.Location.SpeedY = e.Location.SpeedY + 0.5;
             if(e.Location.SpeedY >= 10)
                 e.Location.SpeedY = 10;
-            e.FrameCount += 1;
-            if(e.FrameCount >= 15)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame - 1;
-            }
-            else if(e.FrameCount == 8)
-                e.Frame = e.Frame + 1;
         }
         else if(e.Type == 8 || e.Type == 158 || e.Type == 159 || e.Type == 162 || e.Type == 9 || e.Type == 15 || e.Type == 16 || e.Type == 19 || e.Type == 173 || e.Type == 27 || e.Type == 146 || e.Type == 28 || e.Type == 165 || e.Type == 29 || e.Type == 153 || e.Type == 154 || e.Type == 32 || e.Type == 36 || e.Type == 47 || e.Type == 60 || e.Type == 95 || e.Type == 169 || e.Type == 168 || e.Type == 96 || e.Type == 109) // Flying turtle shell / Bullet bill /hard thing
         {
@@ -315,91 +661,14 @@ void UpdateEffects()
             e.Location.SpeedY = e.Location.SpeedY + 0.5;
             if(e.Location.SpeedY >= 10)
                 e.Location.SpeedY = 10;
-            if(e.Location.SpeedX > 0)
-                e.Frame = 0 + SpecialFrame[1];
-            else
-                e.Frame = 2 + SpecialFrame[1];
         }
         else if(e.Type == 10 || e.Type == 131) // SMW / SMB3 Puff of smoke
         {
             e.Location.X = e.Location.X + e.Location.SpeedX;
-            e.FrameCount += 1;
-            if(e.FrameCount >= 3)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame + 1;
-                if(e.Frame == 4)
-                    e.Life = 0;
-            }
         }
         else if(e.Type == 147) // SMB2 Puff of smoke
         {
             e.Location.X = e.Location.X + e.Location.SpeedX;
-            e.FrameCount += 1;
-            if(e.FrameCount >= 6)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame + 1;
-                if(e.Frame == 4)
-                    e.Life = 0;
-            }
-        }
-        else if(e.Type == 132) // stomp stars
-        {
-            e.FrameCount += 1;
-            if(e.FrameCount >= 3)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame + 1;
-                if(e.Frame == 2)
-                {
-                    e.Life = 0;
-                    NewEffect(133, e.Location);
-                }
-            }
-        }
-        else if(e.Type == 133) // stomp stars
-        {
-            e.FrameCount += 1;
-            if(e.FrameCount >= 1)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame + 1;
-                if(e.Frame == 4)
-                    e.Frame = 0;
-            }
-        }
-        else if(e.Type == 73) // Tail whack
-        {
-            e.FrameCount += 1;
-            if(e.FrameCount >= 2)
-            {
-                // If .Frame = 0 Then
-                    // .Frame = 2
-                // ElseIf .Frame = 2 Then
-                    // .Frame = 1
-                // ElseIf .Frame = 1 Then
-                    // .Frame = 3
-                // Else
-                e.Frame = e.Frame + 1;
-                if(e.Frame > 3)
-                {
-                    e.Frame = 0;
-                    e.Life = 0;
-                }
-                e.FrameCount = 0;
-            }
-        }
-        else if(e.Type == 75) // Whack
-        {
-            e.FrameCount += 1;
-            if(e.FrameCount >= 4)
-            {
-                e.Frame = e.Frame + 1;
-                if(e.Frame > 1)
-                    e.Life = 0;
-                e.FrameCount = 0;
-            }
         }
         else if(e.Type == 76)
         {
@@ -417,27 +686,11 @@ void UpdateEffects()
         }
         else if(e.Type == 74) // Slide Smoke
         {
-            e.FrameCount += 1;
             e.Location.Y = e.Location.Y - 0.1;
-            if(e.FrameCount >= 4)
-            {
-                e.Frame = e.Frame + 1;
-                e.FrameCount = 0;
-                if(e.Frame > 2)
-                    e.Life = 0;
-            }
         }
         else if(e.Type == 63) // Zelda Smoke
         {
             e.Location.X = e.Location.X + e.Location.SpeedX;
-            e.FrameCount += 1;
-            if(e.FrameCount >= 4)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame + 1;
-                if(e.Frame == 4)
-                    e.Life = 0;
-            }
         }
         else if(e.Type == 11) // Coin out of block effect
         {
@@ -449,64 +702,21 @@ void UpdateEffects()
                 MoreScore(CoinCount, e.Location);
             }
             if(e.Life <= 2)
-            {
-                e.Frame = 6;
                 e.Location.SpeedY = e.Location.SpeedY == 0.0;
-            }
             else if(e.Life <= 4)
-            {
-                e.Frame = 5;
                 e.Location.SpeedY = e.Location.SpeedY == 0.0;
-            }
             else if(e.Life <= 6)
-            {
-                e.Frame = 4;
                 e.Location.SpeedY = e.Location.SpeedY == 0.0;
-            }
             else
-            {
                 e.Location.SpeedY = e.Location.SpeedY + 0.4;
-                e.FrameCount += 1;
-                if(e.FrameCount >= 3)
-                {
-                    e.FrameCount = 0;
-                    e.Frame = e.Frame + 1;
-                    if(e.Frame >= 4)
-                        e.Frame = 0;
-                }
-            }
-        }
-        else if(e.Type == 12) // Big Fireball Tail
-        {
-            // .Location.SpeedX = 0
-            // .Location.SpeedY = 0
-            e.FrameCount += 1;
-            if(e.FrameCount >= 4)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame + 1;
-            }
         }
         else if(e.Type == 78) // Coin
         {
             e.Location.SpeedX = 0;
             e.Location.SpeedY = 0;
-            e.FrameCount += 1;
-            if(e.FrameCount >= 5)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame + 1;
-                if(e.Frame == 3)
-                    e.Life = 0;
-            }
         }
         else if(e.Type == 82) // Spinning block
         {
-            if(e.Life % 8 == 0) {
-                e.Frame = e.Frame + 1;
-                if(e.Frame >= 4)
-                    e.Frame = 0;
-            }
             if(e.Life < 10)
             {
                 tempBool = false;
@@ -532,132 +742,29 @@ void UpdateEffects()
                     e.Life = 10;
             }
         }
-        else if(e.Type == 80 || e.Type == 152 || e.Type == 174) // Twinkle
-        {
-            e.FrameCount += 1;
-            if(e.FrameCount >= 8)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame + 1;
-                if(e.Frame == 3)
-                    e.Life = 0;
-            }
-        }
-        else if(e.Type == 80 || e.Type == 160) // Twinkle
-        {
-            e.FrameCount += 1;
-            if(e.FrameCount >= 8)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame + 1;
-                if(e.Frame == 3)
-                    e.Life = 0;
-            }
-        }
         else if(e.Type == 77 || e.Type == 139) // Small Fireball Tail
         {
             e.Location.X += dRand() * 2 - 1;
             e.Location.Y += dRand() * 2 - 1;
-            e.FrameCount += 1;
-            if(e.FrameCount >= 4)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame + 1;
-                if(e.Frame == 3 || e.Frame == 6 || e.Frame == 9 || e.Frame == 12 || e.Frame == 15)
-                    e.Life = 0;
-            }
         }
-        else if(e.Type == 13) // Big Fireball Tail
+        else if(e.Type == 13 || e.Type == 174) // Big Fireball Tail
         {
             e.Location.SpeedX = 0;
             e.Location.SpeedY = 0;
-            e.FrameCount += 1;
-            if(e.FrameCount >= 6)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame + 1;
-                e.FrameCount = 0;
-            }
         }
         else if(e.Type == 14) // Dead Big Koopa
         {
             e.Location.SpeedX = 0;
             e.Location.SpeedY = 0;
-            e.FrameCount += 1;
-            if(e.FrameCount >= 2)
-            {
-                e.FrameCount = 0;
-                e.Frame = e.Frame + 1;
-                e.FrameCount = 0;
-                if(e.Frame >= 4)
-                    e.Frame = 0;
-            }
-        }
-        else if(e.Type == 70) // SMB3 Bomb Part 1
-        {
-            if(e.FrameCount == 0)
-            {
-                NewEffect(71, e.Location, static_cast<float>(e.Frame));
-                e.Frame = e.Frame + 1;
-                if(e.Frame >= 4)
-                    e.Frame = 0;
-            }
-            else if(e.FrameCount >= 6)
-                e.FrameCount = -1;
-            e.FrameCount += 1;
         }
         else if(e.Type == 71 || e.Type == 148) // SMB3 Bomb Part 2
         {
-            e.FrameCount += 1;
-                if(e.FrameCount >= 4)
-                {
-                    e.FrameCount = 0;
-                    e.Frame = e.Frame + 1;
-                    if(e.Frame >= 4)
-                        e.Frame = 0;
-                }
             if(e.Type == 148 && (dRand() * 10.0) > 8.0)
             {
                 NewEffect(77, e.Location, 3);
                 Effect[numEffects].Location.SpeedX = dRand() * 3 - 1.5;
                 Effect[numEffects].Location.SpeedY = dRand() * 3 - 1.5;
             }
-        }
-        else if(e.Type == 125) // POW Block
-        {
-            e.FrameCount += 1;
-                if(e.FrameCount >= 4)
-                {
-                    e.FrameCount = 0;
-                    e.Frame = e.Frame + 1;
-                    if(e.Frame >= 4)
-                    {
-                        e.Life = 0;
-                        e.Frame = 3;
-                    }
-                }
-        }
-        else if(e.Type == 54 || e.Type == 55 || e.Type == 59 || e.Type == 103) // door
-        {
-            e.FrameCount += 1;
-            if(e.FrameCount > 60)
-                e.Life = 0;
-            else if(e.FrameCount > 55)
-                e.Frame = 0;
-            else if(e.FrameCount > 50)
-                e.Frame = 1;
-            else if(e.FrameCount > 45)
-                e.Frame = 2;
-            else if(e.FrameCount > 40)
-                e.Frame = 3;
-            else if(e.FrameCount > 20)
-                e.Frame = 4;
-            else if(e.FrameCount > 15)
-                e.Frame = 3;
-            else if(e.FrameCount > 10)
-                e.Frame = 2;
-            else if(e.FrameCount > 5)
-                e.Frame = 1;
         }
         else if(e.Type == 15 || e.Type == 16 || e.Type == 25 || e.Type == 48 || e.Type == 172 || e.Type == 49 || e.Type == 171 || e.Type == 50 || e.Type == 166 || e.Type == 68 || e.Type == 72 || e.Type == 89 || e.Type == 155 || e.Type == 156 || e.Type == 157 || e.Type == 90 || e.Type == 91 || e.Type == 92 || e.Type == 93 || e.Type == 94 || e.Type == 98 || e.Type == 99 || e.Type == 105 || e.Type == 138 || e.Type == 106 || e.Type == 141) // Bullet Bill / Hammer Bro
         {
@@ -670,53 +777,18 @@ void UpdateEffects()
             e.Location.SpeedY = e.Location.SpeedY + 0.5;
             if(e.Location.SpeedY >= 10)
                 e.Location.SpeedY = 10;
-            e.FrameCount += 1;
-            e.Frame = 5;
-            if(e.FrameCount >= 16)
-            {
-                e.FrameCount = 0;
-                e.Frame = 5;
-            }
-            else if(e.FrameCount > 8)
-                e.Frame = 4;
         }
         else if(e.Type == 17 || e.Type == 18 || e.Type == 20 || e.Type == 24 || (e.Type >= 64 && e.Type <= 67) || e.Type == 83) // Shy guy free falling
         {
             e.Location.SpeedY = e.Location.SpeedY + 0.5;
             if(e.Location.SpeedY >= 10)
                 e.Location.SpeedY = 10;
-            e.FrameCount += 1;
-            if(e.FrameCount >= 8)
-            {
-                e.FrameCount = 0;
-                if(e.Frame == 4)
-                    e.Frame = 5;
-                else if(e.Frame == 5)
-                    e.Frame = 4;
-                else if(e.Frame == 6)
-                    e.Frame = 7;
-                else
-                    e.Frame = 6;
-            }
         }
         else if(e.Type == 85 || e.Type == 86 || e.Type == 161 || e.Type == 163 || e.Type == 164 || e.Type == 87 || e.Type == 88 || e.Type == 97 || e.Type == 115 || e.Type == 122 || e.Type == 116 || e.Type == 118 || e.Type == 119 || e.Type == 120 || e.Type == 121 || e.Type == 137) // Rex / mega mole / smw goomba free falling
         {
             e.Location.SpeedY = e.Location.SpeedY + 0.5;
             if(e.Location.SpeedY >= 10)
                 e.Location.SpeedY = 10;
-            e.FrameCount += 1;
-            if(e.FrameCount >= 8)
-            {
-                e.FrameCount = 0;
-                if(e.Frame == 0)
-                    e.Frame = 1;
-                else if(e.Frame == 1)
-                    e.Frame = 0;
-                else if(e.Frame == 2)
-                    e.Frame = 3;
-                else
-                    e.Frame = 2;
-            }
         }
         else if(e.Type == 56) // Egg
         {
@@ -730,7 +802,7 @@ void UpdateEffects()
                 e.Frame = 2;
                 NewEffect(57, e.Location);
             }
-            else if(e.FrameCount == 30)
+            else if(e.FrameCount >= 30)
             {
                 e.Life = 0;
                 if(LevelEditor == false && e.NewNpc != 96)
@@ -756,17 +828,6 @@ void UpdateEffects()
                     }
                 }
             }
-        }
-        else if(e.Type == 107)
-        {
-            e.FrameCount += 1;
-            if(e.FrameCount >= 4)
-            {
-                e.Frame = e.Frame + 1;
-                e.FrameCount = 0;
-            }
-            if(e.Frame >= 3)
-                e.Life = 0;
         }
         else if(e.Type == 58) // yoshi grow
         {

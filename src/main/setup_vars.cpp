@@ -148,6 +148,8 @@ void SetupVars()
     EffectHeight[12] = 8;
     EffectWidth[13] = 84;
     EffectHeight[13] = 26;
+    EffectWidth[174] = 84;
+    EffectHeight[174] = 26;
     EffectWidth[14] = 62;
     EffectHeight[14] = 32;
     EffectWidth[15] = 32;
@@ -725,6 +727,8 @@ void SetupVars()
     NPCHeight[11] = 32;
     NPCWidth[12] = 28; // Big Fireball
     NPCHeight[12] = 32;
+    NPCWidth[347] = 28; // Big Upside-down Fireball
+    NPCHeight[347] = 32;
     NPCWidth[13] = 16; // Small Fireball
     NPCHeight[13] = 16;
     NPCWidth[265] = 16; // Ice Bolt
@@ -1760,6 +1764,7 @@ void SetupVars()
     NPCJumpHurt[245] = true;
     NPCJumpHurt[313] = true;
     NPCJumpHurt[12] = true;
+    NPCJumpHurt[347] = true;
     NPCJumpHurt[30] = true;
     NPCJumpHurt[36] = true;
     NPCJumpHurt[285] = true;
@@ -1844,6 +1849,7 @@ void SetupVars()
     NPCNoClipping[245] = true;
     // NPCNoClipping[10] = true;
     NPCNoClipping[12] = true;
+    NPCNoClipping[347] = true;
     NPCNoClipping[17] = true;
     NPCNoClipping[18] = true;
     NPCNoClipping[30] = true;
@@ -2113,6 +2119,7 @@ void SetupVars()
 
 
     NPCForeground[12] = true;
+    NPCForeground[347] = true;
     NPCForeground[17] = true;
     NPCForeground[18] = true;
     NPCForeground[28] = true;
@@ -2167,6 +2174,7 @@ void SetupVars()
     NPCNoFireBall[132] = true;
     NPCNoFireBall[322] = true;
     NPCNoFireBall[12] = true;
+    NPCNoFireBall[347] = true;
     NPCNoFireBall[25] = true;
 
 
@@ -2397,6 +2405,7 @@ void SetupVars()
     }
     NPCSpinJumpHurt[8] = false;
     NPCSpinJumpHurt[12] = false;
+    NPCSpinJumpHurt[347] = false;
     NPCSpinJumpHurt[36] = false;
     NPCSpinJumpHurt[294] = false;
     NPCSpinJumpHurt[285] = false;
@@ -2452,6 +2461,16 @@ void SetupVars()
     }
 
     For(A, 207, 208)
+    {
+        BackgroundWidth[A] = 64;
+    }
+
+    For(A, 209, 210)
+    {
+        BackgroundHeight[A] = 64;
+    }
+
+    For(A, 211, 212)
     {
         BackgroundWidth[A] = 64;
     }
@@ -2587,6 +2606,8 @@ void SetupVars()
     Foreground[157] = true;
     Foreground[202] = true;
     Foreground[201] = true;
+
+
 
     BackgroundWidth[206] = 384;
     BackgroundHeight[206] = 64;
@@ -2786,8 +2807,8 @@ void SetupVars()
     }
     For(A, 1, maxEffectType)
     {
-        effectDefaults.EffectHeight[A] = EffectHeight[A];
-        effectDefaults.EffectWidth[A] = EffectWidth[A];
+        EffectDefaults.EffectHeight[A] = EffectHeight[A];
+        EffectDefaults.EffectWidth[A] = EffectWidth[A];
     }
     SaveNPCDefaults();
 

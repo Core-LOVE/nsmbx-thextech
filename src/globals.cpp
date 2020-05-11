@@ -213,13 +213,13 @@ RangeArrI<int, 0, maxBlockType, 32> BlockWidth;
 RangeArrI<int, 0, maxBlockType, 32> BlockHeight;
 RangeArrI<int, 0, maxBlockType, 0> BonusWidth;
 RangeArrI<int, 0, maxBlockType, 0> BonusHeight;
-RangeArrI<int, 0, maxBlockType, 0> EffectWidth;
-RangeArrI<int, 0, maxBlockType, 0> EffectHeight;
-RangeArrI<int, 0, maxNPCType, 0> EffectFrame;
-RangeArrI<int, 0, maxNPCType, 0> EffectFrameSpeed;
-RangeArrI<int, 0, maxNPCType, 0> EffectFrameStyle;
+RangeArrI<int, 0, maxEffectType, 0> EffectWidth;
+RangeArrI<int, 0, maxEffectType, 0> EffectHeight;
+RangeArrI<int, 0, maxEffectType, 0> EffectFrameAmount;
+RangeArrI<int, 0, maxEffectType, 0> EffectFrameSpeed;
 
-EffectDefaults effectDefaults;
+EffectDefaults_t EffectDefaults;
+
 RangeArrI<int, 1, maxSceneType, 0> SceneWidth;
 RangeArrI<int, 1, maxSceneType, 0> SceneHeight;
 RangeArrI<int, 0, 100, 0> SpecialFrame;
