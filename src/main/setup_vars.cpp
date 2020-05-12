@@ -2487,8 +2487,6 @@ void SetupVars()
     {
         BackgroundFrameAmount[A] = 0;
         BackgroundFrameSpeed[A] = 8;
-        BackgroundWidth[A] = 32;
-        BackgroundHeight[A] = 32;
     }
 
 
