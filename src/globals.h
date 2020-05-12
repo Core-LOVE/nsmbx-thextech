@@ -608,6 +608,7 @@ struct Player_t
     int YoshiNPC = 0;
 //    YoshiPlayer As Integer 'the player that is in yoshi's mouth
     int YoshiPlayer = 0;
+    int YoshiSeeds = 0;
 //    Dismount As Integer 'delay before you can remount
     int Dismount = 0;
 //    NoPlayerCol As Integer
@@ -1420,6 +1421,8 @@ extern RangeArrI<int, 0, maxPlayerFrames, 0> ToadFrameY;
 extern RangeArrI<int, 0, maxPlayerFrames, 0> LinkFrameX;
 //Public LinkFrameY(0 To maxPlayerFrames) As Integer 'Player frame offset Y
 extern RangeArrI<int, 0, maxPlayerFrames, 0> LinkFrameY;
+extern RangeArrI<int, 0, maxPlayerFrames, 0> WarioFrameX;
+extern RangeArrI<int, 0, maxPlayerFrames, 0> WarioFrameY;
 //Public BackgroundFence(0 To maxBackgroundType) As Boolean
 extern RangeArrI<bool, 0, maxBackgroundType, false> BackgroundFence;
 extern RangeArrI<bool, 0, maxBackgroundType, false> BackgroundNPCFence;
@@ -2191,6 +2194,15 @@ extern RangeArr<StdPicture, 1, 10> GFXLinkMaskBMP;
 extern RangeArrI<int, 1, 10, 0> GFXLinkHeight;
 //Public GFXLinkWidth(1 To 10) As Integer
 extern RangeArrI<int, 1, 10, 0> GFXLinkWidth;
+
+extern RangeArrI<bool, 1, 10, false> GFXWarioCustom;
+#define GFXWario GFXWarioBMP
+extern RangeArrI<long, 1, 10, 0> GFXWarioMask;
+extern RangeArr<StdPicture, 1, 10> GFXWarioBMP;
+extern RangeArr<StdPicture, 1, 10> GFXWarioMaskBMP;
+extern RangeArrI<int, 1, 10, 0> GFXWarioHeight;
+extern RangeArrI<int, 1, 10, 0> GFXWarioWidth;
+
 //Public GFXYoshiBCustom(1 To 10) As Boolean
 extern RangeArrI<bool, 1, maxYoshiGfx, false> GFXYoshiBCustom;
 //Public GFXYoshiB(1 To 10) As Long
@@ -2340,6 +2352,7 @@ extern int BattleIntro;
 extern int BattleOutro;
 //Public LevelName As String
 extern std::string LevelName;
+extern std::string GameVersion;
 //Public Const curRelease As Integer = 64
 const int curRelease = 64;
 

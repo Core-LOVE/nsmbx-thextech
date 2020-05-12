@@ -1645,7 +1645,7 @@ void NewEffect(int A, Location_t Location, float Direction, int NewNpc, bool Sha
         Effect[numEffects].Life = 60;
         Effect[numEffects].Type = A;
     }
-    else if(A == 80 || A == 152 || A == 160 || A == 174) // Twinkle
+    else if(A == 80 || A == 152 || A == 160) // Twinkle
     {
         numEffects++;
         Effect[numEffects].Shadow = Shadow;
@@ -1659,7 +1659,7 @@ void NewEffect(int A, Location_t Location, float Direction, int NewNpc, bool Sha
         Effect[numEffects].Life = 60;
         Effect[numEffects].Type = A;
     }
-    else if(A == 13) // Lava Splash
+    else if(A == 13 || A == 174) // Lava Splash
     {
         numEffects++;
         Effect[numEffects].Shadow = Shadow;

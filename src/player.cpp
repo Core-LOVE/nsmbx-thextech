@@ -223,6 +223,7 @@ void SetupPlayers()
         Player[A].SpinFireDir = 0;
         Player[A].SpinFrame = 0;
         Player[A].YoshiNPC = 0;
+        Player[A].YoshiSeeds = 0;
         Player[A].YoshiPlayer = 0;
         Player[A].YoshiRed = false;
         Player[A].YoshiBlue = false;
@@ -518,6 +519,7 @@ void PlayerHurt(int A)
                 if(Player[A].YoshiNPC > 0 || Player[A].YoshiPlayer > 0)
                 {
                     YoshiSpit(A);
+                    Player[A].YoshiSeeds = 0;
                 }
                 // If ShadowMode = True Then .Shadow = True
                 NPC[numNPCs].Direction = Player[A].Direction;
@@ -710,6 +712,7 @@ void PlayerDead(int A)
     if(Player[A].YoshiNPC > 0 || Player[A].YoshiPlayer > 0)
     {
         YoshiSpit(A);
+        Player[A].YoshiSeeds = 0;
     }
     Player[A].Location.SpeedX = 0;
     Player[A].Location.SpeedY = 0;
@@ -2363,7 +2366,7 @@ void YoshiEat(int A)
                         }
                         NPC[B].Location.Height = NPCHeight[NPC[B].Type];
                         NPC[B].Location.Width = NPCWidth[NPC[B].Type];
-                        if(!(NPC[B].Type == 21 || NPC[B].Type == 22 || NPC[B].Type == 26 || NPC[B].Type == 31 || NPC[B].Type == 32 || NPC[B].Type == 35 || NPC[B].Type == 49 || NPCIsAnExit[NPC[B].Type]))
+                        if(!(NPC[B].Type == 21 || NPC[B].Type == 22 || NPC[B].Type == 26 || NPC[B].Type == 31 || NPC[B].Type == 32 || NPC[B].Type == 35 || NPC[B].Type == 49 || NPC[B].Type == 348 || NPC[B].Type == 351 || NPCIsAnExit[NPC[B].Type]))
                             NPC[B].DefaultType = 0;
                         NPC[B].Effect = 5;
                         NPC[B].Effect2 = A;
@@ -2380,6 +2383,10 @@ void YoshiEat(int A)
                     NPC[B].Effect2 = A;
                     NPC[B].Location.Height = NPCHeight[NPC[B].Type];
                     Player[A].YoshiNPC = B;
+                    if(NPC[B].Type == 348)
+                        Player[A].YoshiSeeds = 30;
+                    if(NPC[B].Type == 351)
+                        Player[A].YoshiSeeds = 90;
                 }
                 if(NPC[B].Type == 147)
                 {
@@ -2533,6 +2540,16 @@ void YoshiSpit(int A)
                 NPC[Player[A].YoshiNPC].Projectile = true;
                 NPC[Player[A].YoshiNPC].Location.SpeedX = Physics.NPCShellSpeed * Player[A].Direction * 0.6 + Player[A].Location.SpeedX * 0.4;
                 NPC[Player[A].YoshiNPC].TurnAround = false;
+            }
+            if(NPC[Player[A].YoshiNPC].Type == 348 || NPC[Player[A].YoshiNPC].Type == 351)
+            {
+                NPC[Player[A].YoshiNPC].Direction = Player[A].Direction;
+                NPC[Player[A].YoshiNPC].Location.SpeedX = 9 * Player[A].Direction;
+                NPC[Player[A].YoshiNPC].Location.SpeedY = 0;
+                NPC[Player[A].YoshiNPC].TurnAround = false;
+                NPC[Player[A].YoshiNPC].Type = 354;
+                NPC[Player[A].YoshiNPC].Location.X = Player[A].Location.X + Player[A].YoshiTX + NPC[Player[A].YoshiNPC].Location.Width * Player[A].Direction;
+                Player[A].YoshiSeeds--;
             }
         }
     }
@@ -3043,7 +3060,10 @@ void YoshiEatCode(int A)
                 NPC[Player[A].YoshiNPC].Location.Height = 28;
             }
             NPC[Player[A].YoshiNPC].Location.Height = NPCHeight[NPC[Player[A].YoshiNPC].Type];
-            if((NPCIsGrabbable[NPC[Player[A].YoshiNPC].Type] == true || NPCIsAShell[NPC[Player[A].YoshiNPC].Type] == true || NPC[Player[A].YoshiNPC].Type == 40 || NPCIsABot[NPC[Player[A].YoshiNPC].Type] || NPC[Player[A].YoshiNPC].Type == 194 || NPC[Player[A].YoshiNPC].Type == 135 || NPC[Player[A].YoshiNPC].Type == 136 || NPC[Player[A].YoshiNPC].Type == 137) && (NPC[Player[A].YoshiNPC].Type != 166))
+            if((NPCIsGrabbable[NPC[Player[A].YoshiNPC].Type] == true || NPCIsAShell[NPC[Player[A].YoshiNPC].Type] == true ||
+                NPC[Player[A].YoshiNPC].Type == 40 || NPCIsABot[NPC[Player[A].YoshiNPC].Type] || NPC[Player[A].YoshiNPC].Type == 194 ||
+                NPC[Player[A].YoshiNPC].Type == 135 || NPC[Player[A].YoshiNPC].Type == 136 || NPC[Player[A].YoshiNPC].Type == 348 ||
+                NPC[Player[A].YoshiNPC].Type == 351 || NPC[Player[A].YoshiNPC].Type == 137) && (NPC[Player[A].YoshiNPC].Type != 166))
             {
                 if(NPC[Player[A].YoshiNPC].Type == 135)
                     NPC[Player[A].YoshiNPC].Special = 450;

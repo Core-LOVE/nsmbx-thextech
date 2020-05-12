@@ -729,6 +729,7 @@ void SetupVars()
     NPCHeight[12] = 32;
     NPCWidth[347] = 28; // Big Upside-down Fireball
     NPCHeight[347] = 32;
+    NPCNoGravity[347] = true;
     NPCWidth[13] = 16; // Small Fireball
     NPCHeight[13] = 16;
     NPCWidth[265] = 16; // Ice Bolt
@@ -2397,7 +2398,41 @@ void SetupVars()
     NPCNoClipping[282] = true;
     NPCJumpHurt[282] = true;
 
-    NPCSpinJumpHurt[245] = false;
+    NPCWidthGFX[356] = 40;
+    NPCHeightGFX[356] = 36;
+
+    NPCWidthGFX[354] = 8;
+    NPCHeightGFX[354] = 8;
+    NPCJumpHurt[354] = true;
+    NPCNoFireBall[354] = true;
+    NPCNoIceBall[354] = true;
+    NPCWontHurt[354] = true;
+    NPCNoClipping[354] = true;
+    NPCNoGravity[354] = true;
+    NPCJumpHurt[355] = true;
+    NPCNoFireBall[355] = true;
+    NPCNoIceBall[355] = true;
+    NPCWontHurt[355] = true;
+    NPCIsGrabbable[355] = true;
+    NPCNoGravity[356] = true;
+
+    for(int A = 348; A <= 353; ++A)
+    {
+        NPCJumpHurt[A] = true;
+        NPCNoFireBall[A] = true;
+        NPCNoIceBall[A] = true;
+        NPCWontHurt[A] = true;
+        NPCDespawn[A] = false;
+    }
+
+    for(int A = 351; A <= 353; ++A)
+    {
+        NPCWidth[A] = 40;
+        NPCHeight[A] = NPCWidth[A];
+        NPCWidthGFX[A] = NPCWidth[A];
+        NPCHeightGFX[A] = NPCWidth[A];
+    }
+
     NPCSpinJumpHurt[275] = false;
     for(int A = 318; A <= 321; ++A)
     {

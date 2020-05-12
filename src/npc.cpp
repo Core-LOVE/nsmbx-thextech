@@ -4059,7 +4059,6 @@ void SpecialNPC(int A)
         if(NPC[A].Location.Y > NPC[A].DefaultLocation.Y + NPC[A].Location.Height + 16)
             NPC[A].Location.Y = NPC[A].DefaultLocation.Y + NPC[A].DefaultLocation.Height + 16;
         NPC[A].Projectile = true;
-        // If .Location.X <> .DefaultLocation.X Then .Killed = 2
         if(NPC[A].Special2 == 0)
         {
             NPC[A].Location.Y = NPC[A].DefaultLocation.Y + NPC[A].Location.Height + 1.5;
@@ -4104,6 +4103,60 @@ void SpecialNPC(int A)
         }
         if(NPC[A].Location.Y > level[NPC[A].Section].Height + 1)
             NPC[A].Location.Y = level[NPC[A].Section].Height;
+    }
+    else if(NPC[A].Type == 347)
+    {
+        if(NPC[A].Special10 != 1)
+        {
+            NPC[A].Special4 = (NPC[A].Location.Y - NPC[A].Location.Height) - 16;
+            NPC[A].Location.Y -= NPC[A].Location.Height + 16;
+            NPC[A].Special10 = 1;
+        }
+        NPC[A].Special++;
+        if(NPC[A].Special >= 0)
+        {
+            if(NPC[A].Location.Y < (NPC[A].Special4 + NPC[A].Location.Height) + 64)
+            {
+                tempLocation = NPC[A].Location;
+                tempLocation.Y = tempLocation.Y - (NPC[A].Location.Height / 4);
+                if(NPC[A].Location.SpeedY < 0)
+                {
+                    tempLocation = NPC[A].Location;
+                    tempLocation.Y = tempLocation.Y + (NPC[A].Location.Height / 4);
+                }
+                C = dRand() * 3;
+                if(C > 2)
+                    NewEffect(12, tempLocation);
+            }
+            NPC[A].Special2 = 1;
+            if(NPC[A].Special3 == 0)
+            {
+                NPC[A].Location.SpeedY += 32;
+                NPC[A].Special3 = 1;
+            }
+            if(NPC[A].Location.Y < NPC[A].Special4)
+            {
+                tempLocation = NPC[A].Location;
+                tempLocation.Y = tempLocation.Y + 32;
+                NewEffect(174, tempLocation);
+                PlaySound(16);
+                NPC[A].Special = -91;
+                NPC[A].Special2 = 0;
+                NPC[A].Special3 = 0;
+                NPC[A].Location.SpeedY = 0;
+                NPC[A].Location.Y = NPC[A].Special4;
+            }
+        }
+        if(NPC[A].Special2 == 1)
+            NPC[A].Location.SpeedY = NPC[A].Location.SpeedY - Physics.NPCGravity / 1.5;
+        if(NPC[A].Special3 == 1)
+        {
+            tempLocation = NPC[A].Location;
+            tempLocation.Y = tempLocation.Y + 32;
+            NewEffect(174, tempLocation);
+            PlaySound(16);
+            NPC[A].Special3 = 2;
+        }
     }
     else if((NPC[A].Type == 46 || NPC[A].Type == 212 || NPC[A].Type == 311) && LevelMacro == 0)
     {
@@ -4940,6 +4993,14 @@ void SpecialNPC(int A)
                     PlayerHurt(B);
             }
         }
+        }
+    }
+    else if(NPC[A].Type == 354)
+    {
+        for(int B = 1; B <= numNPCs; B++)
+        {
+            if(CheckCollision(NPC[A].Location, NPC[B].Location, NPC[A].Section) == true)
+                NPCHit(B, 3, A);
         }
     }
     else if(NPC[A].Type == 328) // clawgrip

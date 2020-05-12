@@ -121,7 +121,7 @@ void NPCFrames(int A)
             (NPC[A].Type >= 154 && NPC[A].Type <= 157) || NPC[A].Type == 159 || NPC[A].Type == 192 ||
             NPC[A].Type == 197 || NPCIsAVine[NPC[A].Type] || NPC[A].Type == 237 || NPC[A].Type == 239 ||
             NPC[A].Type == 240 || NPC[A].Type == 250 || NPC[A].Type == 289 || NPC[A].Type == 290 || NPC[A].Type == 300 ||
-            NPC[A].Type == 306 || NPC[A].Type == 307 || NPC[A].Type == 336) // no frames
+            NPC[A].Type == 306 || NPC[A].Type == 307 || NPC[A].Type == 336 || (NPC[A].Type >= 348 && NPC[A].Type <= 354)) // no frames
     {
         if(!(NPC[A].Type == 86 || NPC[A].Type == 284 || NPC[A].Type == 47) && A == 0) // Reset Frame to 0 unless a specific NPC type
             NPC[A].Frame = 0;
@@ -209,7 +209,7 @@ void NPCFrames(int A)
         else
             NPC[A].Frame = 3;
     }
-    else if(NPC[A].Type == 288) // potion
+    else if(NPC[A].Type == 288 || NPC[A].Type == 355) // potion
     {
         NPC[A].FrameCount = NPC[A].FrameCount + 1;
         if(NPC[A].FrameCount >= 8)
@@ -1859,7 +1859,7 @@ void NPCFrames(int A)
             }
         }
     }
-    else if(NPC[A].Type == 12) // Frame finder for big fireball
+    else if(NPC[A].Type == 12 || NPC[A].Type == 347) // Frame finder for big fireball
     {
         NPC[A].FrameCount = NPC[A].FrameCount + 1;
         if(NPC[A].FrameCount >= 4)

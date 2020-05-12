@@ -940,6 +940,20 @@ void UpdateGraphics(bool skipRepaint)
                         PlayerWarpGFX(A, tempLocation, X2, Y2);
                         DrawTexture(vScreenX[Z] + tempLocation.X, vScreenY[Z] + tempLocation.Y, tempLocation.Width, tempLocation.Height, GFXLink[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction) + X2, pfrY(100 + Player[A].Frame * Player[A].Direction) + Y2, c, c, c);
                     }
+                    else if(Player[A].Character == 6)
+                    {
+                        if(Player[A].Frame > 5)
+                            Player[A].Frame = 1;
+                        tempLocation = Player[A].Location;
+                        tempLocation.Height = 99;
+                        tempLocation.Width = 99;
+                        tempLocation.X = tempLocation.X + WarioFrameX[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)];
+                        tempLocation.Y = tempLocation.Y + WarioFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)] + Player[A].MountOffsetY;
+                        Y2 = 0;
+                        X2 = 0;
+                        PlayerWarpGFX(A, tempLocation, X2, Y2);
+                        DrawTexture(vScreenX[Z] + tempLocation.X, vScreenY[Z] + tempLocation.Y, tempLocation.Width, tempLocation.Height, GFXWario[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction) + X2, pfrY(100 + Player[A].Frame * Player[A].Direction) + Y2, c, c, c);
+                    }
                 }
                 if(Player[A].HoldingNPC > 0 && Player[A].Frame == 15)
                 {
@@ -1955,8 +1969,7 @@ void UpdateGraphics(bool skipRepaint)
                 DrawTexture(0, 0, MenuGFX[1].w, MenuGFX[1].h, MenuGFX[1], 0, 0);
                 DrawTexture(ScreenW / 2 - MenuGFX[2].w / 2, 70,
                         MenuGFX[2].w, MenuGFX[2].h, MenuGFX[2], 0, 0);
-                SuperPrint("Made By Core", 3, 20, 545);
-                SuperPrint("Version " NSMBX_VERSION_STRING, 3, 20, 570);
+                SuperPrint("Made By Core", 3, 20, 570);
                 if(MenuMode == 0)
                 {
                     SuperPrint("1 PLAYER GAME", 3, 300, 350);

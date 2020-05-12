@@ -144,6 +144,8 @@ RangeArrI<int, 0, maxPlayerFrames, 0> ToadFrameX;
 RangeArrI<int, 0, maxPlayerFrames, 0> ToadFrameY;
 RangeArrI<int, 0, maxPlayerFrames, 0> LinkFrameX;
 RangeArrI<int, 0, maxPlayerFrames, 0> LinkFrameY;
+RangeArrI<int, 0, maxPlayerFrames, 0> WarioFrameX;
+RangeArrI<int, 0, maxPlayerFrames, 0> WarioFrameY;
 RangeArrI<bool, 0, maxBackgroundType, false> BackgroundFence;
 RangeArrI<bool, 0, maxBackgroundType, false> BackgroundNPCFence;
 RangeArrI<bool, 0, maxBackgroundType, false> BackgroundFreeze;
@@ -452,12 +454,20 @@ RangeArrI<int, 1, 10, 0> GFXToadHeight;
 RangeArrI<int, 1, 10, 0> GFXToadWidth;
 
 RangeArrI<bool, 1, 10, false> GFXLinkCustom;
-//RangeArrI<long, 1, 10, 0> GFXLink;
 RangeArrI<long, 1, 10, 0> GFXLinkMask;
 RangeArr<StdPicture, 1, 10> GFXLinkBMP;
 RangeArr<StdPicture, 1, 10> GFXLinkMaskBMP;
 RangeArrI<int, 1, 10, 0> GFXLinkHeight;
 RangeArrI<int, 1, 10, 0> GFXLinkWidth;
+
+
+RangeArrI<bool, 1, 10, false> GFXWarioCustom;
+//RangeArrI<long, 1, 10, 0> GFXWario;
+RangeArrI<long, 1, 10, 0> GFXWarioMask;
+RangeArr<StdPicture, 1, 10> GFXWarioBMP;
+RangeArr<StdPicture, 1, 10> GFXWarioMaskBMP;
+RangeArrI<int, 1, 10, 0> GFXWarioHeight;
+RangeArrI<int, 1, 10, 0> GFXWarioWidth;
 
 RangeArrI<bool, 1, maxYoshiGfx, false> GFXYoshiBCustom;
 //RangeArrI<long, 1, 10, 0> GFXYoshiB;
@@ -552,6 +562,7 @@ RangeArrI<int, 1, maxPlayers, 0> BattleLives;
 int BattleIntro = 0;
 int BattleOutro = 0;
 std::string LevelName;
+std::string GameVersion;
 
 void DoEvents()
 {

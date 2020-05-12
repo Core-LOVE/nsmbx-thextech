@@ -335,6 +335,13 @@ void LoadGFX()
             GFXLinkHeight[A] = GFXLinkBMP[A].h;
         }
 
+        p = GfxRoot + fmt::format_ne("wario/wario-{0}.png", A);
+        if(Files::fileExists(p))
+        {
+            GFXWarioBMP[A] = frmMain.lazyLoadPicture(p);
+            GFXWarioWidth[A] = GFXWarioBMP[A].w;
+            GFXWarioHeight[A] = GFXWarioBMP[A].h;
+        }
         UpdateLoad();
     }
 
@@ -869,6 +876,13 @@ void LoadCustomGFX()
                  FileNamePath, FileName,
                  fmt::format_ne("link-{0}", A),
                  &GFXLinkWidth[A], &GFXLinkHeight[A], GFXLinkCustom[A], GFXLinkBMP[A]);
+    }
+    for(int A = 1; A < 10; ++A)
+    {
+        loadCGFX(existingFiles, GfxRoot + fmt::format_ne("wario/wario-{0}.png", A),
+                 FileNamePath, FileName,
+                 fmt::format_ne("wario-{0}", A),
+                 &GFXWarioWidth[A], &GFXWarioHeight[A], GFXWarioCustom[A], GFXWarioBMP[A]);
     }
 }
 

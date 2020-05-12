@@ -60,6 +60,7 @@ void UpdatePlayer()
     bool tempHit = false;
     bool tempSpring = false;
     bool tempTroop = false;
+    bool tempFriendlyHit = false;
     bool tempShell = false;
     bool tempHit2 = false;
     int tempHit3 = 0;
@@ -164,6 +165,22 @@ void UpdatePlayer()
         tempBlockHit[2] = 0;
 //        tempBlockA[1] = 0; // Unused
 //        tempBlockA[2] = 0;
+        if(Player[A].YoshiSeeds > 0)
+        {
+            if(Player[A].YoshiNPC == 0)
+            {
+                numNPCs++;
+                NPC[numNPCs] = NPC_t();
+                NPC[numNPCs].Direction = Player[A].Direction;
+                NPC[numNPCs].Type = 348;
+                NPC[numNPCs].Frame = EditorNPCFrame(NPC[numNPCs].Type, NPC[numNPCs].Direction);
+                NPC[numNPCs].Active = true;
+                NPC[numNPCs].Section = Player[A].Section;
+                NPC[numNPCs].TimeLeft = 100;
+                NPC[numNPCs].Effect = 0;
+                Player[A].YoshiNPC = numNPCs;
+            }
+        }
         if(Player[A].StarManTimer > 0)
         {
             Player[A].Red = (fRand() * 8.0f) + 2.0f;
@@ -1287,7 +1304,10 @@ void UpdatePlayer()
                         {
                             UnDuck(A);
                             if(Player[A].YoshiNPC > 0 || Player[A].YoshiPlayer > 0)
+                            {
                                 YoshiSpit(A);
+                                Player[A].YoshiSeeds = 0;
+                            }
                             Player[A].CanJump = false;
                             Player[A].StandingOnNPC = 0;
                             Player[A].Mount = 0;
@@ -1521,7 +1541,10 @@ void UpdatePlayer()
                             {
                                 UnDuck(A);
                                 if(Player[A].YoshiNPC > 0 || Player[A].YoshiPlayer > 0)
+                                {
                                     YoshiSpit(A);
+                                    Player[A].YoshiSeeds = 0;
+                                }
                                 Player[A].CanJump = false;
                                 Player[A].StandingOnNPC = 0;
                                 PlaySound(1); // Jump sound
@@ -4331,6 +4354,8 @@ void UpdatePlayer()
                     }
                     else
                     {
+                        if(!tempFriendlyHit)
+                        {
                         Player[A].Jump = Physics.PlayerNPCJumpHeight;
                         if(Player[A].Character == 2)
                             Player[A].Jump = Player[A].Jump + 3;
@@ -4339,13 +4364,14 @@ void UpdatePlayer()
                         Player[A].Location.SpeedY = Physics.PlayerJumpVelocity;
                         if(Player[A].Wet > 0)
                             Player[A].Location.SpeedY = Player[A].Location.SpeedY * 0.3;
+                        }
                     }
                     Player[A].Location.Y = tempLocation.Y;
                     if(tempShell)
                         NewEffect(132, newLoc(Player[A].Location.X + Player[A].Location.Width / 2.0 - EffectWidth[132] / 2.0, Player[A].Location.Y + Player[A].Location.Height - EffectHeight[132] / 2.0));
-                    else if(!tempSpring && !tempTroop)
+                    else if(!tempSpring && !tempTroop && !tempFriendlyHit)
                         NewEffect(75, newLoc(Player[A].Location.X + Player[A].Location.Width / 2.0 - 16, Player[A].Location.Y + Player[A].Location.Height - 16));
-                    else if(!tempSpring && tempTroop)
+                    else if(!tempSpring && tempTroop && !tempFriendlyHit)
                     {
                         if(Player[A].Controls.Jump)
                             PlaySound(97);

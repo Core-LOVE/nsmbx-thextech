@@ -24,6 +24,7 @@
  */
 
 #include "../globals.h"
+#include "../global_constants.h"
 #include "../graphics.h"
 #include "../player.h"
 #include "../sound.h"

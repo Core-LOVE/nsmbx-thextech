@@ -26,7 +26,7 @@
 #include "../globals.h"
 #include "../graphics.h"
 #include "../collision.h"
-
+#include "../global_constants.h"
 
 void DrawPlayer(int A, int Z)
 {
@@ -158,6 +158,13 @@ void DrawPlayer(int A, int Z)
                 if(Player[A].Mount == 0)
                 {
                     frmMain.renderTexture(vScreenX[Z] + Player[A].Location.X + LinkFrameX[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], vScreenY[Z] + Player[A].Location.Y + LinkFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], 99, 99, GFXLink[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction), pfrY(100 + Player[A].Frame * Player[A].Direction), s, s, s);
+                }
+            }
+            else if(Player[A].Character == 6) // draw wario
+            {
+                if(Player[A].Mount == 0)
+                {
+                    frmMain.renderTexture(vScreenX[Z] + Player[A].Location.X + WarioFrameX[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], vScreenY[Z] + Player[A].Location.Y + WarioFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], 99, 99, GFXLink[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction), pfrY(100 + Player[A].Frame * Player[A].Direction), s, s, s);
                 }
             }
         // peach/toad held npcs

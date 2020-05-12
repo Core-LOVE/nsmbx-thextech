@@ -1636,7 +1636,7 @@ void NPCHit(int A, int B, int C)
         }
         // Podoboo
     }
-    else if(NPC[A].Type == 12)
+    else if(NPC[A].Type == 12 || NPC[A].Type == 347)
     {
         if(B == 9)
         {

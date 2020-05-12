@@ -37,6 +37,7 @@
 #include <DirManager/dirman.h>
 #include <Utils/maths.h>
 #include <Graphics/graphics_funcs.h>
+#include <IniProcessor/ini_processing.h>
 #include <FreeImageLite.h>
 #include <chrono>
 #include <fmt_time_ne.h>
@@ -63,7 +64,13 @@ FrmMain::FrmMain()
 #ifdef CUSTOM_GAME_NAME_TITLE
     m_windowTitle = CUSTOM_GAME_NAME_TITLE;
 #else
-    m_windowTitle = "New Super Mario Bros. X - Version " NSMBX_VERSION_STRING;
+    std::string gversion = "1.1";
+    std::string mainIni = AppPath + "main.ini";
+    IniProcessing config(mainIni);
+    config.beginGroup("main");
+    config.read("Version", gversion, "1.1");
+    config.endGroup();
+    m_windowTitle = "New Super Mario Bros. X - Version " + gversion;
 #endif /* CUSTOM_GAME_NAME_TITLE */
 }
 

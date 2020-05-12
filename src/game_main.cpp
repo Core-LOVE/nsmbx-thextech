@@ -26,6 +26,8 @@
 #include <Logger/logger.h>
 #include <Utils/files.h>
 #include <InterProcess/intproc.h>
+#include <IniProcessor/ini_processing.h>
+
 #include <pge_delay.h>
 #include <fmt_format_ne.h>
 
