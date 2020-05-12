@@ -101,7 +101,7 @@ bool RailCollision(const Location_t &Loc1, const Background_t &BG, int section)
     bool tempRailCollision = false;
     Location_t Loc2 = BG.Location;
 
-    if(BG.Type == 71 || BG.Type == 72 || BG.Type == 73 || BG.Type == 74)
+    if(BG.Type == 71 || BG.Type == 72 || BG.Type == 73 || BG.Type == 74 || BG.Type == 70)
         return CheckCollision(Loc1, Loc2, section);
 
     for(int X = -1; X <= 1; X++)
@@ -109,9 +109,9 @@ bool RailCollision(const Location_t &Loc1, const Background_t &BG, int section)
         for(int Y = -1; Y <= 1; Y++)
         {
             float tempPoint = Loc1.X + Loc1.Width/2 + Loc1.SpeedX*X - Loc2.X;
-            if(BG.Type == 212 || BG.Type == 210)
+            if(BG.Type == 212 || BG.Type == 210 || BG.Type == 214)
                 tempPoint = tempPoint * Loc2.Height / Loc2.Width;
-            else if(BG.Type == 211 || BG.Type == 209)
+            else if(BG.Type == 211 || BG.Type == 209 || BG.Type == 213)
                 tempPoint = Loc2.Height - tempPoint * Loc2.Height / Loc2.Width;
 
             if(Loc1.Y + Loc1.Height + Loc1.SpeedY*Y >= Loc2.Y + tempPoint - 1 + Loc2.SpeedY*Y)
