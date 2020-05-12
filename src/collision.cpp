@@ -72,6 +72,99 @@ bool CheckCollision(const Location_t &Loc1, const Location_t &Loc2, int section)
     return tempCheckCollision;
 }
 
+
+// 'Normal collisions with speed
+bool CheckSpeedCollision(const Location_t &Loc1, const Location_t &Loc2)
+{
+    bool tempCheckSpeedCollision = false;
+    if(Loc1.Y + Loc1.Height + Loc1.SpeedY >= Loc2.Y + Loc2.SpeedY)
+    {
+        if(Loc1.Y + Loc1.SpeedY <= Loc2.Y + Loc2.Height + Loc2.SpeedY)
+        {
+            if(Loc1.X + Loc1.SpeedX <= Loc2.X + Loc2.Width + Loc2.SpeedX)
+            {
+                if(Loc1.X + Loc1.Width + Loc1.SpeedX >= Loc2.X + Loc2.SpeedX)
+                {
+                    tempCheckSpeedCollision = true;
+                    return tempCheckSpeedCollision;
+                }
+            }
+        }
+    }
+    return tempCheckSpeedCollision;
+}
+
+
+// 'Colliding with rails
+bool RailCollision(const Location_t &Loc1, const Background_t &BG, int section)
+{
+    bool tempRailCollision = false;
+    Location_t Loc2 = BG.Location;
+
+    if(BG.Type == 71 || BG.Type == 72 || BG.Type == 73 || BG.Type == 74)
+        return CheckCollision(Loc1, Loc2, section);
+
+    for(int X = -1; X <= 1; X++)
+    {
+        for(int Y = -1; Y <= 1; Y++)
+        {
+            float tempPoint = Loc1.X + Loc1.Width/2 + Loc1.SpeedX*X - Loc2.X;
+            if(BG.Type == 212 || BG.Type == 210)
+                tempPoint = tempPoint * Loc2.Height / Loc2.Width;
+            else if(BG.Type == 211 || BG.Type == 209)
+                tempPoint = Loc2.Height - tempPoint * Loc2.Height / Loc2.Width;
+
+            if(Loc1.Y + Loc1.Height + Loc1.SpeedY*Y >= Loc2.Y + tempPoint - 1 + Loc2.SpeedY*Y)
+            {
+                if(Loc1.Y + Loc1.SpeedY*Y <= Loc2.Y + tempPoint + 1 + Loc2.SpeedY*Y)
+                {
+                    if(Loc1.X + Loc1.SpeedX*X <= Loc2.X + Loc2.Width + Loc2.SpeedX*X)
+                    {
+                        if(Loc1.X + Loc1.SpeedX*X + Loc1.Width >= Loc2.X + Loc2.SpeedX*X)
+                        {
+                            tempRailCollision = true;
+                            return tempRailCollision;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return tempRailCollision;
+}
+
+// 'Colliding with rails and speed
+bool RailSpeedCollision(const Location_t &Loc1, const Background_t &BG, int section)
+{
+    bool tempRailSpeedCollision = false;
+    Location_t Loc2 = BG.Location;
+
+    if(BG.Type == 71 || BG.Type == 72 || BG.Type == 73 || BG.Type == 74)
+        return CheckCollision(Loc1, Loc2, section);
+
+    float tempPoint = Loc1.X + Loc1.SpeedX + Loc1.Width/2 - Loc2.X - Loc2.SpeedX;
+    if(BG.Type == 212 || BG.Type == 210)
+        tempPoint = tempPoint * Loc2.Height / Loc2.Width;
+    else if(BG.Type == 211 || BG.Type == 209)
+        tempPoint = Loc2.Height - tempPoint * Loc2.Height / Loc2.Width;
+
+    if(Loc1.Y + Loc1.Height + Loc1.SpeedY >= Loc2.Y + tempPoint + Loc2.SpeedY)
+    {
+        if(Loc1.Y - Loc1.Height + Loc1.SpeedY <= Loc2.Y + tempPoint + Loc2.SpeedY)
+        {
+            if(Loc1.X + Loc1.SpeedX <= Loc2.X + Loc2.Width + Loc2.SpeedX)
+            {
+                if(Loc1.X + Loc1.Width + Loc1.SpeedX >= Loc2.X + Loc2.SpeedX)
+                {
+                    tempRailSpeedCollision = true;
+                    return tempRailSpeedCollision;
+                }
+            }
+        }
+    }
+    return tempRailSpeedCollision;
+}
+
 // Make the game easier for the people who whine about the detection being 'off'
 bool n00bCollision(const Location_t &Loc1, const Location_t &Loc2, int section)
 {
