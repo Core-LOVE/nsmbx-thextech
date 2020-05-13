@@ -551,10 +551,10 @@ void UpdateGraphics(bool skipRepaint)
                                 {
                                     for(int h = 0; h < H; h++)
                                     {
-                                        DrawTexture(vScreenX[Z] + Block[sBlockArray[A]].Location.X + C * BlockWidth[Block[sBlockArray[A]].Type] + w * BlockWidth[Block[sBlockArray[A]].Type] * 0.5,
-                                                              vScreenY[Z] + Block[sBlockArray[A]].Location.Y + B * BlockHeight[Block[sBlockArray[A]].Type] + h * BlockHeight[Block[sBlockArray[A]].Type] * 0.5,
-                                                              BlockWidth[Block[sBlockArray[A]].Type] / W + Block[sBlockArray[A]].ShakeX3,
-                                                              BlockHeight[Block[sBlockArray[A]].Type] / H + Block[sBlockArray[A]].ShakeY3,
+                                        DrawTexture(vScreenX[Z] + Block[sBlockArray[A]].Location.X + C * BlockWidth[Block[sBlockArray[A]].Type] + w * BlockWidth[Block[sBlockArray[A]].Type] * 0.5 + Block[sBlockArray[A]].ShakeX3,
+                                                              vScreenY[Z] + Block[sBlockArray[A]].Location.Y + B * BlockHeight[Block[sBlockArray[A]].Type] + h * BlockHeight[Block[sBlockArray[A]].Type] * 0.5 + Block[sBlockArray[A]].ShakeY3,
+                                                              BlockWidth[Block[sBlockArray[A]].Type] / W,
+                                                              BlockHeight[Block[sBlockArray[A]].Type] / H,
                                                               GFXBlockBMP[Block[sBlockArray[A]].Type],
                                                               D * BlockWidth[Block[sBlockArray[A]].Type] + w * (GFXBlockBMP[Block[sBlockArray[A]].Type].w - BlockWidth[Block[sBlockArray[A]].Type] * 0.5),
                                                               E * BlockHeight[Block[sBlockArray[A]].Type] + h * (GFXBlockBMP[Block[sBlockArray[A]].Type].h - BlockHeight[Block[sBlockArray[A]].Type] * 0.5));
