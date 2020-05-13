@@ -33,12 +33,11 @@
 void UpdateEffectFrames()
 {
     if(FreezeNPCs)
-    return;
+        return;
 
     For(A, 1, numEffects)
     {
         auto &e = Effect[A];
-        e.Life -= 1;
 
         if(e.Type == 111)
         {
@@ -82,8 +81,7 @@ void UpdateEffectFrames()
                     e.Frame = 0;
             }
         }
-        else if(e.Type == 1 || e.Type == 21 || e.Type == 30 || e.Type == 51
-        || e.Type == 100 || e.Type == 135 || e.Type == 170) // Block break
+        else if(e.Type == 1 || e.Type == 21 || e.Type == 30 || e.Type == 51 || e.Type == 100 || e.Type == 135 || e.Type == 170) // Block break
         {
             e.FrameCount += 1;
             if(e.FrameCount >= 3)
@@ -509,6 +507,8 @@ void UpdateEffects()
         auto &e = Effect[A];
         e.Life -= 1;
 
+
+
         if(e.Life == 0)
         {
             if(e.Type == 14)
@@ -557,7 +557,9 @@ void UpdateEffects()
             }
             e.Location.SpeedY += 0.5;
             if(e.Location.SpeedY > 12)
+            {
                 e.Location.SpeedY = 12;
+            }
         }
         else if(e.Type == 111)
         {
@@ -566,7 +568,9 @@ void UpdateEffects()
         else if(e.Type == 136) // RotoDisk
         {
             if(e.Location.SpeedX != 0.0 || e.Location.SpeedY != 0.0)
+            {
                 e.Location.SpeedY = e.Location.SpeedY + 0.5;
+            }
         }
         else if(e.Type == 1 || e.Type == 21 || e.Type == 30 || e.Type == 51 || e.Type == 100 || e.Type == 135 || e.Type == 170) // Block break
         {
@@ -598,16 +602,10 @@ void UpdateEffects()
                 tempBool = false;
                 for(B = 1; B <= numWater; B++)
                 {
-                    for(int C = 1; C <= numPlayers; C++)
+                    if(CheckCollision(e.Location, Water[B].Location, Player[1].Section) && Water[B].Hidden == false)
                     {
-                        if(CheckCollision(e.Location, Water[B].Location, Player[C].Section) && Water[B].Hidden == false)
-                        {
-                            tempBool = true;
-                            break;
-                        }
+                        tempBool = true;
                     }
-                    if(tempBool)
-                        break;
                 }
                 if(tempBool == false)
                     e.Life = 0;
@@ -623,12 +621,16 @@ void UpdateEffects()
                 e.Location.SpeedY = 10;
         }
         else if(e.Type == 3 || e.Type == 5 || e.Type == 129 || e.Type == 130 || e.Type == 134) // Mario & Luigi death
+        {
             e.Location.SpeedY = e.Location.SpeedY + 0.25;
+        }
         else if(e.Type == 145 || e.Type == 110 || e.Type == 127 || e.Type == 4 || e.Type == 143 || e.Type == 142 || e.Type == 7 || e.Type == 22 || e.Type == 31 || e.Type == 33 || e.Type == 34 || e.Type == 38 || e.Type == 40 || e.Type == 42 || e.Type == 44 || e.Type == 46 || e.Type == 53 || e.Type == 117) // Goomba air ride of dooom
         {
             e.Location.SpeedY = e.Location.SpeedY + 0.5;
             if(e.Location.SpeedY >= 10)
+            {
                 e.Location.SpeedY = 10;
+            }
         }
         else if(e.Type == 104) // Blaarg eyes
         {
@@ -660,7 +662,9 @@ void UpdateEffects()
         {
             e.Location.SpeedY = e.Location.SpeedY + 0.5;
             if(e.Location.SpeedY >= 10)
+            {
                 e.Location.SpeedY = 10;
+            }
         }
         else if(e.Type == 10 || e.Type == 131) // SMW / SMB3 Puff of smoke
         {

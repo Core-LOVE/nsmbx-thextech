@@ -1722,13 +1722,13 @@ void UpdateGraphics(bool skipRepaint)
                     {
                     DrawTexture(int(vScreenX[Z] + e.Location.X), int(vScreenY[Z] + e.Location.Y),
                                           int(e.Location.Width), int(e.Location.Height),
-                                          GFXEffectBMP[e.Type], 0, e.Frame * EffectHeight[e.Type], c, c, c);
+                                          GFXEffect[e.Type], 0, e.Frame * EffectHeight[e.Type], c, c, c);
                     }
                     else
                     {
                     DrawTexture(int(vScreenX[Z] + e.Location.X), int(vScreenY[Z] + e.Location.Y),
                                           int(e.Location.Width), int(e.Location.Height),
-                                          GFXEffectBMP[e.Type], 0, e.Frame * EffectHeight[e.Type], e.Red, e.Green, e.Blue);
+                                          GFXEffect[e.Type], 0, e.Frame * EffectHeight[e.Type], e.Red, e.Green, e.Blue);
                     }
 //                    End If
                 }

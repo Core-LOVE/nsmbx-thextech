@@ -32,6 +32,7 @@
 #include "../custom_paths.h"
 #include "../custom_levels.h"
 #include "../custom_scene.h"
+#include "../custom_effects.h"
 
 void SetupVars()
 {
