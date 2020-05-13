@@ -152,6 +152,7 @@ void Bomb(Location_t Location, int Game, int ImmunePlayer)
     double A = 0;
     double B = 0;
     double C = 0;
+    Location_t tempLocation;
 
     NPC[0].Multiplier = 0;
     if(Game == 0)
@@ -177,6 +178,18 @@ void Bomb(Location_t Location, int Game, int ImmunePlayer)
         NewEffect(151, Location);
         PlaySound(93);
         Radius = 128;
+    }
+    if(Game == 5)
+    {
+        for(int i = 1; i <= 3; i++)
+        {
+            NewEffect(175, Location);
+            Effect[numEffects].Location.SpeedX = dRand() * 3 - 1.5;
+            Effect[numEffects].Location.SpeedY = dRand() * 3 - 1.5;
+        }
+        NewEffect(176, Location);
+        PlaySound(43);
+        Radius = 32;
     }
     X = Location.X + Location.Width / 2.0;
     Y = Location.Y + Location.Height / 2.0;
@@ -208,7 +221,7 @@ void Bomb(Location_t Location, int Game, int ImmunePlayer)
 
     for(i = 1; i <= numBlock; i++)
     {
-        if(Block[i].Hidden == false && BlockNoClipping[Block[i].Type] == false && BlockNPCNoClipping[Block[i].Type] == false)
+        if(Block[i].Hidden == false && BlockNoClipping[Block[i].Type] == false && BlockNPCNoClipping[Block[i].Type] == false && Game != 5)
         {
             A = std::abs(Block[i].Location.X + Block[i].Location.Width / 2.0 - X);
             B = std::abs(Block[i].Location.Y + Block[i].Location.Height / 2.0 - Y);
@@ -225,7 +238,7 @@ void Bomb(Location_t Location, int Game, int ImmunePlayer)
 
     for(int i = 1; i <= numWarps; i++)
     {
-        if(Warp[i].bombExit)
+        if(Warp[i].bombExit && Game != 5)
         {
             A = std::abs(Warp[i].Entrance.X + Warp[i].Entrance.Width / 2.0 - X);
             B = std::abs(Warp[i].Entrance.Y + Warp[i].Entrance.Height / 2.0 - Y);
@@ -239,7 +252,7 @@ void Bomb(Location_t Location, int Game, int ImmunePlayer)
 
     for(int i = 1; i <= numBackground + numLocked; i++)
     {
-        if(Background[i].Type == 205 && Background[i].Hidden == false)
+        if(Background[i].Type == 205 && Background[i].Hidden == false && Game != 5)
         {
             A = std::abs(Background[i].Location.X + Background[i].Location.Width / 2.0 - X);
             B = std::abs(Background[i].Location.Y + Background[i].Location.Height / 2.0 - Y);
@@ -253,7 +266,7 @@ void Bomb(Location_t Location, int Game, int ImmunePlayer)
         }
     }
 
-    if(Game != 0)
+    if(Game != 0 && Game != 4)
     {
         for(i = 1; i <= numPlayers; i++)
         {

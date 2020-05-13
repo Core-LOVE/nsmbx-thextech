@@ -2079,6 +2079,14 @@ void UpdateNPCs()
                                                             HitSpot = 0;
                                                         if(NPC[A].Type == 190 && Block[B].IsNPC > 0)
                                                             HitSpot = 0;
+                                                        if(NPC[A].Type == 355 && NPC[A].Projectile > 0)
+                                                        {
+                                                            if(HitSpot != 0)
+                                                            {
+                                                                Bomb(NPC[A].Location, 5, 0);
+                                                                KillNPC(A, 9);
+                                                            }
+                                                        }
                                                         if(NPC[A].Type == 86)
                                                         {
                                                             if(HitSpot != 1 && NPC[A].Special > 0)

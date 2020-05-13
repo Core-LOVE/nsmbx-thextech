@@ -167,12 +167,14 @@ void UpdatePlayer()
 //        tempBlockA[2] = 0;
         if(Player[A].YoshiSeeds > 0)
         {
-            if(Player[A].YoshiNPC == 0)
+            if(Player[A].YoshiMelonTimer <= 10)
+                Player[A].YoshiMelonTimer++;
+            if(Player[A].YoshiNPC == 0 && Player[A].YoshiMelonTimer >= 10)
             {
                 numNPCs++;
                 NPC[numNPCs] = NPC_t();
                 NPC[numNPCs].Direction = Player[A].Direction;
-                NPC[numNPCs].Type = 348;
+                NPC[numNPCs].Type = Player[A].YoshiMelonType;
                 NPC[numNPCs].Frame = EditorNPCFrame(NPC[numNPCs].Type, NPC[numNPCs].Direction);
                 NPC[numNPCs].Active = true;
                 NPC[numNPCs].Section = Player[A].Section;
@@ -180,6 +182,11 @@ void UpdatePlayer()
                 NPC[numNPCs].Effect = 0;
                 Player[A].YoshiNPC = numNPCs;
             }
+        }
+        else if(Player[A].YoshiSeeds == 0 && Player[A].YoshiMelonType > 0)
+        {
+            Player[A].YoshiMelonType = 0;
+            Player[A].YoshiMelonTimer = 0;
         }
         if(Player[A].StarManTimer > 0)
         {

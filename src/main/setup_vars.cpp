@@ -147,6 +147,8 @@ void SetupVars()
     EffectHeight[11] = 32;
     EffectWidth[12] = 8;
     EffectHeight[12] = 8;
+    EffectWidth[175] = 8;
+    EffectHeight[175] = 8;
     EffectWidth[13] = 84;
     EffectHeight[13] = 26;
     EffectWidth[174] = 84;

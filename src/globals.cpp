@@ -215,10 +215,13 @@ RangeArrI<int, 0, maxBlockType, 32> BlockWidth;
 RangeArrI<int, 0, maxBlockType, 32> BlockHeight;
 RangeArrI<int, 0, maxBlockType, 0> BonusWidth;
 RangeArrI<int, 0, maxBlockType, 0> BonusHeight;
+
 RangeArrI<int, 0, maxEffectType, 0> EffectWidth;
 RangeArrI<int, 0, maxEffectType, 0> EffectHeight;
 RangeArrI<int, 0, maxEffectType, 0> EffectFrameAmount;
 RangeArrI<int, 0, maxEffectType, 0> EffectFrameSpeed;
+RangeArrI<int, 0, maxEffectType, 0> EffectLifeTime;
+RangeArrI<int, 0, maxEffectType, 0> EffectAcceleration;
 
 EffectDefaults_t EffectDefaults;
 

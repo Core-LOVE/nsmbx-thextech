@@ -468,6 +468,7 @@ struct NPC_t
     bool TurnBackWipe = false;
 //    Immune As Integer 'time that the NPC is immune
     int Immune = 0;
+    int BlockSpot = 0;
 //End Type
 };
 
@@ -609,6 +610,8 @@ struct Player_t
 //    YoshiPlayer As Integer 'the player that is in yoshi's mouth
     int YoshiPlayer = 0;
     int YoshiSeeds = 0;
+    int YoshiMelonType = 0;
+    int YoshiMelonTimer = 0;
 //    Dismount As Integer 'delay before you can remount
     int Dismount = 0;
 //    NoPlayerCol As Integer
@@ -1633,6 +1636,8 @@ extern RangeArrI<int, 0, maxEffectType, 0> EffectWidth;
 extern RangeArrI<int, 0, maxEffectType, 0> EffectHeight;
 extern RangeArrI<int, 0, maxEffectType, 0> EffectFrameAmount;
 extern RangeArrI<int, 0, maxEffectType, 0> EffectFrameSpeed;
+extern RangeArrI<int, 0, maxEffectType, 0> EffectLifeTime;
+extern RangeArrI<int, 0, maxEffectType, 0> EffectAcceleration;
 
 //Public Type EffectDefaults
 struct EffectDefaults_t
@@ -1641,6 +1646,8 @@ struct EffectDefaults_t
     RangeArrI<int, 1, maxEffectType, 0> EffectHeight;
     RangeArrI<int, 0, maxEffectType, 0> EffectFrameAmount;
     RangeArrI<int, 0, maxEffectType, 0> EffectFrameSpeed;
+    RangeArrI<int, 0, maxEffectType, 0> EffectLifeTime;
+    RangeArrI<int, 0, maxEffectType, 0> EffectAcceleration;
 };
 extern EffectDefaults_t EffectDefaults;
 

@@ -39,6 +39,19 @@ void UpdateEffectFrames()
     {
         auto &e = Effect[A];
 
+    if(EffectFrameAmount[Effect[A].Type] > 0)
+    {
+        e.FrameCount += 1;
+        if(e.FrameCount >= EffectFrameSpeed[Effect[A].Type])
+        {
+            e.FrameCount = 0;
+            e.Frame++;
+            if(e.Frame >= EffectFrameAmount[Effect[A].Type])
+                e.Frame = 0;
+        }
+    }
+    else
+    {
         if(e.Type == 111)
         {
             e.FrameCount += 1;
@@ -249,6 +262,20 @@ void UpdateEffectFrames()
                 e.FrameCount = 0;
             }
         }
+        else if(e.Type == 176) // Tail whack
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 4)
+            {
+                e.Frame = e.Frame + 1;
+                if(e.Frame > 3)
+                {
+                    e.Frame = 0;
+                    e.Life = 0;
+                }
+                e.FrameCount = 0;
+            }
+        }
         else if(e.Type == 75) // Whack
         {
             e.FrameCount += 1;
@@ -309,7 +336,7 @@ void UpdateEffectFrames()
                 }
             }
         }
-        else if(e.Type == 12) // Big Fireball Tail
+        else if(e.Type == 12 || e.Type == 175) // Big Fireball Tail
         {
             e.FrameCount += 1;
             if(e.FrameCount >= 4)
@@ -482,6 +509,7 @@ void UpdateEffectFrames()
             if(e.Frame >= 3)
                 e.Life = 0;
         }
+    }
     }
 }
 
@@ -1348,7 +1376,7 @@ void NewEffect(int A, Location_t Location, float Direction, int NewNpc, bool Sha
         Effect[numEffects].Type = A;
 
     }
-    else if(A == 148) // Heart Bomb
+    else if(A == 148 || A == 175) // Heart Bomb
     {
         for(B = 1; B <= 6; B++)
         {
@@ -1507,7 +1535,7 @@ void NewEffect(int A, Location_t Location, float Direction, int NewNpc, bool Sha
             Effect[numEffects].Type = A;
         }
     }
-    else if(A == 10 || A == 73 || A == 74 || A == 75 || A == 131 || A == 151 || A == 132 || A == 147) // Puff of smoke
+    else if(A == 10 || A == 73 || A == 176 || A == 74 || A == 75 || A == 131 || A == 151 || A == 132 || A == 147) // Puff of smoke
     {
         numEffects++;
         Effect[numEffects].Shadow = Shadow;
@@ -1527,7 +1555,7 @@ void NewEffect(int A, Location_t Location, float Direction, int NewNpc, bool Sha
         Effect[numEffects].Type = A;
         if(Effect[numEffects].Type == 147)
             Effect[numEffects].Life = 24;
-        if(A == 73 || A == 75)
+        if(A == 73 || A == 176 || A == 75)
         {
             Effect[numEffects].Location.X += dRand() * 16 - 8;
             Effect[numEffects].Location.Y += dRand() * 16 - 8;
