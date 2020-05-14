@@ -2206,7 +2206,6 @@ void UpdateNPCs()
                                                             HitSpot = 0;
 
 
-
                                                         if(NPC[A].Type == 205 || NPC[A].Type == 206 || NPC[A].Type == 207 || NPC[A].Type == 345)
                                                         {
                                                             NPC[A].Special5 = 0;
@@ -2717,6 +2716,24 @@ void UpdateNPCs()
                                                                     beltCount += static_cast<float>(C);
                                                                 }
                                                             }
+
+
+
+                                                            // coins
+                                                            if(NPCIsACoin[NPC[A].Type] && NPC[A].Special2 != 0)
+                                                            {
+                                                                if(NPC[A].Special != 0)
+                                                                {
+                                                                    NPC[A].Location.SpeedY = NPC[A].Location.SpeedY * -0.5 + Block[B].Location.SpeedY;
+                                                                    NPC[A].Location.SpeedX = NPC[A].Location.SpeedX * 0.5 + Block[B].Location.SpeedX;
+                                                                    if(NPC[A].Slope == 0)
+                                                                        NPC[A].Location.Y = Block[B].Location.Y - NPC[A].Location.Height - 0.01;
+                                                                    tempHit = 0;
+                                                                    tempHitBlock = 0;
+                                                                    HitSpot = 0;
+                                                                }
+                                                            }
+
 
                                                             if(tempHitBlock == B)
                                                             {
@@ -4465,68 +4482,87 @@ void UpdateNPCs()
                                 }
                             }
                         }
-
-                        if(numNPCs < maxNPCs)
+                        int blastAmount = 1;
+                        if(NPCIsACoin[NPC[A].Special2])
                         {
-                            if(fEqual(C, -1) && NPC[A].HoldingPlayer == 0 && NPC[A].standingOnPlayer == 0)
-                                NPC[A].Special = 0;
-                            else if(Player[NPC[A].standingOnPlayer].Controls.Run == true || NPC[A].standingOnPlayer == 0)
+                            blastAmount = 5;
+                        }
+                        for(int I = 1; I <= blastAmount; I++)
+                        {
+                            if(numNPCs < maxNPCs)
                             {
-                                NPC[A].Special = 0;
-                                numNPCs++;
-                                NPC[numNPCs] = NPC_t();
-                                NPC[numNPCs].Inert = NPC[A].Inert;
-                                tempBool = false;
-                                NPC[numNPCs].Direction = NPC[A].Direction;
-                                if(NPC[A].HoldingPlayer > 0 || NPC[A].standingOnPlayer > 0 || (NPC[A].Type == 22 && NPC[A].Projectile == true))
+                                if(fEqual(C, -1) && NPC[A].HoldingPlayer == 0 && NPC[A].standingOnPlayer == 0)
+                                    NPC[A].Special = 0;
+                                else if(Player[NPC[A].standingOnPlayer].Controls.Run == true || NPC[A].standingOnPlayer == 0)
                                 {
-                                    NPC[numNPCs].Projectile = true;
-                                    NPC[numNPCs].CantHurt = 10000;
-                                    NPC[numNPCs].CantHurtPlayer = NPC[A].HoldingPlayer;
-                                    NPC[numNPCs].Location.SpeedX = 8 * NPC[numNPCs].Direction;
-                                }
-                                else if(NPC[A].CantHurtPlayer > 0)
-                                {
-                                    NPC[numNPCs].Projectile = true;
-                                    NPC[numNPCs].CantHurt = 1000;
-                                    NPC[numNPCs].CantHurtPlayer = NPC[A].CantHurtPlayer;
-                                }
-                                else if(NPC[A].Type == 22)
-                                {
-                                    tempBool = true;
-                                    numNPCs = numNPCs - 1;
-                                }
-                                if(tempBool == false)
-                                {
-                                    NPC[numNPCs].Shadow = NPC[A].Shadow;
-                                    NPC[numNPCs].Active = true;
-                                    NPC[numNPCs].TimeLeft = 100;
-                                    NPC[numNPCs].JustActivated = 0;
-                                    NPC[numNPCs].Section = NPC[A].Section;
-                                    if(NPC[A].Special2 != 0)
-                                        NPC[numNPCs].Type = NPC[A].Special2;
-                                    else
-                                        NPC[numNPCs].Type = 17;
-                                    NPC[numNPCs].Location.Width = NPCWidth[NPC[numNPCs].Type];
-                                    NPC[numNPCs].Location.Height = NPCHeight[NPC[numNPCs].Type];
+                                    NPC[A].Special = 0;
+                                    numNPCs++;
+                                    NPC[numNPCs] = NPC_t();
+                                    NPC[numNPCs].Inert = NPC[A].Inert;
+                                    tempBool = false;
+                                    NPC[numNPCs].Direction = NPC[A].Direction;
+                                    if(NPC[A].HoldingPlayer > 0 || NPC[A].standingOnPlayer > 0 || (NPC[A].Type == 22 && NPC[A].Projectile == true))
+                                    {
+                                        NPC[numNPCs].Projectile = true;
+                                        NPC[numNPCs].CantHurt = 10000;
+                                        NPC[numNPCs].CantHurtPlayer = NPC[A].HoldingPlayer;
+                                        NPC[numNPCs].Location.SpeedX = 8 * NPC[numNPCs].Direction;
+                                    }
+                                    else if(NPC[A].CantHurtPlayer > 0)
+                                    {
+                                        NPC[numNPCs].Projectile = true;
+                                        NPC[numNPCs].CantHurt = 1000;
+                                        NPC[numNPCs].CantHurtPlayer = NPC[A].CantHurtPlayer;
+                                    }
+                                    else if(NPC[A].Type == 22)
+                                    {
+                                        tempBool = true;
+                                        numNPCs = numNPCs - 1;
+                                    }
+                                    if(tempBool == false)
+                                    {
+                                        NPC[numNPCs].Shadow = NPC[A].Shadow;
+                                        NPC[numNPCs].Active = true;
+                                        NPC[numNPCs].TimeLeft = 100;
+                                        NPC[numNPCs].JustActivated = 0;
+                                        NPC[numNPCs].Section = NPC[A].Section;
+                                        if(NPC[A].Special2 != 0)
+                                            NPC[numNPCs].Type = NPC[A].Special2;
+                                        else
+                                            NPC[numNPCs].Type = 17;
+                                        NPC[numNPCs].Location.Width = NPCWidth[NPC[numNPCs].Type];
+                                        NPC[numNPCs].Location.Height = NPCHeight[NPC[numNPCs].Type];
 
-                                    if(NPC[numNPCs].Direction > 0)
-                                        NPC[numNPCs].Location.X = NPC[A].Location.X + NPC[A].Location.Width / 2.0;
-                                    else
-                                        NPC[numNPCs].Location.X = NPC[A].Location.X + NPC[A].Location.Width / 2.0 - NPC[numNPCs].Location.Width;
+                                        if(NPC[numNPCs].Direction > 0)
+                                            NPC[numNPCs].Location.X = NPC[A].Location.X + NPC[A].Location.Width / 2.0;
+                                        else
+                                            NPC[numNPCs].Location.X = NPC[A].Location.X + NPC[A].Location.Width / 2.0 - NPC[numNPCs].Location.Width;
 
-                                    if(NPC[numNPCs].Direction > 0)
-                                        NPC[numNPCs].Frame = 1;
-                                    else
-                                        NPC[numNPCs].Frame = 0;
-                                    NPC[numNPCs].Location.Y = NPC[A].Location.Y + NPC[A].Location.Height / 2.0 - NPC[numNPCs].Location.Height / 2.0;
+                                        if(NPC[numNPCs].Direction > 0)
+                                            NPC[numNPCs].Frame = 1;
+                                        else
+                                            NPC[numNPCs].Frame = 0;
 
-                                    tempLocation = NPC[numNPCs].Location;
-                                    tempLocation.X = NPC[numNPCs].Location.X + (NPC[numNPCs].Location.Width / 2.0) * NPC[numNPCs].Direction;
-                                    tempLocation.Y = NPC[numNPCs].Location.Y + NPC[numNPCs].Location.Height / 2.0 - EffectHeight[10] / 2.0;
-                                    NewEffect(10, tempLocation);
 
-                                    PlaySound(22);
+                                        if(NPCIsACoin[NPC[numNPCs].Type])
+                                        {
+                                            NPC[numNPCs].Location.SpeedX = (dRand() * 6 + 2) * NPC[numNPCs].Direction;
+                                            NPC[numNPCs].Location.SpeedY = (dRand() * 8 - 4);
+                                            NPC[numNPCs].Special = 1;
+                                            NPC[numNPCs].Special2 = 1;
+                                            NPC[numNPCs].Bouce = true;
+                                        }
+
+                                        NPC[numNPCs].Location.Y = NPC[A].Location.Y + NPC[A].Location.Height / 2.0 - NPC[numNPCs].Location.Height / 2.0;
+
+
+                                        tempLocation = NPC[numNPCs].Location;
+                                        tempLocation.X = NPC[numNPCs].Location.X + (NPC[numNPCs].Location.Width / 2.0) * NPC[numNPCs].Direction;
+                                        tempLocation.Y = NPC[numNPCs].Location.Y + NPC[numNPCs].Location.Height / 2.0 - EffectHeight[10] / 2.0;
+                                        NewEffect(10, tempLocation);
+
+                                        PlaySound(22);
+                                    }
                                 }
                             }
                         }
