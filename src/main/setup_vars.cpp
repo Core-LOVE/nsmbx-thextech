@@ -365,7 +365,6 @@ void SetupVars()
     NPCNoYoshi[291] = true;
 
 
-
     NPCNoYoshi[256] = true;
     NPCNoYoshi[257] = true;
     NPCNoYoshi[239] = true;
@@ -1487,6 +1486,9 @@ void SetupVars()
     NPCHeight[170] = 32;
     NPCFrameOffsetY[170] = 2;
     NPCIsABonus[170] = true;
+    NPCWidth[357] = 22; // Mini Mushroom
+    NPCHeight[357] = 20;
+    NPCIsABonus[357] = true;
 
     NPCWontHurt[292] = true; // Boomerang
     NPCJumpHurt[292] = true;
@@ -1497,6 +1499,10 @@ void SetupVars()
     NPCNoIceBall[314] = true;
 
     NPCNoIceBall[247] = true;
+
+    NPCWidth[359] = 32; // SMA4 Advanced Coin
+    NPCHeight[359] = 52;
+    NPCIsABonus[359] = true;
 
     NPCWidth[171] = 16; // Hammer Suit Hammer
     NPCHeight[171] = 28;
@@ -2403,6 +2409,7 @@ void SetupVars()
 
     NPCWidthGFX[356] = 40;
     NPCHeightGFX[356] = 36;
+    NPCWontHurt[356] = true;
 
     NPCWidthGFX[354] = 8;
     NPCHeightGFX[354] = 8;
@@ -2418,6 +2425,14 @@ void SetupVars()
     NPCWontHurt[355] = true;
     NPCIsGrabbable[355] = true;
     NPCNoGravity[356] = true;
+
+    NPCJumpHurt[358] = true;
+    NPCNoFireBall[358] = true;
+    NPCNoIceBall[358] = true;
+    NPCWontHurt[358] = true;
+    NPCDespawn[358] = false;
+    NPCIsGrabbable[358] = true;
+    NPCNoGravity[358] = true;
 
     for(int A = 348; A <= 353; ++A)
     {
@@ -2471,7 +2486,7 @@ void SetupVars()
     NPCJumpBounce[268] = true;
     NPCJumpBounce[281] = true;
     NPCJumpBounce[302] = true;
-
+    NPCJumpBounce[356] = true;
 
 
 

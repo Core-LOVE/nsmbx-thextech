@@ -79,7 +79,11 @@ void SetupPhysics()
     Physics.PlayerDuckHeight[1][8] = 46;    // ---------
     Physics.PlayerGrabSpotX[1][8] = 18;     // ---------
     Physics.PlayerGrabSpotY[1][8] = 16;     // ---------
-
+    Physics.PlayerHeight[1][9] = 20;        // Mini Mario
+    Physics.PlayerWidth[1][9] = 18;         // ---------
+    Physics.PlayerDuckHeight[1][9] = 23;    // ---------
+    Physics.PlayerGrabSpotX[1][9] = 9;     // ---------
+    Physics.PlayerGrabSpotY[1][9] = 8;     // ---------
 
     Physics.PlayerHeight[2][1] = 30;        // Little Luigi
     Physics.PlayerWidth[2][1] = 24;         // ------------

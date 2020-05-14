@@ -2032,15 +2032,23 @@ void UpdateNPCs()
                                                             NPCHit(A, 8);
 
                                                         if(Block[B].IsNPC != 57 && (NPCIsABlock[Block[B].IsNPC] || NPCIsAHit1Block[Block[B].IsNPC] || NPCCanWalkOn[Block[B].IsNPC]))
+                                                        {
                                                             HitSpot = NPCFindCollision(NPC[A].Location, Block[B].Location, NPC[A].Section);
+                                                            NPC[A].BlockSpot = NPCFindCollision(NPC[A].Location, Block[B].Location, NPC[A].Section);
+                                                        }
                                                         else
+                                                        {
+                                                            NPC[A].BlockSpot = FindCollisionBelt(NPC[A].Location, Block[B].Location, oldBeltSpeed, NPC[A].Section);
                                                             HitSpot = FindCollisionBelt(NPC[A].Location, Block[B].Location, oldBeltSpeed, NPC[A].Section);
+                                                        }
                                                         if(NPCIsCheep[NPC[A].Type])
                                                         {
                                                             if(NPC[A].Wet == 0)
                                                             {
                                                                 if(NPC[A].WallDeath >= 9)
+                                                                {
                                                                     HitSpot = 0;
+                                                                }
                                                             }
                                                         }
                                                         if(NPC[A].Type == 171 || NPC[A].Type == 266 || NPC[A].Type == 292)
@@ -2048,6 +2056,7 @@ void UpdateNPCs()
                                                             if(BlockHammer[Block[B].Type] == true)
                                                                 KillBlock(B);
                                                             HitSpot = 0;
+                                                            NPC[A].BlockSpot = 0;
                                                         }
                                                         if(NPC[A].Type == 266)
                                                             HitSpot = 0;
@@ -2495,7 +2504,25 @@ void UpdateNPCs()
                                                             }
                                                             NPCHit(A, 3, A);
                                                         }
-
+                                                        if(NPC[A].Type == 356 && NPC[A].Special > 0)
+                                                        {
+                                                            if(HitSpot == 1)
+                                                            {
+                                                                NPC[A].Location.SpeedY = 4;
+                                                            }
+                                                            else if(HitSpot == 3)
+                                                            {
+                                                                NPC[A].Location.SpeedY = -4;
+                                                            }
+                                                            else if(HitSpot == 2)
+                                                            {
+                                                                NPC[A].Location.SpeedX = 4;
+                                                            }
+                                                            else if(HitSpot == 4)
+                                                            {
+                                                                NPC[A].Location.SpeedX = -4;
+                                                            }
+                                                        }
                                                         if(NPC[A].Type == 263 && (HitSpot == 1 || HitSpot == 3 || HitSpot == 5))
                                                         {
                                                             if(NPC[A].Location.SpeedX > -Physics.NPCShellSpeed * 0.8 && NPC[A].Location.SpeedX < Physics.NPCShellSpeed * 0.8)
@@ -2616,6 +2643,11 @@ void UpdateNPCs()
                                                             {
                                                                 NPC[A].Location.Y = Block[B].Location.Y - Block[B].Location.Height - 0.2;
                                                                 NPC[A].Special2 = -1;
+                                                            }
+                                                            else if(NPC[A].Type == 358 && NPC[A].Special3 == 1)
+                                                            {
+                                                                NewEffect(177, NPC[A].Location);
+                                                                KillNPC(A, 9);
                                                             }
                                                             if(NPC[A].Type == 197)
                                                                 NPC[A].Special = 1;
@@ -2891,6 +2923,11 @@ void UpdateNPCs()
                                                                 NPC[A].Location.Y = Block[B].Location.Y + Block[B].Location.Height + 0.1;
                                                             }
                                                             if(NPC[A].Type == 303)
+                                                            {
+                                                                NPC[A].Location.Y = Block[B].Location.Y + Block[B].Location.Height + 0.5;
+                                                                NPC[A].Special2 = 1;
+                                                            }
+                                                            else if(NPC[A].Type == 358 && NPC[A].Projectile == true)
                                                             {
                                                                 NPC[A].Location.Y = Block[B].Location.Y + Block[B].Location.Height + 0.5;
                                                                 NPC[A].Special2 = 1;
@@ -3843,7 +3880,7 @@ void UpdateNPCs()
                         NPC[A].Killed = 9;
                     }
                 }
-                else if(NPC[A].Type == 135) // SMB2 Bob-om
+                else if(NPC[A].Type == 135) // SMB2 Bob-omb
                 {
                     NPC[A].Special = NPC[A].Special + 1;
                     if(NPC[A].Special > 450)
@@ -4466,7 +4503,10 @@ void UpdateNPCs()
                                     NPC[numNPCs].TimeLeft = 100;
                                     NPC[numNPCs].JustActivated = 0;
                                     NPC[numNPCs].Section = NPC[A].Section;
-                                    NPC[numNPCs].Type = 17;
+                                    if(NPC[A].Special2 != 0)
+                                        NPC[numNPCs].Type = NPC[A].Special2;
+                                    else
+                                        NPC[numNPCs].Type = 17;
                                     NPC[numNPCs].Location.Width = NPCWidth[NPC[numNPCs].Type];
                                     NPC[numNPCs].Location.Height = NPCHeight[NPC[numNPCs].Type];
 

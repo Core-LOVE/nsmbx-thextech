@@ -126,7 +126,7 @@ void NPCFrames(int A)
         if(!(NPC[A].Type == 86 || NPC[A].Type == 284 || NPC[A].Type == 47) && A == 0) // Reset Frame to 0 unless a specific NPC type
             NPC[A].Frame = 0;
     }
-    else if(NPC[A].Type == 169 || NPC[A].Type == 170 ||  NPC[A].Type == 304)
+    else if(NPC[A].Type == 169 || NPC[A].Type == 170 ||  NPC[A].Type == 304 || NPC[A].Type == 357)
     {
         C = 0;
         for(B = 1; B <= numPlayers; B++)
@@ -150,6 +150,17 @@ void NPCFrames(int A)
             NPC[A].Frame = D;
         }
         NPC[A].FrameCount = 1;
+    }
+    else if(NPC[A].Type == 358)
+    {
+        if(NPC[A].Special3 == 0)
+            NPC[A].Frame = 0;
+        else
+        {
+            NPC[A].Frame =  1;
+            if(NPC[A].Direction == 1)
+                NPC[A].Frame =  2;
+        }
     }
     else if(NPC[A].Type == 278 || NPC[A].Type == 279) // fly block
     {
@@ -177,6 +188,76 @@ void NPCFrames(int A)
         }
         if(NPC[A].Type == 279 && NPC[A].Direction == 1)
             NPC[A].Frame = NPC[A].Frame + 4;
+    }
+    else if(NPC[A].Type == 356) // bumpty
+    {
+        if(NPC[A].Special == -2)
+        {
+            NPC[A].Frame = 8;
+            if(NPC[A].Direction == 1)
+                NPC[A].Frame = 9;
+        }
+        if(NPC[A].Special == -1)
+        {
+            NPC[A].FrameCount = NPC[A].FrameCount + (std::abs(NPC[A].Location.SpeedX) / 4);
+            if(NPC[A].FrameCount < 4)
+                NPC[A].Frame = 10;
+            else if(NPC[A].FrameCount < 8)
+                NPC[A].Frame = 11;
+            else if(NPC[A].FrameCount < 12)
+                NPC[A].Frame = 12;
+            else if(NPC[A].FrameCount < 16)
+                NPC[A].Frame = 13;
+            else if(NPC[A].FrameCount < 20)
+                NPC[A].Frame = 14;
+            else if(NPC[A].FrameCount < 24)
+                NPC[A].Frame = 15;
+            else if(NPC[A].FrameCount < 28)
+                NPC[A].Frame = 16;
+            else
+            {
+                NPC[A].Frame = 10;
+                NPC[A].FrameCount = 0;
+            }
+        }
+        else if(NPC[A].Special == 0 && NPC[A].Location.SpeedX != 0)
+        {
+            NPC[A].FrameCount = NPC[A].FrameCount + 1;
+            if(NPC[A].FrameCount < 4)
+                NPC[A].Frame = 0;
+            else if(NPC[A].FrameCount < 8)
+                NPC[A].Frame = 1;
+            else if(NPC[A].FrameCount < 12)
+                NPC[A].Frame = 2;
+            else
+            {
+                NPC[A].Frame = 3;
+                NPC[A].FrameCount = 0;
+            }
+            if(NPC[A].Direction == 1)
+                NPC[A].Frame = NPC[A].Frame + 4;
+        }
+        else if(NPC[A].Special == 0 && NPC[A].Location.SpeedX == 0)
+        {
+            NPC[A].Frame = 0;
+            if(NPC[A].Direction == 1)
+                NPC[A].Frame = NPC[A].Frame + 4;
+        }
+        else if(NPC[A].Special > 0)
+        {
+            NPC[A].FrameCount = NPC[A].FrameCount + 1;
+            if(NPC[A].FrameCount < 4)
+                NPC[A].Frame = 18;
+            else if(NPC[A].FrameCount < 8)
+                NPC[A].Frame = 19;
+            else
+            {
+                NPC[A].Frame = 18;
+                NPC[A].FrameCount = 0;
+            }
+            if(NPC[A].Direction == 1)
+                NPC[A].Frame = NPC[A].Frame + 2;
+        }
     }
     else if(NPC[A].Type == 275) // fire plant thing
     {

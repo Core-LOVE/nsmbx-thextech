@@ -123,10 +123,14 @@ void Deactivate(int A)
             NPC[A].Reset[2] = false;
             NPC[A].Special = NPC[A].DefaultSpecial;
             NPC[A].Special2 = NPC[A].DefaultSpecial2;
-            NPC[A].Special3 = 0;
+            NPC[A].Special3 = NPC[A].DefaultSpecial3;
             NPC[A].Special4 = 0;
             NPC[A].Special5 = 0;
             NPC[A].Special6 = 0;
+            NPC[A].Special7 = 0;
+            NPC[A].Special8 = 0;
+            NPC[A].Special9 = 0;
+            NPC[A].Special10 = 0;
             NPC[A].Damage = 0;
             NPC[A].HoldingPlayer = 0;
             NPC[A].Pinched1 = 0;
@@ -1395,6 +1399,36 @@ void NPCSpecial(int A)
             tempLocation.X = NPC[A].Location.X - tempLocation.Width / 2.0 + dRand() * NPC[A].Location.Width - 4;
             tempLocation.Y = NPC[A].Location.Y - tempLocation.Height / 2.0 + dRand() * NPC[A].Location.Height - 4;
             NewEffect(152, tempLocation);
+        }
+    }
+    else if(NPC[A].Type == 358)
+    {
+        if(NPC[A].Projectile == true)
+            NPC[A].Special3 = 1;
+
+        if(NPC[A].Special3 == 0)
+            NPC[A].Location.SpeedY += Physics.NPCGravity;
+        else
+        {
+            NPC[A].Special++;
+            if(NPC[A].Special >= 10)
+            {
+                NPC[A].Special = 0;
+                NewEffect(177, NPC[A].Location);
+            }
+            if(NPC[A].Special2 != 1)
+                NPC[A].Location.SpeedY = -5;
+            else
+                NPC[A].Location.SpeedY = 5;
+        }
+        for(int B = 1; B <= numNPCs; B++)
+        {
+            if(CheckCollision(NPC[A].Location, NPC[B].Location, NPC[A].Section) == true &&
+               NPC[A].Special3 == 1 &&
+               NPCIsACoin[NPC[B].Type])
+            {
+                NPCHit(B, 10, A);
+            }
         }
     }
     else if(NPC[A].Type == 280)
@@ -5200,6 +5234,100 @@ void SpecialNPC(int A)
            NPC[A].Special4 = 0;
            NPC[A].Special5 = 0;
        }
+    }
+    else if(NPC[A].Type == 356)
+    {
+        for(int C = 1; C <= numPlayers; C++)
+        {
+            if(CheckCollision(NPC[A].Location, Player[C].Location, NPC[A].Section) == true)
+            {
+                NewEffect(75, Player[C].Location);
+                PlaySound(2);
+                if(Player[C].Location.X + Player[C].Location.Width / 2.0 < NPC[A].Location.X + NPC[A].Location.Width / 2.0)
+                    Player[C].Location.SpeedX = Player[C].Location.SpeedX - 6;
+                else
+                    Player[C].Location.SpeedX = Player[C].Location.SpeedX + 6;
+            }
+            B = NPCFindCollision(NPC[A].Location, Player[C].Location, NPC[A].Section);
+            if(B == 3)
+            {
+                Player[C].Location.SpeedY = 3;
+            }
+        }
+        if((NPC[A].Location.SpeedY == Physics.NPCGravity || NPC[A].Slope > 0) && NPC[A].Special == -2)
+        {
+            NPC[A].Special = -1;
+        }
+        else if((NPC[A].Location.SpeedY > Physics.NPCGravity) && NPC[A].Special == 0)
+        {
+            NPC[A].Special = -2;
+        }
+        if(NPC[A].Special == 0)
+        {
+            NPC[A].Special2++;
+            if(NPC[A].Special2 < 200)
+            {
+                NPC[A].Location.SpeedX = 1.4 * NPC[A].Direction;
+            }
+            else if(NPC[A].Special2 == 200)
+            {
+                NPC[A].Location.SpeedX = 0;
+            }
+            else if(NPC[A].Special2 == 220)
+            {
+                NPC[A].Direction = -NPC[A].Direction;
+            }
+            else if(NPC[A].Special2 == 240)
+            {
+                NPC[A].Direction = -NPC[A].Direction;
+            }
+            else if(NPC[A].Special2 >= 280)
+            {
+                NPC[A].Special2 = 0;
+                NPC[A].Location.Y -= 2;
+                NPC[A].Location.SpeedY = -4;
+                NPC[A].Location.SpeedX = 2.8 * NPC[A].Direction;
+                NPC[A].Special = -2;
+            }
+        }
+        else if(NPC[A].Special == -1)
+        {
+            if(NPC[A].Location.SpeedX > 0)
+            {
+                NPC[A].Location.SpeedX -= 0.01;
+            }
+            else if(NPC[A].Location.SpeedX < 0)
+            {
+                NPC[A].Location.SpeedX += 0.01;
+            }
+            if(NPC[A].Location.SpeedX > -0.1 && NPC[A].Location.SpeedX < 0.1)
+            {
+                NPC[A].Special3++;
+                if(NPC[A].Special3 > 50)
+                {
+                    NPC[A].Special3 = 0;
+                    NPC[A].Special = 0;
+                }
+            }
+        }
+        else if(NPC[A].Special == 1)
+        {
+            NPC[A].Special4 += 0.01;
+            NPC[A].Special5 += 0.1;
+            NPC[A].Location.SpeedX = cos(NPC[A].Special4) * 2;
+            NPC[A].Location.SpeedY = sin(NPC[A].Special5);
+        }
+        else if(NPC[A].Special == 2)
+        {
+            NPC[A].Special4 += 0.01;
+            NPC[A].Location.SpeedY = sin(NPC[A].Special4) * 2;
+        }
+        if(NPC[A].Stuck && NPC[A].Projectile == 0)
+            NPC[A].Location.SpeedX = 0;
+        if(NPC[A].Special < 1)
+        {
+            NPC[A].Location.SpeedY += Physics.NPCGravity;
+        }
     }
     else if(NPC[A].Type == 314) // smb2 fireball
     {

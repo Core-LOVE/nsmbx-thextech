@@ -398,6 +398,7 @@ struct NPC_t
     int DefaultSpecial = 0;
 //    DefaultSpecial2 As Integer
     int DefaultSpecial2 = 0;
+    int DefaultSpecial3 = 0;
 //    Type As Integer 'Defines what NPC this is.  1 for goomba, 2 for red goomba, etc.
     int Type = 0;
 //    Frame As Integer 'The graphic to be shown

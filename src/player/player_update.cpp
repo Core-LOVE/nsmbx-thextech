@@ -3053,7 +3053,7 @@ void UpdatePlayer()
                     }
 
                     // diggable dirt
-                    if(BlockDiggable[Block[tempHit3].Type] == true && Player[A].StandingOnNPC <= 0) // dig dirt
+                    if(BlockDiggable[Block[tempHit3].Type] == true && Player[A].StandingOnNPC <= 0 && Player[A].State != 9) // dig dirt
                     {
                         DontResetGrabTime = true;
                         B = tempHit3;
@@ -3969,7 +3969,7 @@ void UpdatePlayer()
                                             {
                                                 if(NPCIsABonus[NPC[B].Type]) // Bonus
                                                     TouchBonus(A, B);
-                                                else if(NPCIsAShell[NPC[B].Type] && NPC[B].Location.SpeedX == 0 && Player[A].HoldingNPC == 0 && Player[A].Controls.Run == true)
+                                                else if(NPCIsAShell[NPC[B].Type] && NPC[B].Location.SpeedX == 0 && Player[A].HoldingNPC == 0 && Player[A].Controls.Run == true && Player[A].State != 9)
                                                 {
                                                     // grab turtle shells
                                                     //if(nPlay.Online == false || nPlay.MySlot + 1 == A)
@@ -4076,7 +4076,7 @@ void UpdatePlayer()
                                                 (NPCIsAShell[NPC[B].Type] && FreezeNPCs)
                                                 ) // GRAB EVERYTHING
                                         {
-                                            if(Player[A].Controls.Run)
+                                            if(Player[A].Controls.Run && Player[A].State != 9)
                                             {
                                                 if((HitSpot == 2 && Player[A].Direction == -1) || (HitSpot == 4 && Player[A].Direction == 1) || (NPC[B].Type == 22 || NPC[B].Type == 49 || NPC[B].Effect == 2 || (NPCIsVeggie[NPC[B].Type && NPC[B].CantHurtPlayer != A])))
                                                 {

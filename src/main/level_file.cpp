@@ -343,6 +343,17 @@ bool OpenLevelData(LevelData &lvl, const std::string FilePath)
             npc.DefaultSpecial = int(npc.Special);
         }
 
+        if(npc.Type == 356)
+        {
+            npc.Special = n.special_data;
+            npc.DefaultSpecial = int(npc.Special);
+        }
+        if(npc.Type == 21 || npc.Type == 22)
+        {
+            npc.Special2 = n.contents;
+            npc.DefaultSpecial2 = int(npc.Special2);
+        }
+
         if(NPCIsCheep[npc.Type])
         {
             npc.Special = n.special_data;

@@ -212,7 +212,7 @@ void UpdateEffectFrames()
                     e.Life = 0;
             }
         }
-        else if(e.Type == 147) // SMB2 Puff of smoke
+        else if(e.Type == 147 || e.Type == 177) // SMB2 Puff of smoke
         {
             e.FrameCount += 1;
             if(e.FrameCount >= 6)
@@ -698,7 +698,7 @@ void UpdateEffects()
         {
             e.Location.X = e.Location.X + e.Location.SpeedX;
         }
-        else if(e.Type == 147) // SMB2 Puff of smoke
+        else if(e.Type == 147 || e.Type == 177) // SMB2 Puff of smoke
         {
             e.Location.X = e.Location.X + e.Location.SpeedX;
         }
@@ -1535,7 +1535,7 @@ void NewEffect(int A, Location_t Location, float Direction, int NewNpc, bool Sha
             Effect[numEffects].Type = A;
         }
     }
-    else if(A == 10 || A == 73 || A == 176 || A == 74 || A == 75 || A == 131 || A == 151 || A == 132 || A == 147) // Puff of smoke
+    else if(A == 10 || A == 73 || A == 176 || A == 74 || A == 75 || A == 131 || A == 151 || A == 132 || A == 147 || A == 177) // Puff of smoke
     {
         numEffects++;
         Effect[numEffects].Shadow = Shadow;
@@ -1553,7 +1553,7 @@ void NewEffect(int A, Location_t Location, float Direction, int NewNpc, bool Sha
         Effect[numEffects].Frame = 0;
         Effect[numEffects].Life = 12;
         Effect[numEffects].Type = A;
-        if(Effect[numEffects].Type == 147)
+        if(Effect[numEffects].Type == 147 || Effect[numEffects].Type == 177)
             Effect[numEffects].Life = 24;
         if(A == 73 || A == 176 || A == 75)
         {
