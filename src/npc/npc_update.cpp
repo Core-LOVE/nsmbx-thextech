@@ -1581,7 +1581,9 @@ void UpdateNPCs()
                     else if(NPC[A].Type == 17 || NPC[A].Type == 18)
                     {
                         if(NPC[A].CantHurt < 1000)
+                        {
                             NPC[A].Location.SpeedX = 4 * NPC[A].Direction;
+                        }
                     }
                     else if(NPC[A].Type == 42)
                         NPC[A].Location.SpeedX = 2 * double(NPC[A].Direction);
@@ -4538,10 +4540,6 @@ void UpdateNPCs()
                                         else
                                             NPC[numNPCs].Location.X = NPC[A].Location.X + NPC[A].Location.Width / 2.0 - NPC[numNPCs].Location.Width;
 
-                                        if(NPC[numNPCs].Direction > 0)
-                                            NPC[numNPCs].Frame = 1;
-                                        else
-                                            NPC[numNPCs].Frame = 0;
 
 
                                         if(NPCIsACoin[NPC[numNPCs].Type])
