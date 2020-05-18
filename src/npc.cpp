@@ -5248,11 +5248,6 @@ void SpecialNPC(int A)
                 else
                     Player[C].Location.SpeedX = Player[C].Location.SpeedX + 6;
             }
-            B = NPCFindCollision(NPC[A].Location, Player[C].Location, NPC[A].Section);
-            if(B == 3)
-            {
-                Player[C].Location.SpeedY = 3;
-            }
         }
         if((NPC[A].Location.SpeedY == Physics.NPCGravity || NPC[A].Slope > 0) && NPC[A].Special == -2)
         {

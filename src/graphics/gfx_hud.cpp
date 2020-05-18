@@ -36,6 +36,7 @@ void DrawInterface(int Z, int numScreens)
     std::string coinsStr = std::to_string(Coins);
     std::string livesStr = std::to_string(int(Lives));
     std::string numStarsStr = std::to_string(numStars);
+    std::string numAceCoinsStr = std::to_string(numAceCoins);
 
     if(ScreenType == 5 || ScreenType == 6) // 2 Players
     {
@@ -422,6 +423,19 @@ void DrawInterface(int Z, int numScreens)
             SuperPrint(numStarsStr, 1,
                        float(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122 + 12 + 18 + Interface[5].w),
                        16 + 31);
+        }
+        int some_y = 30;
+        if(numStars != 0)
+            some_y = 50;
+        for(int i = 0; i <= maxAceCoins; i++)
+        {
+            if(maxAceCoins >= 0)
+                frmMain.renderTexture(((vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122) + ((Interface[10].w + 4) * i)) - 24, 16 + some_y, Interface[10].w, Interface[10].h, Interface[10], 0, 0);
+        }
+        for(int i = 0; i <= numAceCoins; i++)
+        {
+            if(numAceCoins >= 0)
+                frmMain.renderTexture(((vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122) + ((Interface[10].w + 4) * i)) - 24, 16 + some_y, Interface[11].w, Interface[11].h, Interface[11], 0, 0);
         }
     }
     if(BattleIntro > 0)

@@ -84,6 +84,11 @@ void SetupVars()
     EffectWidth[172] = 42;
     EffectHeight[172] = 22;
 
+    EffectWidth[178] = 16;
+    EffectHeight[178] = 16;
+
+    EffectHeight[179] = 52;
+
     EffectWidth[143] = 64;
     EffectHeight[143] = 64;
 
@@ -1503,7 +1508,9 @@ void SetupVars()
     NPCWidth[359] = 32; // SMA4 Advanced Coin
     NPCHeight[359] = 52;
     NPCIsABonus[359] = true;
-
+    NPCNoGravity[359] = true;
+    NPCNoFireBall[359] = true;
+    NPCNoIceBall[359] = true;
     NPCWidth[171] = 16; // Hammer Suit Hammer
     NPCHeight[171] = 28;
     NPCWontHurt[171] = true;

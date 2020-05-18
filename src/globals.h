@@ -1361,6 +1361,7 @@ extern RangeArrI<long, 0, maxSections, 0> bgColor;
 extern RangeArrI<int, 0, maxSections, 0> Background2;
 extern RangeArrI<int, 0, maxSections, 0> SectionTimer;
 extern RangeArrI<int, 0, maxSections, 0> SectionTimerTurn;
+extern RangeArrI<int, 0, maxSections, 0> AceCoins;
 //Public WorldPath(1 To maxWorldPaths) As WorldPath
 extern RangeArr<WorldPath_t, 1, maxWorldPaths> WorldPath;
 //Public numWorldPaths As Integer
@@ -1383,6 +1384,7 @@ extern int numBlock;
 extern int numBackground;
 //Public numNPCs As Integer
 extern int numNPCs;
+extern int numAceCoins;
 //Public numEffects As Integer
 extern int numEffects;
 //Public numPlayers As Integer
@@ -1982,6 +1984,8 @@ extern int EndCredits;
 extern int curStars;
 //Public maxStars As Integer 'max number of stars in the game
 extern int maxStars;
+extern int maxAceCoins;
+extern int currentAceCoins;
 //'cheat codes --------------
 //Public ShadowMode As Boolean 'cheat code
 extern bool ShadowMode;
@@ -2175,7 +2179,7 @@ extern RangeArr<StdPicture, 0, 9> Font1;
 extern RangeArr<StdPicture, 1, 3> Font2;
 extern StdPicture Font2S;
 extern RangeArr<StdPicture, 1, 2> Heart;
-extern RangeArr<StdPicture, 0, 9> Interface;
+extern RangeArr<StdPicture, 0, 11> Interface;
 extern StdPicture LoadCoin;
 extern StdPicture Loader;
 extern RangeArr<StdPicture, 0, 3> MCursor;

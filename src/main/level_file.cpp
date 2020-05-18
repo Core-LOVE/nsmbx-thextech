@@ -132,6 +132,8 @@ bool OpenLevelData(LevelData &lvl, const std::string FilePath)
     numBlock = 0;
     numBackground = 0;
     numNPCs = 0;
+    numAceCoins = -1;
+    maxAceCoins = -1;
     numWarps = 0;
 
     numLayers = 0;
@@ -326,6 +328,8 @@ bool OpenLevelData(LevelData &lvl, const std::string FilePath)
             npc.Type = 1;
         }
 
+        if(npc.Type == 359)
+            maxAceCoins++;
         if(npc.Type == 91 || npc.Type == 96 || npc.Type == 283 || npc.Type == 284)
         {
             npc.Special = n.contents;
@@ -910,6 +914,8 @@ void ClearLevel()
         NPC[A] = blankNPC;
 
     numNPCs = 0;
+    numAceCoins = -1;
+    maxAceCoins = -1;
     for(A = 1; A <= maxBlocks; A++)
         Block[A] = blankBlock;
 

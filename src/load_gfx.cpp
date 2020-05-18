@@ -476,7 +476,7 @@ void LoadGFX()
     }
     UpdateLoad();
 
-    for(int A = 0; A <= 9; ++A)
+    for(int A = 0; A <= 11; ++A)
     {
         p = GfxRoot + fmt::format_ne("ui/Interface{0}.png", A);
         if(Files::fileExists(p))

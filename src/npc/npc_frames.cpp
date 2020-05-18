@@ -1878,6 +1878,10 @@ void NPCFrames(int A)
         if(NPC[A].Type == 152)
             NPC[A].Frame = CoinFrame[3];
     }
+    else if(NPC[A].Type == 359) // Ace Coin
+    {
+        NPC[A].Frame = CoinFrame[3];
+    }
     else if(NPC[A].Type == 11) // Frame finder for Star/Flower/Mushroom Exit
     {
         NPC[A].FrameCount = NPC[A].FrameCount + 1;

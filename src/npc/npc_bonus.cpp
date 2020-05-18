@@ -509,6 +509,14 @@ void TouchBonus(int A, int B)
             if(NPC[B].Effect != 2)
                 MoreScore(6, NPC[B].Location);
         }
+        else if(NPC[B].Type == 359)
+        {
+            numAceCoins++;
+            if(numAceCoins >= maxAceCoins)
+                MoreScore(10, Player[A].Location);
+            PlaySound(59);
+            NewEffect(179, NPC[B].Location, NPC[B].Frame);
+        }
         else if(NPCIsACoin[NPC[B].Type]) // Bonus is a coin
         {
             if(NPC[B].Type == 152)

@@ -1195,7 +1195,10 @@ void NPCHit(int A, int B, int C)
         }
         else
             NPC[A].Killed = B;
-        // SMB3 Brown Paragoomba
+    }
+    else if(NPC[A].Type == 356)
+    {
+        NPC[A].Killed = B;
     }
     else if(NPC[A].Type == 244)
     {
@@ -1638,10 +1641,7 @@ void NPCHit(int A, int B, int C)
     }
     else if(NPC[A].Type == 12 || NPC[A].Type == 347)
     {
-        if(B == 9)
-        {
-        }
-        else if(B == 8)
+        if(B == 8)
             NPC[A].Killed = B;
         else if(B == 3 || B == 5 || B == 7)
         {
@@ -2177,7 +2177,7 @@ void NPCHit(int A, int B, int C)
     }
     else if(NPC[A].Type == 19 || NPC[A].Type == 20 || NPC[A].Type == 247 || NPC[A].Type == 25 ||
             NPC[A].Type == 36 || NPC[A].Type == 285 || NPC[A].Type == 286 ||
-            NPC[A].Type == 48 || NPC[A].Type == 53 || NPC[A].Type == 54 || NPC[A].Type == 340 || NPC[A].Type == 318 ||
+            NPC[A].Type == 48 || NPC[A].Type == 53 || NPC[A].Type == 54 || NPC[A].Type == 318 ||
             (NPC[A].Type >= 129 && NPC[A].Type <= 132) || NPC[A].Type == 231 || NPC[A].Type == 235 ||
             NPC[A].Type == 261 || NPC[A].Type == 272 || NPC[A].Type == 319 || NPC[A].Type == 320 || NPC[A].Type == 321 ||
             NPC[A].Type == 322 || NPC[A].Type == 330 || NPC[A].Type == 331 || NPC[A].Type == 332 || NPC[A].Type == 333)
