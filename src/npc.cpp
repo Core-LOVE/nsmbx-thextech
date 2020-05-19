@@ -1768,77 +1768,9 @@ void NPCSpecial(int A)
     }
     else if(NPC[A].Type == 260) // Firebar
     {
-        C = 0.03 * NPC[A].DefaultSpecial;
-        B = 0.98 * NPC[A].DefaultSpecial;
-        if(NPC[A].Special2 == 0)
-        {
-            NPC[A].Location.SpeedX = NPC[A].Location.SpeedX + C;
-            NPC[A].Location.SpeedY = NPC[A].Location.SpeedY + C * NPC[A].DefaultDirection;
-            if(NPC[A].Special5 == 0)
-            {
-                NPC[A].Special5 = 1;
-                NPC[A].Location.SpeedX = -B;
-                NPC[A].Location.SpeedY = 0;
-            }
-            if(NPC[A].Location.SpeedX >= -0.001)
-            {
-                NPC[A].Special2 = NPC[A].Special2 + 1 * NPC[A].DefaultDirection;
-                if(NPC[A].Special2 <= 0)
-                    NPC[A].Special2 = 3;
-                NPC[A].Special5 = 0;
-            }
-        }
-        else if(NPC[A].Special2 == 1)
-        {
-            NPC[A].Location.SpeedX = NPC[A].Location.SpeedX + C * NPC[A].DefaultDirection;
-            NPC[A].Location.SpeedY = NPC[A].Location.SpeedY - C;
-            if(NPC[A].Special5 == 0)
-            {
-                NPC[A].Special5 = 1;
-                NPC[A].Location.SpeedY = B;
-                NPC[A].Location.SpeedX = 0;
-            }
-            if(NPC[A].Location.SpeedY <= 0.001)
-            {
-                NPC[A].Special2 = NPC[A].Special2 + 1 * NPC[A].DefaultDirection;
-                NPC[A].Special5 = 0;
-            }
-        }
-        else if(NPC[A].Special2 == 2)
-        {
-            NPC[A].Location.SpeedX = NPC[A].Location.SpeedX - C;
-            NPC[A].Location.SpeedY = NPC[A].Location.SpeedY - C * NPC[A].DefaultDirection;
-            if(NPC[A].Special5 == 0)
-            {
-                NPC[A].Special5 = 1;
-                NPC[A].Location.SpeedX = B;
-                NPC[A].Location.SpeedY = 0;
-            }
-            if(NPC[A].Location.SpeedX <= 0.001)
-            {
-                NPC[A].Special2 = NPC[A].Special2 + 1 * NPC[A].DefaultDirection;
-                NPC[A].Special5 = 0;
-            }
-        }
-        else if(NPC[A].Special2 == 3)
-        {
-            NPC[A].Location.SpeedX = NPC[A].Location.SpeedX - C * NPC[A].DefaultDirection;
-            NPC[A].Location.SpeedY = NPC[A].Location.SpeedY + C;
-            if(NPC[A].Special5 == 0)
-            {
-                NPC[A].Special5 = 1;
-                NPC[A].Location.SpeedY = -B;
-                NPC[A].Location.SpeedX = 0;
-            }
-            if(NPC[A].Location.SpeedY >= -0.001)
-            {
-                NPC[A].Special2 = NPC[A].Special2 + 1 * NPC[A].DefaultDirection;
-                if(NPC[A].Special2 > 3)
-                    NPC[A].Special2 = 0;
-                NPC[A].Special5 = 0;
-            }
-        }
-
+        NPC[A].Special2 -= 0.0483321947 * NPC[A].DefaultDirection; // pi/65
+        NPC[A].Location.SpeedX = std::cos(NPC[A].Special2) * NPC[A].DefaultSpecial * NPCWidth[NPC[A].Type] * 0.0483321947 * NPC[A].DefaultDirection;
+        NPC[A].Location.SpeedY = std::sin(NPC[A].Special2) * NPC[A].DefaultSpecial * NPCHeight[NPC[A].Type] * 0.0483321947 * NPC[A].DefaultDirection;
     }
     else if(NPC[A].Type == 259) // Roto-Disk
     {
