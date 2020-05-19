@@ -927,6 +927,34 @@ struct Block_t
 //End Type
 };
 
+extern RangeArrI<int, 0, maxWeathers, 0> WeatherWidth;
+extern RangeArrI<int, 0, maxWeathers, 0> WeatherHeight;
+extern RangeArrI<int, 0, maxWeathers, 0> WeatherLife;
+extern RangeArrI<int, 0, maxWeathers, 0> WeatherFrameAmount;
+extern RangeArrI<int, 0, maxWeathers, 0> WeatherFrameSpeed;
+extern RangeArrI<int, 0, maxWeathers, 0> WeatherOpacity;
+
+struct Weather_t
+{
+    Location_t Location;
+    int Type = 0;
+    int Frame = 0;
+    int FrameCount = 0;
+    int LifeTimer = 0;
+    bool Shadow = false;
+};
+
+struct WeatherDefaults_t
+{
+    RangeArrI<int, 0, maxWeathers, 0> WeatherWidth;
+    RangeArrI<int, 0, maxWeathers, 0> WeatherHeight;
+    RangeArrI<int, 0, maxWeathers, 0> WeatherLife;
+    RangeArrI<int, 0, maxWeathers, 0> WeatherFrameAmount;
+    RangeArrI<int, 0, maxWeathers, 0> WeatherFrameSpeed;
+    RangeArrI<int, 0, maxWeathers, 0> WeatherOpacity;
+};
+extern WeatherDefaults_t WeatherDefaults;
+
 //Public Type Effect  'Special effects
 struct Effect_t
 {
@@ -1391,6 +1419,8 @@ extern int numEffects;
 extern int numPlayers;
 //Public numWorldLevels As Integer
 extern int numWorldLevels;
+
+extern int numWeather;
 //Public WorldMusic(1 To maxWorldMusic) As WorldMusic
 extern RangeArr<WorldMusic_t, 1, maxWorldMusic> WorldMusic;
 //Public numWorldMusic As Integer
@@ -1403,6 +1433,8 @@ extern RangeArr<Background_t, 1, maxBackgrounds> Background;
 extern RangeArr<Effect_t, 1, maxEffects> Effect;
 //Public NPC(-128 To maxNPCs) As NPC
 extern RangeArr<NPC_t, -128, maxNPCs> NPC;
+
+extern RangeArr<Weather_t, 0, maxWeathers> Weather;
 //Public Block(0 To maxBlocks) As Block
 extern RangeArr<Block_t, 0, maxBlocks> Block;
 //Public Player(0 To maxPlayers) As Player
@@ -1832,6 +1864,7 @@ extern std::string curWorldMusicFile;
 extern RangeArrI<bool, 0, maxSections, false> NoTurnBack;
 //Public UnderWater(0 To maxSections) As Boolean
 extern RangeArrI<bool, 0, maxSections, false> UnderWater;
+extern RangeArrI<int, 0, maxSections, 0> SectionWeather;
 //Public TestLevel As Boolean
 extern bool TestLevel;
 //Public FullFileName As String
@@ -2066,6 +2099,14 @@ extern RangeArrI<int, 1, numBackground2, 0> GFXBackground2Width;
 extern RangeArrI<bool, 1, maxNPCType, false> GFXNPCCustom;
 //Public GFXNPC(1 To maxNPCType) As Long
 //extern RangeArrI<long, 1, maxNPCType, 0> GFXNPC;
+//extern RangeArrI<long, 1, maxWeatherType, 0> GFXWeather;
+#define GFXWeather GFXWeatherBMP
+extern RangeArrI<bool, 1, maxWeatherType, false> GFXWeatherCustom;
+extern RangeArrI<long, 1, maxWeatherType, 0> GFXWeatherMask;
+extern RangeArr<StdPicture, 0, maxWeatherType> GFXWeatherBMP;
+extern RangeArr<StdPicture, 0, maxWeatherType> GFXWeatherMaskBMP;
+extern RangeArrI<int, 1, maxWeatherType, 0> GFXWeatherWidth;
+extern RangeArrI<int, 1, maxWeatherType, 0> GFXWeatherHeight;
 #define GFXNPC GFXNPCBMP
 //Public GFXNPCMask(1 To maxNPCType) As Long
 extern RangeArrI<long, 1, maxNPCType, 0> GFXNPCMask;

@@ -3,8 +3,8 @@
 
 #include <string>
 
-void SaveBGODefaults();
-void LoadBGODefaults();
+void SaveBackgroundDefaults();
+void LoadBackgroundDefaults();
 void FindCustomBGOs();
 
 #endif

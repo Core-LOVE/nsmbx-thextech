@@ -30,6 +30,7 @@
 #include "../custom.h"
 #include "../custom_blocks.h"
 #include "../custom_bgo.h"
+#include "../custom_weather.h"
 #include "../sound.h"
 #include "../sorting.h"
 #include "../layers.h"
@@ -176,6 +177,14 @@ bool OpenLevelData(LevelData &lvl, const std::string FilePath)
         NoTurnBack[B] = s.lock_left_scroll;
         UnderWater[B] = s.underwater;
         CustomMusic[B] = dirEpisode.resolveFileCase(s.music_file);
+        if(!s.custom_params.empty())
+        {
+            SectionWeather[B] = nlohmann::json::parse("{ \"weather\": 0 }");
+        }
+        else
+        {
+            SectionWeather[B] = 0;
+        }
         B++;
         if(B > maxSections)
             break;
@@ -816,7 +825,9 @@ void ClearLevel()
     NPCScore[274] = 6;
     LevelName.clear();
     LoadNPCDefaults();
+    LoadBackgroundDefaults();
     LoadBlockDefaults();
+    LoadWeatherDefaults();
     noUpdate = true;
     BlocksSorted = true;
     qScreen = false;

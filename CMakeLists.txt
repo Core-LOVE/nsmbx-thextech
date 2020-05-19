@@ -267,6 +267,7 @@ set(THEXTECH_SRC
     src/custom_levels.cpp
     src/custom_scene.cpp
     src/custom_bgo.cpp
+    src/custom_weather.cpp
     src/graphics.cpp
     src/editor.cpp
     src/main.cpp
