@@ -424,18 +424,18 @@ void DrawInterface(int Z, int numScreens)
                        float(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122 + 12 + 18 + Interface[5].w),
                        16 + 31);
         }
-        int some_y = 30;
-        if(numStars != 0)
-            some_y = 50;
-        for(int i = 0; i <= maxAceCoins; i++)
+        if(maxAceCoins >= 0)
         {
-            if(maxAceCoins >= 0)
-                frmMain.renderTexture(((vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122) + ((Interface[10].w + 4) * i)) - 24, 16 + some_y, Interface[10].w, Interface[10].h, Interface[10], 0, 0);
-        }
-        for(int i = 0; i <= numAceCoins; i++)
-        {
-            if(numAceCoins >= 0)
-                frmMain.renderTexture(((vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122) + ((Interface[10].w + 4) * i)) - 24, 16 + some_y, Interface[11].w, Interface[11].h, Interface[11], 0, 0);
+            int offY = 30;
+            if(numStars > 0)
+                offY = 50;
+            for(int i = 0; i <= maxAceCoins; i++)
+            {
+                int graphic = 10;
+                if(i <= numAceCoins)
+                    graphic = 11;
+                frmMain.renderTexture(((vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122 - 16) + (Interface[graphic].w * (i % 8))), 16 + offY + 20 * std::floor(i / 8), Interface[graphic].w, Interface[graphic].h, Interface[graphic], 0, 0);
+            }
         }
     }
     if(BattleIntro > 0)
