@@ -128,12 +128,14 @@ int numAceCoins = 0;
 int numEffects = 0;
 int numPlayers = 0;
 int numWorldLevels = 0;
+int numWeather = 0;
 RangeArr<WorldMusic_t, 1, maxWorldMusic> WorldMusic;
 int numWorldMusic = 0;
 RangeArr<WorldLevel_t, 1, maxWorldLevels> WorldLevel;
 RangeArr<Background_t, 1, maxBackgrounds> Background;
 RangeArr<Effect_t, 1, maxEffects> Effect;
 RangeArr<NPC_t, -128, maxNPCs> NPC;
+RangeArr<Weather_t, 0, maxWeathers> Weather;
 RangeArr<Block_t, 0, maxBlocks> Block;
 RangeArr<Player_t, 0, maxPlayers> Player;
 RangeArrI<int, 0, maxPlayerFrames, 0> MarioFrameX;
@@ -217,6 +219,15 @@ RangeArrI<int, 0, maxBlockType, 32> BlockWidth;
 RangeArrI<int, 0, maxBlockType, 32> BlockHeight;
 RangeArrI<int, 0, maxBlockType, 0> BonusWidth;
 RangeArrI<int, 0, maxBlockType, 0> BonusHeight;
+
+RangeArrI<int, 0, maxWeathers, 0> WeatherWidth;
+RangeArrI<int, 0, maxWeathers, 0> WeatherHeight;
+RangeArrI<int, 0, maxWeathers, 0> WeatherLife;
+RangeArrI<int, 0, maxWeathers, 0> WeatherFrameAmount;
+RangeArrI<int, 0, maxWeathers, 0> WeatherFrameSpeed;
+RangeArrI<int, 0, maxWeathers, 0> WeatherOpacity;
+
+WeatherDefaults_t WeatherDefaults;
 
 RangeArrI<int, 0, maxEffectType, 0> EffectWidth;
 RangeArrI<int, 0, maxEffectType, 0> EffectHeight;
@@ -325,6 +336,7 @@ int curWorldMusic = 0;
 std::string curWorldMusicFile;
 RangeArrI<bool, 0, maxSections, false> NoTurnBack;
 RangeArrI<bool, 0, maxSections, false> UnderWater;
+RangeArrI<int, 0, maxSections, 0> SectionWeather;
 bool TestLevel = false;
 std::string FullFileName;
 std::string FileNamePath;
@@ -399,6 +411,13 @@ RangeArr<Player_t, 0, 10> SavedChar;
 bool LoadingInProcess = false;
 int LoadCoins = 0;
 float LoadCoinsT = 0.0f;
+
+RangeArrI<bool, 1, maxWeatherType, false> GFXWeatherCustom;
+RangeArrI<long, 1, maxWeatherType, 0> GFXWeatherMask;
+RangeArr<StdPicture, 0, maxWeatherType> GFXWeatherBMP;
+RangeArr<StdPicture, 0, maxWeatherType> GFXWeatherMaskBMP;
+RangeArrI<int, 1, maxWeatherType, 0> GFXWeatherWidth;
+RangeArrI<int, 1, maxWeatherType, 0> GFXWeatherHeight;
 
 RangeArrI<bool, 1, maxBlockType, false> GFXBlockCustom;
 //RangeArrI<long, 1, maxBlockType, 0> GFXBlock;

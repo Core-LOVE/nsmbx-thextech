@@ -1171,7 +1171,7 @@ void UpdateGraphics(bool skipRepaint)
             if(Effect[A].Type == 112 || Effect[A].Type == 54 || Effect[A].Type == 55 ||
                Effect[A].Type == 59 || Effect[A].Type == 77 || Effect[A].Type == 81 ||
                Effect[A].Type == 82 || Effect[A].Type == 103 || Effect[A].Type == 104 ||
-               Effect[A].Type == 114 || Effect[A].Type == 123 || Effect[A].Type == 124)
+               Effect[A].Type == 114 || Effect[A].Type == 123 || Effect[A].Type == 124 || Effect[A].Type == 179)
             {
                 if(vScreenCollision(Z, Effect[A].Location))
                 {
@@ -1701,6 +1701,19 @@ void UpdateGraphics(bool skipRepaint)
                 }
             }
         }
+// draw weather
+
+        For(A, 1, numWeather)
+        {
+            auto &w = Weather[A];
+            if(vScreenCollision(Z, w.Location))
+            {
+                float c = w.Shadow ? 0.f : 1.f;
+                DrawTexture(int(vScreenX[Z] + w.Location.X), int(vScreenY[Z] + w.Location.Y),
+                            int(w.Location.Width), int(w.Location.Height),
+                            GFXWeather[w.Type], 0, w.Frame * WeatherHeight[w.Type], c, c, c);
+            }
+        }
 
 // effects on top
         For(A, 1, numEffects)
@@ -1710,7 +1723,7 @@ void UpdateGraphics(bool skipRepaint)
 //                If .Type <> 112 And .Type <> 54 And .Type <> 55 And .Type <> 59 And .Type <> 77 And .Type <> 81 And .Type <> 82 And .Type <> 103 And .Type <> 104 And .Type <> 114 And .Type <> 123 And .Type <> 124 Then
             if(e.Type != 112 && e.Type != 54 && e.Type != 55 && e.Type != 59 &&
                e.Type != 77 && e.Type != 81 && e.Type != 82 && e.Type != 103 &&
-               e.Type != 104 && e.Type != 114 && e.Type != 123 && e.Type != 124)
+               e.Type != 104 && e.Type != 114 && e.Type != 123 && e.Type != 124 && e.Type != 179)
             {
 //                    If vScreenCollision(Z, .Location) Then
                 if(vScreenCollision(Z, e.Location))

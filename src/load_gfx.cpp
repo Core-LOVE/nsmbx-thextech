@@ -605,6 +605,26 @@ void LoadGFX()
     }
     UpdateLoad();
 
+    for(int A = 1; A <= maxWeatherType; ++A)
+    {
+        p = GfxRoot + fmt::format_ne("weather/weather-{0}.png", A);
+        if(Files::fileExists(p))
+        {
+            GFXWeatherBMP[A] = frmMain.lazyLoadPicture(p);
+            GFXWeatherWidth[A] = GFXWeatherBMP[A].w;
+            GFXWeatherHeight[A] = GFXWeatherBMP[A].h;
+            if(A % 20 == 0)
+                UpdateLoad();
+        }
+        else
+        {
+            GFXWeatherWidth[A] = 0;
+            GFXWeatherHeight[A] = 0;
+            break;
+        }
+    }
+    UpdateLoad();
+
     for(int A = 1; A <= maxYoshiGfx; ++A)
     {
         p = GfxRoot + fmt::format_ne("yoshi/yoshib-{0}.png", A);
@@ -818,6 +838,14 @@ void LoadCustomGFX()
                  FileNamePath, FileName,
                  fmt::format_ne("effect-{0}", A),
                  &GFXEffectWidth[A], &GFXEffectHeight[A], GFXEffectCustom[A], GFXEffectBMP[A]);
+    }
+
+    for(int A = 1; A < maxWeatherType; ++A)
+    {
+        loadCGFX(existingFiles, GfxRoot + fmt::format_ne("weather/weather-{0}.png", A),
+                 FileNamePath, FileName,
+                 fmt::format_ne("weather-{0}", A),
+                 &GFXWeatherWidth[A], &GFXWeatherHeight[A], GFXWeatherCustom[A], GFXWeatherBMP[A]);
     }
 
     for(int A = 1; A < maxBackgroundType; ++A)

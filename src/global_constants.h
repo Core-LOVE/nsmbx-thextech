@@ -60,6 +60,9 @@ const int BlockTypes = 2000;
 const int UserBlockTypes = 1000;
 const int maxBlockType = BlockTypes + UserBlockTypes;
 
+const int maxWeatherType = 50;
+const int maxWeathers = 2000;
+
 //Public Const maxBackgroundType As Integer = 200 'Maximum number of background types
 const int maxBackgroundType = 400;
 //Public Const maxSceneType As Integer = 100 'Maximum number of scenetypes
