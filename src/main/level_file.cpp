@@ -179,7 +179,7 @@ bool OpenLevelData(LevelData &lvl, const std::string FilePath)
         CustomMusic[B] = dirEpisode.resolveFileCase(s.music_file);
         if(!s.custom_params.empty())
         {
-            SectionWeather[B] = nlohmann::json::parse("{ \"weather\": 0 }");
+            SectionWeather[B] = nlohmann::json::parse("{ \"weather\": 0 }")["weather"];
         }
         else
         {

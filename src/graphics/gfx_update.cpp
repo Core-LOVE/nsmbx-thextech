@@ -46,6 +46,7 @@ void DrawTexture(double xDst, double yDst, double wDst, double hDst,
         frmMain.renderTexture(xDst - (level[Player[Z].Section].Width - level[Player[Z].Section].X), yDst, wDst, hDst, tx, xSrc, ySrc);
         frmMain.renderTexture(xDst + (level[Player[Z].Section].Width - level[Player[Z].Section].X), yDst, wDst, hDst, tx, xSrc, ySrc);
     }
+
 }
 void DrawTexture(double xDst, double yDst, double wDst, double hDst,
                  StdPicture &tx,
@@ -261,6 +262,12 @@ void UpdateGraphics(bool skipRepaint)
 
     For(Z, 1, numScreens)
     {
+        float color = 1.0;
+        if(Subspace)
+        {
+            color = 0.0;
+            frmMain.Flip = SDL_FLIP_HORIZONTAL;
+        }
         if(SingleCoop == 2)
             Z = 2;
 
@@ -481,7 +488,7 @@ void UpdateGraphics(bool skipRepaint)
                                           BackgroundHeight[Background[A].Type],
                                           GFXBackgroundBMP[Background[A].Type], 0,
                                           BackgroundHeight[Background[A].Type] *
-                                          BackgroundFrame[Background[A].Type]);
+                                          BackgroundFrame[Background[A].Type], color, color, color);
                 }
             }
         }
@@ -557,7 +564,8 @@ void UpdateGraphics(bool skipRepaint)
                                                               BlockHeight[Block[sBlockArray[A]].Type] / H,
                                                               GFXBlockBMP[Block[sBlockArray[A]].Type],
                                                               D * BlockWidth[Block[sBlockArray[A]].Type] + w * (GFXBlockBMP[Block[sBlockArray[A]].Type].w - BlockWidth[Block[sBlockArray[A]].Type] * 0.5),
-                                                              E * BlockHeight[Block[sBlockArray[A]].Type] + h * (GFXBlockBMP[Block[sBlockArray[A]].Type].h - BlockHeight[Block[sBlockArray[A]].Type] * 0.5));
+                                                              E * BlockHeight[Block[sBlockArray[A]].Type] + h * (GFXBlockBMP[Block[sBlockArray[A]].Type].h - BlockHeight[Block[sBlockArray[A]].Type] * 0.5),
+                                                              color, color, color);
                                     }
                                 }
                             }
@@ -593,7 +601,7 @@ void UpdateGraphics(bool skipRepaint)
                                           BackgroundWidth[Background[A].Type],
                                           BackgroundHeight[Background[A].Type],
                                           GFXBackgroundBMP[Background[A].Type],
-                                          0, BackgroundHeight[Background[A].Type] * BackgroundFrame[Background[A].Type]);
+                                          0, BackgroundHeight[Background[A].Type] * BackgroundFrame[Background[A].Type], color, color, color);
                 }
             }
         }
@@ -607,7 +615,7 @@ void UpdateGraphics(bool skipRepaint)
                                       vScreenY[Z] + Background[A].Location.Y,
                                       BackgroundWidth[Background[A].Type], BackgroundHeight[Background[A].Type],
                                       GFXBackgroundBMP[Background[A].Type],
-                                      0, BackgroundHeight[Background[A].Type] * BackgroundFrame[Background[A].Type]);
+                                      0, BackgroundHeight[Background[A].Type] * BackgroundFrame[Background[A].Type], color, color, color);
             }
         }
 
@@ -1028,7 +1036,8 @@ void UpdateGraphics(bool skipRepaint)
                                               Block[A].Location.Height,
                                               GFXBlock[Block[A].Type],
                                               0,
-                                              BlockFrame[Block[A].Type] * Block[A].Location.Height);
+                                              BlockFrame[Block[A].Type] * Block[A].Location.Height,
+                                              color, color, color);
                     }
                     else
                     {
@@ -1129,7 +1138,6 @@ void UpdateGraphics(bool skipRepaint)
                                 cornerBR = 4;
                         }
 
-
                         // render corners
                         DrawTexture(vScreenX[Z] + Block[A].Location.X + Block[A].ShakeX3,
                                               vScreenY[Z] + Block[A].Location.Y + Block[A].ShakeY3,
@@ -1137,28 +1145,28 @@ void UpdateGraphics(bool skipRepaint)
                                               (Block[A].Location.Height) / 2,
                                               GFXBlock[Block[A].Type],
                                               0,
-                                              BlockFrame[Block[A].Type] * Block[A].Location.Height * 5 + Block[A].Location.Height * cornerTL);
+                                              BlockFrame[Block[A].Type] * Block[A].Location.Height * 5 + Block[A].Location.Height * cornerTL, color, color, color);
                         DrawTexture(vScreenX[Z] + Block[A].Location.X + Block[A].ShakeX3 + (Block[A].Location.Width) / 2,
                                               vScreenY[Z] + Block[A].Location.Y + Block[A].ShakeY3,
                                               (Block[A].Location.Width + offW) / 2,
                                               (Block[A].Location.Height) / 2,
                                               GFXBlock[Block[A].Type],
                                               (Block[A].Location.Width) / 2,
-                                              BlockFrame[Block[A].Type] * Block[A].Location.Height * 5 + Block[A].Location.Height * cornerTR);
+                                              BlockFrame[Block[A].Type] * Block[A].Location.Height * 5 + Block[A].Location.Height * cornerTR, color, color, color);
                         DrawTexture(vScreenX[Z] + Block[A].Location.X + Block[A].ShakeX3,
                                               vScreenY[Z] + Block[A].Location.Y + Block[A].ShakeY3 + (Block[A].Location.Height) / 2,
                                               (Block[A].Location.Width + offW) / 2,
                                               (Block[A].Location.Height) / 2,
                                               GFXBlock[Block[A].Type],
                                               0,
-                                              BlockFrame[Block[A].Type] * Block[A].Location.Height * 5 + Block[A].Location.Height * cornerBL + (Block[A].Location.Height) / 2);
+                                              BlockFrame[Block[A].Type] * Block[A].Location.Height * 5 + Block[A].Location.Height * cornerBL + (Block[A].Location.Height) / 2, color, color, color);
                         DrawTexture(vScreenX[Z] + Block[A].Location.X + Block[A].ShakeX3 + (Block[A].Location.Width) / 2,
                                               vScreenY[Z] + Block[A].Location.Y + Block[A].ShakeY3 + (Block[A].Location.Height) / 2,
                                               (Block[A].Location.Width + offW) / 2,
                                               (Block[A].Location.Height) / 2,
                                               GFXBlock[Block[A].Type],
                                               (Block[A].Location.Width) / 2,
-                                              BlockFrame[Block[A].Type] * Block[A].Location.Height * 5 + Block[A].Location.Height * cornerBR + (Block[A].Location.Height) / 2);
+                                              BlockFrame[Block[A].Type] * Block[A].Location.Height * 5 + Block[A].Location.Height * cornerBR + (Block[A].Location.Height) / 2, color, color, color);
                     }
                 }
             }
@@ -1191,7 +1199,7 @@ void UpdateGraphics(bool skipRepaint)
         }
         for(A = 1; A <= numNPCs; A++) // Display NPCs that should be behind other npcs
         {
-            float cn = NPC[A].Shadow ? 0.f : 1.f;
+            float cn = (NPC[A].Shadow || Subspace) ? 0.f : 1.f;
             if(NPC[A].Effect == 0)
             {
                 if(NPC[A].HoldingPlayer == 0 && (NPC[A].standingOnPlayer > 0 || NPC[A].Type == 56 || NPC[A].Type == 22 || NPC[A].Type == 49 || NPC[A].Type == 91 || NPC[A].Type == 160 || NPC[A].Type == 282 || NPCIsACoin[NPC[A].Type]) && (NPC[A].Generator == false || LevelEditor == true))
@@ -1621,7 +1629,7 @@ void UpdateGraphics(bool skipRepaint)
             {
                 if(vScreenCollision(Z, Background[A].Location) && !Background[A].Hidden)
                 {
-                    DrawTexture(vScreenX[Z] + Background[A].Location.X, vScreenY[Z] + Background[A].Location.Y, GFXBackgroundWidth[Background[A].Type], BackgroundHeight[Background[A].Type], GFXBackground[Background[A].Type], 0, BackgroundHeight[Background[A].Type] * BackgroundFrame[Background[A].Type]);
+                    DrawTexture(vScreenX[Z] + Background[A].Location.X, vScreenY[Z] + Background[A].Location.Y, GFXBackgroundWidth[Background[A].Type], BackgroundHeight[Background[A].Type], GFXBackground[Background[A].Type], 0, BackgroundHeight[Background[A].Type] * BackgroundFrame[Background[A].Type], color, color, color);
                 }
             }
 //        End If
@@ -2760,9 +2768,13 @@ void UpdateGraphics(bool skipRepaint)
         }
 //    Next Z
     }
+    frmMain.Flip = SDL_FLIP_NONE;
+    if(Subspace)
+        frmMain.Flip = SDL_FLIP_HORIZONTAL;
 
     if(!skipRepaint)
         frmMain.repaint();
+
 
 //    If TakeScreen = True Then ScreenShot
     if(TakeScreen)

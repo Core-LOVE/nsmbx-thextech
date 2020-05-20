@@ -603,9 +603,6 @@ void FrmMain::repaint()
     int w, h, off_x, off_y, wDst, hDst;
     float scale_x, scale_y;
 
-#ifndef __EMSCRIPTEN__
-    processRecorder();
-#endif
 
     SDL_SetRenderTarget(m_gRenderer, nullptr);
 
@@ -643,7 +640,11 @@ void FrmMain::repaint()
 
     SDL_SetTextureColorMod(m_tBuffer, 255, 255, 255);
     SDL_SetTextureAlphaMod(m_tBuffer, 255);
-    SDL_RenderCopyEx(m_gRenderer, m_tBuffer, &sourceRect, &destRect, 0.0, nullptr, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(m_gRenderer, m_tBuffer, &sourceRect, &destRect, 0.0, nullptr, Flip);
+
+#ifndef __EMSCRIPTEN__
+    processRecorder();
+#endif
 
     SDL_RenderPresent(m_gRenderer);
     SDL_SetRenderTarget(m_gRenderer, m_tBuffer);
@@ -1158,14 +1159,18 @@ void FrmMain::GifRecorder::drawRecCircle()
         }
     }
 
+    float x = 50;
+    if(Subspace)
+        x = 750;
+
     if(doFinalize)
     {
-        frmMain.renderCircle(50, 50, 20, 0.f, 0.6f, 0.f, fadeValue, true);
+        frmMain.renderCircle(x, 50, 20, 0.f, 0.6f, 0.f, fadeValue, true);
         SuperPrint("SAVING", 3, 2, 80, 0.f, 0.6f, 0.f, fadeValue);
     }
     else
     {
-        frmMain.renderCircle(50, 50, 20, 1.f, 0.f, 0.f, fadeValue, true);
+        frmMain.renderCircle(x, 50, 20, 1.f, 0.f, 0.f, fadeValue, true);
         SuperPrint("REC", 3, 25, 80, 1.f, 0.f, 0.f, fadeValue);
     }
 }

@@ -163,6 +163,15 @@ void UpdatePlayer()
         tempHit3 = 0;
         tempBlockHit[1] = 0;
         tempBlockHit[2] = 0;
+
+        // reverse controls for flip
+        if(Subspace)
+        {
+            bool right = Player[A].Controls.Right;
+            Player[A].Controls.Right = Player[A].Controls.Left;
+            Player[A].Controls.Left = right;
+        }
+
 //        tempBlockA[1] = 0; // Unused
 //        tempBlockA[2] = 0;
         if(Player[A].YoshiSeeds > 0)

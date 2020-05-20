@@ -1278,6 +1278,9 @@ extern bool LevelEditor;
 extern bool WorldEditor;
 //Public BGOffset As Float 'a background offset for wrap type 2
 extern int BGOffset;
+//Public Subspace As Bool 'is in subspace
+extern bool Subspace;
+
 //Public PlayerStart(1 To 2) As Location
 extern RangeArr<Location_t, 1, 2> PlayerStart;
 

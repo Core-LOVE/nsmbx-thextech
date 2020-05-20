@@ -28,6 +28,7 @@
 
 #include <string>
 #include "location.h"
+#include "globals.h"
 
 // Public Sub UpdateGraphics2() 'draws GFX to screen when on the world map/world map editor
 // draws GFX to screen when on the world map/world map editor
@@ -97,6 +98,12 @@ void DrawPlayer(int A, int Z);
 void ScreenShot();
 // Public Sub DrawFrozenNPC(Z As Integer, A As Integer)
 void DrawFrozenNPC(int Z, int A);
+
+//Public Sub DrawTextureF(...)
+void DrawTextureF(double xDst, double yDst, double wDst, double hDst, StdPicture &tx, int xSrc, int ySrc);
+void DrawTextureF(double xDst, double yDst, double wDst, double hDst, StdPicture &tx, int xSrc, int ySrc, float red, float green, float blue, float alpha);
+void DrawTextureF(double xDst, double yDst, double wDst, double hDst, StdPicture &tx, int xSrc, int ySrc, float red, float green, float blue);
+void DrawTextureF(double xDst, double yDst, StdPicture &tx);
 
 
 
