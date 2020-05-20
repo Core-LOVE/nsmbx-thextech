@@ -265,7 +265,7 @@ void UpdateGraphics(bool skipRepaint)
         float color = 1.0;
         if(Subspace)
         {
-            color = 0.0;
+            color = 0.2;
             frmMain.Flip = SDL_FLIP_HORIZONTAL;
         }
         if(SingleCoop == 2)
@@ -1199,7 +1199,7 @@ void UpdateGraphics(bool skipRepaint)
         }
         for(A = 1; A <= numNPCs; A++) // Display NPCs that should be behind other npcs
         {
-            float cn = (NPC[A].Shadow || Subspace) ? 0.f : 1.f;
+            float cn = NPC[A].Shadow ? 0.f : 1.f;
             if(NPC[A].Effect == 0)
             {
                 if(NPC[A].HoldingPlayer == 0 && (NPC[A].standingOnPlayer > 0 || NPC[A].Type == 56 || NPC[A].Type == 22 || NPC[A].Type == 49 || NPC[A].Type == 91 || NPC[A].Type == 160 || NPC[A].Type == 282 || NPCIsACoin[NPC[A].Type]) && (NPC[A].Generator == false || LevelEditor == true))
