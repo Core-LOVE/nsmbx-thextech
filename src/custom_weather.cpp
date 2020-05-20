@@ -18,6 +18,8 @@ void SaveWeatherDefaults()
         WeatherDefaults.WeatherHeight[A] = WeatherHeight[A];
         WeatherDefaults.WeatherFrameAmount[A] = WeatherFrameAmount[A];
         WeatherDefaults.WeatherFrameSpeed[A] = WeatherFrameSpeed[A];
+        WeatherDefaults.WeatherLife[A] = WeatherLife[A];
+        WeatherDefaults.WeatherOpacity[A] = WeatherOpacity[A];
     }
 }
 
@@ -29,6 +31,8 @@ void LoadWeatherDefaults()
         WeatherHeight[A] = WeatherDefaults.WeatherHeight[A];
         WeatherFrameAmount[A] = WeatherDefaults.WeatherFrameAmount[A];
         WeatherFrameSpeed[A] = WeatherDefaults.WeatherFrameSpeed[A];
+        WeatherLife[A] = WeatherDefaults.WeatherLife[A];
+        WeatherOpacity[A] = WeatherDefaults.WeatherOpacity[A];
     }
 }
 
@@ -104,6 +108,8 @@ void LoadCustomWeather(int A, std::string cFileName)
 
     if(WeatherFrameSpeed[A] <= 0) // validate
         WeatherFrameSpeed[A] = 1;
+
+    config.read("lifetime", WeatherLife[A], WeatherLife[A]);
 
     config.endGroup();
 }

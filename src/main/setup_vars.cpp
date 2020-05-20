@@ -33,6 +33,7 @@
 #include "../custom_levels.h"
 #include "../custom_scene.h"
 #include "../custom_effects.h"
+#include "../custom_weather.h"
 
 void SetupVars()
 {
@@ -2870,14 +2871,34 @@ void SetupVars()
         EffectDefaults.EffectHeight[A] = EffectHeight[A];
         EffectDefaults.EffectWidth[A] = EffectWidth[A];
     }
+
+    For(A, 1, maxWeatherType)
+    {
+        WeatherWidth[A] = 16;
+        WeatherHeight[A] = 16;
+        WeatherLife[A] = 200;
+    }
+
+    WeatherWidth[1] = 4;
+    WeatherHeight[1] = 8;
+
     SaveNPCDefaults();
+    SaveBlockDefaults();
+    SaveBackgroundDefaults();
+    SaveEffectDefaults();
+    SaveLevelDefaults();
+    SavePathDefaults();
+    SaveSceneryDefaults();
+    SaveTileDefaults();
+    SaveWeatherDefaults();
 
     FindCustomNPCs();
     FindCustomBlocks();
     FindCustomBGOs();
-
+    FindCustomEffects();
     FindCustomTiles();
     FindCustomPaths();
     FindCustomLevels();
     FindCustomScenery();
+    FindCustomWeathers();
 }
