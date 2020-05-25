@@ -31,6 +31,7 @@
 #include <chrono>  // chrono::system_clock
 #include <ctime>   // localtime
 #include <sstream>
+#include <algorithm>
 
 #include <AppPath/app_path.h>
 
@@ -62,10 +63,13 @@ class MutexLocker
         }
 };
 
+std::string     LogWriter::m_logDirPath;
 std::string     LogWriter::m_logFilePath;
 PGE_LogLevel    LogWriter::m_logLevel;
+int             LogWriter::m_maxFilesCount = 10;
 bool            LogWriter::m_enabled = false;
 bool            LogWriter::m_enabledStdOut = false;
+bool            LogWriter::m_enabledVerboseLogs = false;
 
 bool  LogWriter::m_logIsOpened = false;
 SDL_RWops *LogWriter::m_logout = nullptr;
@@ -84,7 +88,37 @@ static std::string return_current_time_and_date()
 }
 #endif//__EMSCRIPTEN__
 
-void LogWriter::LoadLogSettings(bool disableStdOut)
+static void cleanUpLogs(const std::string &logsPath, int maxLogs)
+{
+    if(maxLogs <= 0)
+        return; // No limit
+
+    DirMan d(logsPath);
+    std::vector<std::string> files, filesPre;
+    d.getListOfFiles(filesPre, {".txt"});
+
+    // Be sure that we are looking for our log files and don't touch others
+    for(auto &s : filesPre)
+    {
+        if(SDL_strncasecmp(s.c_str(), "TheXTech_log_", 13) == 0)
+            files.push_back(s);
+    }
+
+    // nothing to do, count of log files is fine
+    if(static_cast<int>(files.size()) <= maxLogs)
+        return;
+
+    // Sort array
+    std::sort(files.begin(), files.end());
+
+    // Keep these files (remove from a deletion list)
+    files.erase(files.end() - maxLogs, files.end());
+
+    for(auto &s : files)
+        Files::deleteFile(logsPath + "/" + s);
+}
+
+void LogWriter::LoadLogSettings(bool disableStdOut, bool verboseLogs)
 {
     MutexLocker mutex(&g_lockLocker);
     (void)(mutex);
@@ -96,6 +130,12 @@ void LogWriter::LoadLogSettings(bool disableStdOut)
 #else
     std::string logFileName = fmt::format_ne("TheXTech_log_{0}.txt", return_current_time_and_date());
 
+#if defined(DEBUG_BUILD)
+    (void)verboseLogs; // unused
+    m_enabledVerboseLogs = true; // Enforce verbose log for debug builds
+#else
+    m_enabledVerboseLogs = verboseLogs;
+#endif
     m_enabledStdOut = !disableStdOut;
     m_logLevel = PGE_LogLevel::Debug;
     std::string mainIniFile = AppPathManager::settingsFileSTD();
@@ -112,13 +152,18 @@ void LogWriter::LoadLogSettings(bool disableStdOut)
 
     logSettings.beginGroup("logging");
     {
-        logSettings.read("log-path", m_logFilePath, defLogDir.absolutePath() + "/" + logFileName);
-        if(!DirMan::exists(Files::dirname(m_logFilePath)))
-            m_logFilePath = defLogDir.absolutePath() + "/" + logFileName;
+        logSettings.read("log-path", m_logDirPath, defLogDir.absolutePath());
+        logSettings.read("max-log-count", m_maxFilesCount, 10);
+        if(!DirMan::exists(m_logDirPath))
+            m_logDirPath = defLogDir.absolutePath();
         m_logLevel  = static_cast<PGE_LogLevel>(logSettings.value("log-level", static_cast<int>(PGE_LogLevel::Debug)).toInt());
         m_enabled   = (m_logLevel != PGE_LogLevel::NoLog);
     }
     logSettings.endGroup();
+
+    m_logFilePath = m_logDirPath + "/" + logFileName;
+
+    cleanUpLogs(m_logDirPath, m_maxFilesCount);
 
     if(!disableStdOut)
     {
@@ -149,9 +194,9 @@ void LogWriter::LoadLogSettings(bool disableStdOut)
 #endif
 }
 
-void LoadLogSettings(bool disableStdOut)
+void LoadLogSettings(bool disableStdOut, bool verboseLogs)
 {
-    LogWriter::LoadLogSettings(disableStdOut);
+    LogWriter::LoadLogSettings(disableStdOut, verboseLogs);
 }
 
 void CloseLog()
@@ -202,8 +247,8 @@ static void pLogGeneric(PGE_LogLevel level, const char *label, const char *forma
 {
     va_list arg_in;
 
-#if defined(DEBUG_BUILD) && !defined(__ANDROID__)
-    if(LogWriter::m_enabledStdOut)
+#if !defined(__ANDROID__)
+    if(LogWriter::m_enabledStdOut && LogWriter::m_enabledVerboseLogs)
     {
         va_copy(arg_in, arg);
         std::fprintf(stdout, "%s: ", label);

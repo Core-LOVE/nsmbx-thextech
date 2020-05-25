@@ -29,19 +29,23 @@
 class LogWriter
 {
 public:
+    static std::string  m_logDirPath;
     static std::string  m_logFilePath;
     static PGE_LogLevel m_logLevel;
+    static int          m_maxFilesCount;
     //! Is logging system is enabled
     static bool  m_enabled;
     //! Is logging system allowed to output into `stdout`
     static bool  m_enabledStdOut;
+    //! Verbose logs to stdOut if possible
+    static bool  m_enabledVerboseLogs;
     //! Is log file is opened
     static bool  m_logIsOpened;
     //! Output file
     static SDL_RWops *m_logout;
 
     static void WriteToLog(PGE_LogLevel type, const std::string &msg);
-    static void LoadLogSettings(bool disableStdOut = false);
+    static void LoadLogSettings(bool disableStdOut = false, bool verboseLogs = false);
 };
 
 #endif // LOGGER_SETS_H
