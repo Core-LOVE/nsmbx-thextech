@@ -254,6 +254,7 @@ set(THEXTECH_SRC
     src/graphics/gfx_screen.cpp
     src/change_res.cpp
     src/effect.cpp
+    src/weather.cpp
     src/collision.cpp
     src/joystick.cpp
     src/load_gfx.cpp

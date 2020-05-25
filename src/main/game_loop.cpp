@@ -31,12 +31,14 @@
 #include "../sound.h"
 #include "../joystick.h"
 #include "../effect.h"
+#include "../weather.h"
 #include "../graphics.h"
 #include "../blocks.h"
 #include "../npc.h"
 #include "../layers.h"
 #include "../player.h"
 #include "../editor.h"
+#include "../location.h"
 
 #include "../pseudo_vb.h"
 
@@ -44,6 +46,8 @@ void CheckActive();//in game_main.cpp
 
 void GameLoop()
 {
+    Location_t tempLocation;
+
     UpdateControls();
     if(LevelMacro > 0)
         UpdateMacro();
@@ -81,6 +85,16 @@ void GameLoop()
     }
     else if(qScreen)
     {
+        For(A, 1, numSections)
+        {
+            if(SectionWeather[A] == 1)
+            {
+                tempLocation.X = dRand()*level[A].Width;
+                tempLocation.Y = level[A].Y;
+                SpawnWeather(A, tempLocation);
+            }
+        }
+        UpdateWeatherPhysics();
         UpdateEffects();
         UpdateGraphics();
     }
@@ -107,6 +121,7 @@ void GameLoop()
 
         UpdateBlocks();
         UpdateEffects();
+        UpdateWeatherPhysics();
         UpdatePlayer();
         if(LivingPlayers() || BattleMode)
             UpdateGraphics();
@@ -272,6 +287,7 @@ void PauseGame(int plr)
             UpdateSound();
             BlockFrames();
             UpdateEffects();
+            UpdateWeatherPhysics();
 
             if(SingleCoop > 0 || numPlayers > 2)
             {

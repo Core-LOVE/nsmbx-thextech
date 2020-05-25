@@ -937,6 +937,7 @@ extern RangeArrI<int, 0, maxWeathers, 0> WeatherOpacity;
 struct Weather_t
 {
     Location_t Location;
+    int Section = 0;
     int Type = 0;
     int Frame = 0;
     int FrameCount = 0;

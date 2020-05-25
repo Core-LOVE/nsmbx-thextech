@@ -2881,6 +2881,7 @@ void SetupVars()
 
     WeatherWidth[1] = 4;
     WeatherHeight[1] = 8;
+    WeatherLife[1] = 400;
 
     SaveNPCDefaults();
     SaveBlockDefaults();
