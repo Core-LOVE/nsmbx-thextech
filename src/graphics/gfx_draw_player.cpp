@@ -160,11 +160,25 @@ void DrawPlayer(int A, int Z)
                     frmMain.renderTexture(vScreenX[Z] + Player[A].Location.X + LinkFrameX[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], vScreenY[Z] + Player[A].Location.Y + LinkFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], 99, 99, GFXLink[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction), pfrY(100 + Player[A].Frame * Player[A].Direction), s, s, s);
                 }
             }
-            else if(Player[A].Character == 6) // draw wario
+            else if(Player[A].Character == 6) // draw waluigi
             {
                 if(Player[A].Mount == 0)
                 {
-                    frmMain.renderTexture(vScreenX[Z] + Player[A].Location.X + WarioFrameX[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], vScreenY[Z] + Player[A].Location.Y + WarioFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], 99, 99, GFXLink[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction), pfrY(100 + Player[A].Frame * Player[A].Direction), s, s, s);
+                    frmMain.renderTexture(vScreenX[Z] + Player[A].Location.X + WaluigiFrameX[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], vScreenY[Z] + Player[A].Location.Y + WaluigiFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], 99, 99, GFXWaluigi[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction) + Player[A].Direction, pfrY(100 + Player[A].Frame * Player[A].Direction), s, s, s);
+                }
+            }
+            else if(Player[A].Character == 7) // draw yoshi
+            {
+                if(Player[A].Direction == 1)
+                    frmMain.renderTextureI(vScreenX[Z] + Player[A].Location.X + Player[A].Location.Width * 0.5 - 64, vScreenY[Z] + Player[A].Location.Y + Player[A].Location.Height - 64, 127, 127, GFXYoshi[Player[A].State], (Player[A].Frame % 16) * 128, (int)(Player[A].Frame/16) * 128, 0.0, nullptr, SDL_FLIP_NONE, s, s, s);
+                else
+                    frmMain.renderTextureI(vScreenX[Z] + Player[A].Location.X + Player[A].Location.Width * 0.5 - 64, vScreenY[Z] + Player[A].Location.Y + Player[A].Location.Height - 64, 127, 127, GFXYoshi[Player[A].State], (Player[A].Frame % 16) * 128, (int)(Player[A].Frame/16) * 128, 0.0, nullptr, SDL_FLIP_HORIZONTAL, s, s, s);
+            }
+            else if(Player[A].Character == 8) // draw wario
+            {
+                if(Player[A].Mount == 0)
+                {
+                    frmMain.renderTexture(vScreenX[Z] + Player[A].Location.X + WarioFrameX[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], vScreenY[Z] + Player[A].Location.Y + WarioFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], 99, 99, GFXWario[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction), pfrY(100 + Player[A].Frame * Player[A].Direction), s, s, s);
                 }
             }
         // peach/toad held npcs

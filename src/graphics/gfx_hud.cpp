@@ -87,7 +87,7 @@ void DrawInterface(int Z, int numScreens)
                 else
                     C = 40;
 
-                if(Player[B].Character == 3 || Player[B].Character == 4 || Player[B].Character == 5)
+                if(Player[B].Character == 3 || Player[B].Character == 4 || Player[B].Character == 5 || Player[B].Character == 7)
                 {
                     if(B == 1)
                         D = -1;
@@ -213,7 +213,7 @@ void DrawInterface(int Z, int numScreens)
 
 // 2 players 2 screen heldbonus
 
-            if(Player[Z].Character == 3 || Player[Z].Character == 4 || Player[Z].Character == 5)
+            if(Player[Z].Character == 3 || Player[Z].Character == 4 || Player[Z].Character == 5 || Player[Z].Character == 7)
             {
                 if(Player[Z].Hearts > 0)
                 {
@@ -333,7 +333,7 @@ void DrawInterface(int Z, int numScreens)
 
 //        if(nPlay.Online == false)
         {
-            if(Player[1].Character == 3 || Player[1].Character == 4 || Player[1].Character == 5)
+            if(Player[1].Character == 3 || Player[1].Character == 4 || Player[1].Character == 5 || Player[1].Character == 7)
             {
 //                BitBlt myBackBuffer, vScreen[Z].Width / 2.0 - Heart[1].w / 2 + C - 32, 16, Heart[1].w, Heart[1].h, GFX::HeartMask(1).hdc, 0, 0, vbSrcAnd;
 //                BitBlt myBackBuffer, vScreen[Z].Width / 2.0 - Heart[1].w / 2 + C, 16, Heart[1].w, Heart[1].h, GFX::HeartMask(1).hdc, 0, 0, vbSrcAnd;

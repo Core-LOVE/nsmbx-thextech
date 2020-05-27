@@ -729,6 +729,9 @@ struct Player_t
     float mountBump = 0.0f;
 //    SpeedFixY As Single
     float SpeedFixY = 0.0f;
+//    Flutter As Integer 'Yoshi's Flutter
+    int Flutter = 0;
+
 //End Type
 };
 
@@ -1463,6 +1466,8 @@ extern RangeArrI<int, 0, maxPlayerFrames, 0> ToadFrameY;
 extern RangeArrI<int, 0, maxPlayerFrames, 0> LinkFrameX;
 //Public LinkFrameY(0 To maxPlayerFrames) As Integer 'Player frame offset Y
 extern RangeArrI<int, 0, maxPlayerFrames, 0> LinkFrameY;
+extern RangeArrI<int, 0, maxPlayerFrames, 0> WaluigiFrameX;
+extern RangeArrI<int, 0, maxPlayerFrames, 0> WaluigiFrameY;
 extern RangeArrI<int, 0, maxPlayerFrames, 0> WarioFrameX;
 extern RangeArrI<int, 0, maxPlayerFrames, 0> WarioFrameY;
 //Public BackgroundFence(0 To maxBackgroundType) As Boolean
@@ -2212,6 +2217,27 @@ extern RangeArr<StdPicture, 1, 10> GFXToadMaskBMP;
 extern RangeArrI<int, 1, 10, 0> GFXToadHeight;
 //Public GFXToadWidth(1 To 10) As Integer
 extern RangeArrI<int, 1, 10, 0> GFXToadWidth;
+
+//Public GFXLuigiCustom(1 To 10) As Boolean
+extern RangeArrI<bool, 1, 10, false> GFXWaluigiCustom;
+//Public GFXWaluigi(1 To 10) As Long
+//extern RangeArrI<long, 1, 10, 0> GFXWaluigi;
+#define GFXWaluigi GFXWaluigiBMP
+//Public GFXWaluigiMask(1 To 10) As Long
+extern RangeArrI<long, 1, 10, 0> GFXWaluigiMask;
+//Public GFXWaluigiBMP(1 To 10) As StdPicture
+extern RangeArr<StdPicture, 1, 10> GFXWaluigiBMP;
+//Public GFXWaluigiMaskBMP(1 To 10) As StdPicture
+extern RangeArr<StdPicture, 1, 10> GFXWaluigiMaskBMP;
+//Public GFXWaluigiHeight(1 To 10) As Integer
+extern RangeArrI<int, 1, 10, 0> GFXWaluigiHeight;
+//Public GFXWaluigiWidth(1 To 10) As Integer
+extern RangeArrI<int, 1, 10, 0> GFXWaluigiWidth;
+
+
+#define GFXYoshi GFXYoshiBMP
+extern RangeArr<StdPicture, 1, 10> GFXYoshiBMP;
+
 
 extern StdPicture BMVs;
 extern StdPicture BMWin;

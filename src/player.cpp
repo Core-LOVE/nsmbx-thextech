@@ -139,7 +139,7 @@ void SetupPlayers()
             Player[A].State = 1;
         // box to hearts
 
-        if(Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 5) // Peach and Toad
+        if(Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 5 || Player[A].Character == 7) // Peach and Toad
         {
             if(Player[A].Hearts <= 0)
                 Player[A].Hearts = 1;
@@ -289,11 +289,12 @@ void SetupPlayers()
         Player[A].RunRelease = false;
         Player[A].FloatTime = 0;
         Player[A].CanFloat = false;
+        Player[A].Flutter = 0;
 
         if(Player[A].Character == 3)
             Player[A].CanFloat = true;
 
-        if(Player[A].Character == 3 || Player[A].Character == 4)
+        if(Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 7)
         {
             if(Player[A].State == 1)
                 Player[A].Hearts = 1;
@@ -555,7 +556,10 @@ void PlayerHurt(int A)
             }
             else
             {
-                if(Player[A].Character == 3 || Player[A].Character == 4)
+                // waluigi dies 1 hit
+                if(Player[A].Character == 6)
+                    PlayerDead(A);
+                if(Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 7)
                 {
                     if(Player[A].Hearts == 3 && (Player[A].State == 2 || Player[A].State == 4 || Player[A].State == 5 || Player[A].State == 6))
                     {
@@ -766,6 +770,8 @@ void PlayerDead(int A)
         NewEffect(134, Player[A].Location, static_cast<float>(Player[A].Direction), 0, ShadowMode);
         Effect[numEffects].Location.SpeedX = 2 * -Player[A].Direction;
     }
+    else if(Player[A].Character == 6)
+        NewEffect(69, Player[A].Location, 1, 0, ShadowMode);
     Player[A].TimeToLive = 1;
     if(CheckLiving() == 0 && GameMenu == false && BattleMode == false)
     {
@@ -1129,6 +1135,13 @@ void PlayerFrame(int A)
         return;
     }
 
+    // YOSHI FRAMES
+    if(Player[A].Character == 7)
+    {
+        YoshiFrame(A);
+        return;
+    }
+
 // for the grab animation when picking something up from the top
     if(Player[A].GrabTime > 0)
     {
@@ -1167,7 +1180,7 @@ void PlayerFrame(int A)
     }
 
 // sliding frames
-    if(Player[A].Slide && (Player[A].Character == 1 || Player[A].Character == 2))
+    if(Player[A].Slide && (Player[A].Character == 1 || Player[A].Character == 2 || Player[A].Character == 6))
     {
         if(Player[A].Location.SpeedX != 0.0)
         {
@@ -1304,7 +1317,7 @@ void PlayerFrame(int A)
     }
     else
     {
-        if((Player[A].State == 1 || Player[A].State == 9) && (Player[A].Character == 1 || Player[A].Character == 2)) // Small Mario & Luigi
+        if((Player[A].State == 1 || Player[A].State == 9) && (Player[A].Character == 1 || Player[A].Character == 2 || Player[A].Character == 6)) // Small Mario & Luigi & Waluigi
         {
             if(Player[A].HoldingNPC == 0) // not holding anything
             {
@@ -1518,7 +1531,7 @@ void PlayerFrame(int A)
                 {
                     if(Player[A].Location.SpeedY < 0 || Player[A].Frame == 43 || Player[A].Frame == 44)
                     {
-                        if(Player[A].Character <= 2)
+                        if(Player[A].Character <= 2 || Player[A].Character == 6)
                         {
                             if(Player[A].Frame != 40 && Player[A].Frame != 43 && Player[A].Frame != 44)
                                 Player[A].FrameCount = 6;
@@ -1555,7 +1568,7 @@ void PlayerFrame(int A)
                         }
                     }
 
-                    if(Player[A].Character >= 3)
+                    if(Player[A].Character >= 3 && Player[A].Character != 6)
                     {
                         if(Player[A].Frame == 43)
                             Player[A].Frame = 1;
@@ -2784,7 +2797,7 @@ void SizeCheck(int A)
                 Player[A].Location.Y = Player[A].Location.Y - Player[A].Location.Height;
             }
         }
-        else if(Player[A].Character == 2 && Player[A].State > 1)
+        else if((Player[A].Character == 2 || Player[A].Character == 6) && Player[A].State > 1)
         {
             if(Player[A].Location.Height != Physics.PlayerHeight[1][2])
             {
@@ -3625,20 +3638,31 @@ void PowerUps(int A)
             }
         }
     }
+    if(Player[A].Character == 7 && (Player[A].State == 3 || Player[A].State == 6 || Player[A].State == 7))
+    {
+        if(Player[A].Controls.Run == true && Player[A].SpinJump == false && Player[A].FireBallCD == 0 && Player[A].Duck == false && Player[A].HoldingNPC <= 0 && !Player[A].Slide && Player[A].Vine == 0 && (Player[A].RunRelease == true || FlameThrower == true))
+            Player[A].FireBallCD = -46;
+        if(Player[A].FireBallCD < 0)
+            Player[A].FireBallCD++;
+
+    }
 
 // Hammer Throw Code
         if(!Player[A].Slide && Player[A].Vine == 0 && Player[A].State == 6 && Player[A].Duck == false && Player[A].Mount != 2 && Player[A].Mount != 3 && Player[A].HoldingNPC <= 0 && Player[A].Character != 5)
         {
-            if(Player[A].Controls.Run == true && Player[A].SpinJump == false && Player[A].FireBallCD <= 0 && BoomOut == false)
+            if(((Player[A].Controls.Run == true && Player[A].SpinJump == false && Player[A].FireBallCD == 0) || (Player[A].Character == 7 && Player[A].FireBallCD == -37)) && BoomOut == false)
             {
-                if(Player[A].RunRelease == true || FlameThrower == true)
+                if(Player[A].RunRelease == true || FlameThrower == true || (Player[A].Character == 7 && Player[A].FireBallCD == -37))
                 {
                     if(numNPCs < maxNPCs - 100)
                     {
 //                        if(nPlay.Online == true && A - 1 == nPlay.MySlot)
 //                            Netplay::sendData Netplay::PutPlayerControls(nPlay.MySlot) + "1f" + std::to_string(A) + "|" + Player[A].FireBallCD - 1;
                         Player[A].FrameCount = 110;
-                        Player[A].FireBallCD = 25;
+                        if(Player[A].Character != 7)
+                        {
+                            Player[A].FireBallCD = 25;
+                        }
                         numNPCs++;
                         NPC[numNPCs] = NPC_t();
                         if(ShadowMode == true)
@@ -3731,9 +3755,9 @@ void PowerUps(int A)
 // Fire Mario / Luigi code ---- FIRE FLOWER ACTION BALLS OF DOOM
         if(Player[A].Slide == false && Player[A].Vine == 0 && (Player[A].State == 3 || Player[A].State == 7) && Player[A].Duck == false && Player[A].Mount != 2 && Player[A].Mount != 3 && Player[A].HoldingNPC <= 0 && Player[A].Character != 5)
         {
-            if(((Player[A].Controls.Run == true && Player[A].SpinJump == false) || (Player[A].SpinJump == true && Player[A].Direction != Player[A].SpinFireDir)) && Player[A].FireBallCD <= 0)
+            if((((Player[A].Controls.Run == true && Player[A].SpinJump == false) || (Player[A].SpinJump == true && Player[A].Direction != Player[A].SpinFireDir)) && Player[A].FireBallCD == 0) || (Player[A].Character == 7 && Player[A].FireBallCD == -37))
             {
-                if((Player[A].RunRelease == true || Player[A].SpinJump == true) || (FlameThrower == true && Player[A].HoldingNPC <= 0))
+                if((Player[A].RunRelease == true || Player[A].SpinJump == true) || (FlameThrower == true && Player[A].HoldingNPC <= 0) || (Player[A].Character == 7 && Player[A].FireBallCD == -37))
                 {
                     if(Player[A].SpinJump == true)
                         Player[A].SpinFireDir = Player[A].Direction;
@@ -3761,7 +3785,7 @@ void PowerUps(int A)
                         NPC[numNPCs].CantHurt = 100;
                         NPC[numNPCs].CantHurtPlayer = A;
                         NPC[numNPCs].Special = Player[A].Character;
-                        if(Player[A].State == 7)
+                        if(Player[A].State == 7 || Player[A].Character == 7)
                             NPC[numNPCs].Special = 1;
                         if((Player[A].Character == 3 || Player[A].Character == 4) && Player[A].Mount == 0 && Player[A].Controls.AltRun == true) // peach holds fireballs
                         {
@@ -3775,13 +3799,16 @@ void PowerUps(int A)
                         if(Maths::iRound(NPC[numNPCs].Special) == 4)
                             NPC[numNPCs].Frame = 12;
                         CheckSectionNPC(numNPCs);
-                        Player[A].FireBallCD = 30;
-                        if(Player[A].Character == 2)
-                            Player[A].FireBallCD = 35;
-                        if(Player[A].Character == 3)
-                            Player[A].FireBallCD = 40;
-                        if(Player[A].Character == 4)
-                            Player[A].FireBallCD = 25;
+                        if(Player[A].Character != 7)
+                        {
+                            Player[A].FireBallCD = 30;
+                            if(Player[A].Character == 2)
+                                Player[A].FireBallCD = 35;
+                            if(Player[A].Character == 3 || Player[A].Character == 6)
+                                Player[A].FireBallCD = 40;
+                            if(Player[A].Character == 4)
+                                Player[A].FireBallCD = 25;
+                        }
                         NPC[numNPCs].Location.SpeedX = 5 * Player[A].Direction + (Player[A].Location.SpeedX / 3.5);
 
                         if(Player[A].State == 7)
@@ -3954,7 +3981,7 @@ void PowerUps(int A)
     if(Player[A].FireBallCD2 < 0)
         Player[A].FireBallCD2 = 0;
 
-    if(!(Player[A].Character == 3 && NPC[Player[A].HoldingNPC].Type == 13))
+    if(!(Player[A].Character == 3 && NPC[Player[A].HoldingNPC].Type == 13) && Player[A].FireBallCD > 0)
     {
         Player[A].FireBallCD = Player[A].FireBallCD - 1;
         if(FlameThrower == true)
@@ -4273,7 +4300,7 @@ void PlayerCollide(int A)
                     PlayerPush(A, 3);
                     Player[A].Location.SpeedY = Physics.PlayerJumpVelocity;
                     Player[A].Jump = Physics.PlayerHeadJumpHeight;
-                    if(Player[A].Character == 2)
+                    if(Player[A].Character == 2 || Player[A].Character == 6)
                         Player[A].Jump = Player[A].Jump + 3;
                     if(Player[A].SpinJump == true)
                         Player[A].Jump = Player[A].Jump - 6;
@@ -4291,7 +4318,7 @@ void PlayerCollide(int A)
                     PlayerPush(B, 3);
                     Player[B].Location.SpeedY = Physics.PlayerJumpVelocity;
                     Player[B].Jump = Physics.PlayerHeadJumpHeight;
-                    if(Player[B].Character == 2)
+                    if(Player[B].Character == 2 || Player[A].Character == 6)
                         Player[A].Jump = Player[A].Jump + 3;
                     if(Player[A].SpinJump == true)
                         Player[A].Jump = Player[A].Jump - 6;
@@ -4370,7 +4397,7 @@ void PlayerGrabCode(int A, bool DontResetGrabTime)
                     Player[A].GrabSpeed = 0;
                     Player[A].GrabTime = 0;
                     Player[A].TailCount = 0;
-                    if(Player[A].Character == 1 || Player[A].Character == 2)
+                    if(Player[A].Character == 1 || Player[A].Character == 2 || Player[A].Character == 6)
                     {
                         UnDuck(A);
                     }
@@ -5095,7 +5122,7 @@ void PlayerEffects(int A)
                 {
                     YoshiHeight(A);
                 }
-                else if(Player[A].Character == 2 && Player[A].Mount != 2)
+                else if((Player[A].Character == 2 || Player[A].Character == 6) && Player[A].Mount != 2)
                 {
                     Player[A].Location.Y = Player[A].Location.Y - Physics.PlayerHeight[2][2] + Physics.PlayerHeight[1][2];
                     Player[A].Location.Height = Physics.PlayerHeight[Player[A].Character][Player[A].State];
@@ -5115,7 +5142,7 @@ void PlayerEffects(int A)
                 {
                     YoshiHeight(A);
                 }
-                else if(Player[A].Character == 2 && Player[A].Mount != 2)
+                else if((Player[A].Character == 2 || Player[A].Character == 6) && Player[A].Mount != 2)
                 {
                     Player[A].Location.Y = Player[A].Location.Y - Physics.PlayerHeight[1][2] + Physics.PlayerHeight[2][2];
                     Player[A].Location.Height = Physics.PlayerHeight[1][2];
@@ -5936,7 +5963,7 @@ void PlayerEffects(int A)
                 {
                     YoshiHeight(A);
                 }
-                else if(Player[A].Character == 2 && Player[A].Mount != 2)
+                else if((Player[A].Character == 2 || Player[A].Character == 6) && Player[A].Mount != 2)
                 {
                     Player[A].Location.Y = Player[A].Location.Y - Physics.PlayerHeight[2][2] + Physics.PlayerHeight[1][2];
                     Player[A].Location.Height = Physics.PlayerHeight[Player[A].Character][Player[A].State];
@@ -6016,7 +6043,7 @@ void PlayerEffects(int A)
             {
                 YoshiHeight(A);
             }
-            else if(Player[A].Character == 2 && Player[A].State == 1 && Player[A].Mount == 1)
+            else if((Player[A].Character == 2 || Player[A].Character == 6) && Player[A].State == 1 && Player[A].Mount == 1)
             {
                 Player[A].Location.Y = Player[A].Location.Y - Physics.PlayerHeight[2][2] + Physics.PlayerHeight[1][2];
                 Player[A].Location.Height = Physics.PlayerHeight[Player[A].Character][6];
@@ -6055,7 +6082,7 @@ void PlayerEffects(int A)
             {
                 YoshiHeight(A);
             }
-            else if(Player[A].Character == 2 && Player[A].State == 1 && Player[A].Mount == 1)
+            else if((Player[A].Character == 2 || Player[A].Character == 6) && Player[A].State == 1 && Player[A].Mount == 1)
             {
                 Player[A].Location.Y = Player[A].Location.Y - Physics.PlayerHeight[2][2] + Physics.PlayerHeight[1][2];
                 Player[A].Location.Height = Physics.PlayerHeight[Player[A].Character][4];
@@ -6095,7 +6122,7 @@ void PlayerEffects(int A)
             {
                 YoshiHeight(A);
             }
-            else if(Player[A].Character == 2 && Player[A].State == 1 && Player[A].Mount == 1)
+            else if((Player[A].Character == 2 || Player[A].Character == 6) && Player[A].State == 1 && Player[A].Mount == 1)
             {
                 Player[A].Location.Y = Player[A].Location.Y - Physics.PlayerHeight[2][2] + Physics.PlayerHeight[1][2];
                 Player[A].Location.Height = Physics.PlayerHeight[Player[A].Character][4];
@@ -6135,7 +6162,7 @@ void PlayerEffects(int A)
             {
                 YoshiHeight(A);
             }
-            else if(Player[A].Character == 2 && Player[A].State == 1 && Player[A].Mount == 1)
+            else if((Player[A].Character == 2 || Player[A].Character == 6) && Player[A].State == 1 && Player[A].Mount == 1)
             {
                 Player[A].Location.Y = Player[A].Location.Y - Physics.PlayerHeight[2][2] + Physics.PlayerHeight[1][2];
                 Player[A].Location.Height = Physics.PlayerHeight[Player[A].Character][6];
@@ -6330,3 +6357,124 @@ void PlayerEffects(int A)
 //            Netplay::sendData Netplay::PutPlayerControls(nPlay.MySlot) + "1c" + std::to_string(A) + "|" + Player[A].Effect + "|" + Player[A].Effect2 + LB + "1h" + std::to_string(A) + "|" + Player[A].State + LB;
 //    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// YOSHI FRAMES
+void YoshiFrame(int A)
+{
+    if(!(Player[A].Frame == 23 || Player[A].Frame == 24 || Player[A].Frame == 25) && !Player[A].Duck)
+    {
+        // standing
+        if((Player[A].Location.SpeedX == 0.0 || (Player[A].Slippy == true && Player[A].Controls.Left == false && Player[A].Controls.Right == false)) && !(Player[A].Frame == 23 || Player[A].Frame == 24 || Player[A].Frame == 25) && Player[A].Flutter <= 0) // Standing
+        {
+            Player[A].Frame = 0;
+            Player[A].FrameCount = 0;
+        }
+        else if(std::abs(Player[A].Location.SpeedX) < 6 || !Player[A].Controls.Run)
+        {
+            // walking
+            Player[A].FrameCount += std::abs(Player[A].Location.SpeedX/Physics.PlayerWalkSpeed) + 1;
+            if(Player[A].FrameCount >= 36)
+            {
+                Player[A].FrameCount = 0;
+            }
+            Player[A].Frame = (int)(Player[A].FrameCount / 4);
+        }
+        else
+        {
+            // running
+            Player[A].FrameCount += std::abs(Player[A].Location.SpeedX/Physics.PlayerWalkSpeed) + 1;
+            if(Player[A].FrameCount >= 16)
+            {
+                Player[A].FrameCount = 0;
+            }
+            Player[A].Frame = (int)(Player[A].FrameCount / 8) + 11;
+        }
+    }
+
+    // jumping
+    if((!Player[A].CanJump || (Player[A].Location.SpeedY != 0 && Player[A].Slope == 0 && Player[A].StandingOnNPC == 0)) && LevelSelect == false && Player[A].Pinched1 == 0)
+    {
+        Player[A].Duck = false;
+        Player[A].Frame = 18;
+        if(Player[A].Location.SpeedY <= 0 && Player[A].Slope == 0 && Player[A].StandingOnNPC == 0)
+        {
+            if(Player[A].Jump == 0)
+                Player[A].Frame = 17;
+            else if(Player[A].Location.SpeedY < 0)
+                Player[A].Frame = 16;
+        }
+    }
+    else
+    {
+        if(Player[A].Controls.Left)
+        {
+            Player[A].Direction = -1;
+        }
+        else if(Player[A].Controls.Right)
+        {
+            Player[A].Direction = 1;
+        }
+    }
+
+    if(Player[A].Flutter > 0)
+    {
+        Player[A].FrameCount = Player[A].FrameCount + 1;
+        if(Player[A].FrameCount >= 16)
+            Player[A].FrameCount = 0;
+        else if(Player[A].FrameCount >= 12)
+            Player[A].Frame = 26;
+        else if(Player[A].FrameCount >= 8)
+            Player[A].Frame = 27;
+        else if(Player[A].FrameCount >= 4)
+            Player[A].Frame = 28;
+        else if(Player[A].FrameCount >= 0)
+            Player[A].Frame = 29;
+    }
+
+
+
+    // throwing
+    if(Player[A].FireBallCD <= -42)
+        Player[A].Frame = 19;
+    else if(Player[A].FireBallCD <= -38)
+        Player[A].Frame = 20;
+    else if(Player[A].FireBallCD <= -34)
+        Player[A].Frame = 21;
+    else if(Player[A].FireBallCD <= -32)
+        Player[A].Frame = 22;
+
+
+    if(Player[A].Duck)
+    {
+        if(Player[A].FrameCount < 12)
+            Player[A].FrameCount++;
+        if(Player[A].FrameCount >= 12)
+            Player[A].Frame = 25;
+        else if(Player[A].FrameCount >= 8)
+            Player[A].Frame = 24;
+        else if(Player[A].FrameCount >= 4)
+            Player[A].Frame = 23;
+    }
+}
+

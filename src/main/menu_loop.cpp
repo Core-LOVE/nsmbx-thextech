@@ -353,7 +353,7 @@ void MenuLoop()
 //                B = 0
                 B = 0;
 //                For A = 0 To 4
-                For(A, 0, 4)
+                For(A, 0, numCharacters - 1)
                 {
 //                    If blockCharacter(A + 1) = True Then
                     if(blockCharacter[A + 1])
@@ -373,10 +373,11 @@ void MenuLoop()
 //                                menuLen = 18 * Len("mario game") + 2
                                 menuLen = 18 * std::strlen("mario game") + 2;
 //                            ElseIf A = 3 Or A = 5 Then
-                            } else if(A == 3 || A == 5) {
+                            } else if(A == 3 || A == 4) {
 //                                menuLen = 18 * Len("toad game")
                                 menuLen = 18 * std::strlen("toad game");
-//                            Else
+                            } else if(A == 5) {
+                                menuLen = 18 * std::strlen("waluigi game");
                             } else {
 //                                menuLen = 18 * Len("luigi game")
                                 menuLen = 18 * std::strlen("luigi game");
@@ -597,9 +598,6 @@ void MenuLoop()
 //            End If
             }
         }
-//        ElseIf MenuMode = 1 Or MenuMode = 2 Or MenuMode = 4 Then 'World Select
-
-        // World Select
         else if(MenuMode == 1 || MenuMode == 2 || MenuMode == 4)
         {
 //            If ScrollDelay > 0 Then
@@ -693,7 +691,9 @@ void MenuLoop()
 //                            blockCharacter(A) = False
                             blockCharacter[A] = false;
 //                        Else
-                        } else {
+                        }
+                        else
+                        {
 //                            blockCharacter(A) = SelectWorld(selWorld).blockChar(A)
                             blockCharacter[A] = SelectWorld[selWorld].blockChar[A];
 //                        End If

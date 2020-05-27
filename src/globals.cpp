@@ -149,6 +149,8 @@ RangeArrI<int, 0, maxPlayerFrames, 0> ToadFrameX;
 RangeArrI<int, 0, maxPlayerFrames, 0> ToadFrameY;
 RangeArrI<int, 0, maxPlayerFrames, 0> LinkFrameX;
 RangeArrI<int, 0, maxPlayerFrames, 0> LinkFrameY;
+RangeArrI<int, 0, maxPlayerFrames, 0> WaluigiFrameX;
+RangeArrI<int, 0, maxPlayerFrames, 0> WaluigiFrameY;
 RangeArrI<int, 0, maxPlayerFrames, 0> WarioFrameX;
 RangeArrI<int, 0, maxPlayerFrames, 0> WarioFrameY;
 RangeArrI<bool, 0, maxBackgroundType, false> BackgroundFence;
@@ -487,6 +489,14 @@ RangeArr<StdPicture, 1, 10> GFXLinkMaskBMP;
 RangeArrI<int, 1, 10, 0> GFXLinkHeight;
 RangeArrI<int, 1, 10, 0> GFXLinkWidth;
 
+RangeArrI<bool, 1, 10, false> GFXWaluigiCustom;
+RangeArrI<long, 1, 10, 0> GFXWaluigiMask;
+RangeArr<StdPicture, 1, 10> GFXWaluigiBMP;
+RangeArr<StdPicture, 1, 10> GFXWaluigiMaskBMP;
+RangeArrI<int, 1, 10, 0> GFXWaluigiHeight;
+RangeArrI<int, 1, 10, 0> GFXWaluigiWidth;
+
+RangeArr<StdPicture, 1, 10> GFXYoshiBMP;
 
 RangeArrI<bool, 1, 10, false> GFXWarioCustom;
 //RangeArrI<long, 1, 10, 0> GFXWario;

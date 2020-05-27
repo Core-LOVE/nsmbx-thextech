@@ -76,7 +76,7 @@ void SaveGame()
     sav.worldPosX = WorldPlayer[1].Location.X;
     sav.worldPosY = WorldPlayer[1].Location.Y;
 
-    for(A = 1; A <= 5; A++)
+    for(A = 1; A <= numCharacters; A++)
     {
         saveCharState c;
         c.id = static_cast<unsigned long>(A);
@@ -179,7 +179,7 @@ void LoadGame()
 
     for(auto &s : sav.characterStates)
     {
-        if(s.id < 1 || s.id > 5)
+        if(s.id < 1 || s.id > numCharacters)
             continue;
         A = int(s.id);
 

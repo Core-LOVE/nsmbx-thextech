@@ -106,7 +106,7 @@ void TouchBonus(int A, int B)
     {
         //        if(nPlay.Online == true && nPlay.MySlot + 1 == A)
         //            Netplay::sendData "1k" + std::to_string(A) + "|" + std::to_string(B) + "|" + NPC[B].Type + LB;
-        if(Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 5) // for link give hearts
+        if(Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 5 || Player[A].Character == 7) // for link give hearts
         {
             if(NPC[B].Type == 34 || NPC[B].Type == 169 || NPC[B].Type == 170 || NPC[B].Type == 304 || NPC[B].Type == 310 || NPC[B].Type == 357)
             {
@@ -178,7 +178,7 @@ void TouchBonus(int A, int B)
             MoreScore(10, NPC[B].Location);
             return;
         }
-        if(NPC[B].Type == 248 && NPC[B].Effect != 2 && (Player[A].Character == 1 || Player[A].Character == 2)) // send the clock to the item container
+        if(NPC[B].Type == 248 && NPC[B].Effect != 2 && (Player[A].Character == 1 || Player[A].Character == 2 || Player[A].Character == 6)) // send the clock to the item container
         {
             Player[A].HeldBonus = 248;
             NPC[B].Killed = 9;
@@ -247,7 +247,7 @@ void TouchBonus(int A, int B)
         {
             if(Player[A].Character == 5 && Player[A].State == 1)
                 Player[A].State = 2;
-            if(Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 5)
+            if(Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 5 || Player[A].Character == 7)
             {
                 Player[A].Hearts = Player[A].Hearts + 1;
                 if(Player[A].Hearts > 3)
@@ -277,7 +277,7 @@ void TouchBonus(int A, int B)
         }
         else if(NPC[B].Type == 14 || NPC[B].Type == 182 || NPC[B].Type == 183) // Bonus is a fire flower
         {
-            if(Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 5)
+            if(Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 5 || Player[A].Character == 7)
             {
                 Player[A].Hearts = Player[A].Hearts + 1;
                 if(Player[A].Hearts > 3)
@@ -310,7 +310,7 @@ void TouchBonus(int A, int B)
         }
         else if(NPC[B].Type == 264 || NPC[B].Type == 277) // Bonus is an ice flower
         {
-            if(Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 5)
+            if(Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 5 || Player[A].Character == 7)
             {
                 Player[A].Hearts = Player[A].Hearts + 1;
                 if(Player[A].Hearts > 3)

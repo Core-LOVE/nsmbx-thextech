@@ -338,6 +338,20 @@ void LoadGFX()
             GFXLinkHeight[A] = GFXLinkBMP[A].h;
         }
 
+        p = GfxRoot + fmt::format_ne("waluigi/waluigi-{0}.png", A);
+        if(Files::fileExists(p))
+        {
+            GFXWaluigiBMP[A] = frmMain.lazyLoadPicture(p);
+            GFXWaluigiWidth[A] = GFXWaluigiBMP[A].w;
+            GFXWaluigiHeight[A] = GFXWaluigiBMP[A].h;
+        }
+
+        p = GfxRoot + fmt::format_ne("yoshi2/yoshi2-{0}.png", A);
+        if(Files::fileExists(p))
+        {
+            GFXYoshiBMP[A] = frmMain.lazyLoadPicture(p);
+        }
+
         p = GfxRoot + fmt::format_ne("wario/wario-{0}.png", A);
         if(Files::fileExists(p))
         {
@@ -911,6 +925,23 @@ void LoadCustomGFX()
                  fmt::format_ne("link-{0}", A),
                  &GFXLinkWidth[A], &GFXLinkHeight[A], GFXLinkCustom[A], GFXLinkBMP[A]);
     }
+
+    for(int A = 1; A < 10; ++A)
+    {
+        loadCGFX(existingFiles, GfxRoot + fmt::format_ne("waluigi/waluigi-{0}.png", A),
+                 FileNamePath, FileName,
+                 fmt::format_ne("waluigi-{0}", A),
+                 &GFXWaluigiWidth[A], &GFXWaluigiHeight[A], GFXWaluigiCustom[A], GFXWaluigiBMP[A]);
+    }
+
+    for(int A = 1; A < 10; ++A)
+    {
+        //loadCGFX(existingFiles, GfxRoot + fmt::format_ne("yoshi2/yoshi2-{0}.png", A),
+        //         FileNamePath, FileName,
+        //         fmt::format_ne("yoshi2-{0}", A),
+        //         &GFXYoshiBMP[A].w, &GFXYoshiBMP[A].h, GFXYoshiCustom[A], GFXYoshiBMP[A]);
+    }
+
     for(int A = 1; A < 10; ++A)
     {
         loadCGFX(existingFiles, GfxRoot + fmt::format_ne("wario/wario-{0}.png", A),

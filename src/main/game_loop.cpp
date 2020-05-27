@@ -390,7 +390,7 @@ void PauseGame(int plr)
                                         {
                                             Player[A].Character = Player[A].Character - 1;
                                             if(Player[A].Character <= 0)
-                                                Player[A].Character = 5;
+                                                Player[A].Character = numCharacters;
                                         } while(Player[A].Character == Player[B].Character || blockCharacter[Player[A].Character]);
                                     }
                                     else
@@ -398,7 +398,7 @@ void PauseGame(int plr)
                                         do
                                         {
                                             Player[A].Character = Player[A].Character + 1;
-                                            if(Player[A].Character >= 6)
+                                            if(Player[A].Character > numCharacters)
                                                 Player[A].Character = 1;
                                         } while(Player[A].Character == Player[B].Character || blockCharacter[Player[A].Character]);
                                     }

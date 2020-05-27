@@ -950,6 +950,45 @@ void UpdateGraphics(bool skipRepaint)
                     }
                     else if(Player[A].Character == 6)
                     {
+                        if(Player[A].Mount == 1)
+                        {
+                            tempLocation = Player[A].Location;
+                            if(Player[A].State == 1)
+                                tempLocation.Height = Player[A].Location.Height - WaluigiFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)];
+                            else
+                                tempLocation.Height = Player[A].Location.Height - WaluigiFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)] - 30;
+                            tempLocation.Width = 99;
+                            tempLocation.X = tempLocation.X + WaluigiFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)];
+                            tempLocation.Y = tempLocation.Y + WaluigiFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)];
+                            Y2 = 0;
+                            X2 = 0;
+                            PlayerWarpGFX(A, tempLocation, X2, Y2);
+                            DrawTexture(vScreenX[Z] + tempLocation.X, vScreenY[Z] + tempLocation.Y, tempLocation.Width, tempLocation.Height, GFXWaluigi[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction) + X2, pfrY(100 + Player[A].Frame * Player[A].Direction) + Y2);
+                            tempLocation = Player[A].Location;
+                            tempLocation.Height = 32;
+                            tempLocation.Width = 32;
+                            tempLocation.X = tempLocation.X + Player[A].Location.Width / 2.0 - 16;
+                            tempLocation.Y = tempLocation.Y + Player[A].Location.Height - 30;
+                            Y2 = 0;
+                            X2 = 0;
+                            PlayerWarpGFX(A, tempLocation, X2, Y2);
+                            DrawTexture(vScreenX[Z] + tempLocation.X, vScreenY[Z] + tempLocation.Y, tempLocation.Width, tempLocation.Height, Boot[Player[A].MountType], X2, Y2 + 32 * Player[A].MountFrame, c, c, c);
+                        }
+                        else
+                        {
+                            tempLocation = Player[A].Location;
+                            tempLocation.Height = 99;
+                            tempLocation.Width = 99;
+                            tempLocation.X = tempLocation.X + WaluigiFrameX[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)];
+                            tempLocation.Y = tempLocation.Y + WaluigiFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)] + Player[A].MountOffsetY;
+                            Y2 = 0;
+                            X2 = 0;
+                            PlayerWarpGFX(A, tempLocation, X2, Y2);
+                            DrawTexture(vScreenX[Z] + tempLocation.X, vScreenY[Z] + tempLocation.Y, tempLocation.Width, tempLocation.Height, GFXWaluigi[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction) + X2, pfrY(100 + Player[A].Frame * Player[A].Direction) + Y2);
+                        }
+                    }
+                    else if(Player[A].Character == 8)
+                    {
                         if(Player[A].Frame > 5)
                             Player[A].Frame = 1;
                         tempLocation = Player[A].Location;
@@ -1556,6 +1595,15 @@ void UpdateGraphics(bool skipRepaint)
                     DrawTexture(vScreenX[Z] + static_cast<int>(floor(static_cast<double>(Player[A].Location.X))) + LinkFrameX[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)] - Physics.PlayerWidth[Player[A].Character][Player[A].State] / 2 + 64, vScreenY[Z] + Player[A].Location.Y + LinkFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)] + Player[A].MountOffsetY - Y, 99, Player[A].Location.Height - 20 - Player[A].MountOffsetY, GFXLink[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction), pfrY(100 + Player[A].Frame * Player[A].Direction), c, c, c);
                     DrawTexture(vScreenX[Z] + static_cast<int>(floor(static_cast<double>(Player[A].Location.X))) + Player[A].Location.Width / 2.0 - 64, vScreenY[Z] + Player[A].Location.Y + Player[A].Location.Height - 128, 128, 128, Mount[Player[A].Mount], 0, 128 * Player[A].MountFrame, c, c, c);
                 }
+                else if(Player[A].Character == 6)
+                {
+                    if(Player[A].State == 1)
+                        Y = 24;
+                    else
+                        Y = 38;
+                    DrawTexture(vScreenX[Z] + static_cast<int>(floor(static_cast<double>(Player[A].Location.X))) + WaluigiFrameX[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)] - Physics.PlayerWidth[Player[A].Character][Player[A].State] / 2 + 64, vScreenY[Z] + Player[A].Location.Y + WaluigiFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)] + Player[A].MountOffsetY - Y, 99, Player[A].Location.Height - 20 - Player[A].MountOffsetY, GFXWaluigi[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction), pfrY(100 + Player[A].Frame * Player[A].Direction), c, c, c);
+                    DrawTexture(vScreenX[Z] + static_cast<int>(floor(static_cast<double>(Player[A].Location.X))) + Player[A].Location.Width / 2.0 - 64, vScreenY[Z] + Player[A].Location.Y + Player[A].Location.Height - 128, 128, 128, Mount[Player[A].Mount], 0, 128 * Player[A].MountFrame, c, c, c);
+                }
             }
         }
 
@@ -1991,6 +2039,7 @@ void UpdateGraphics(bool skipRepaint)
                 DrawTexture(ScreenW / 2 - MenuGFX[2].w / 2, 70,
                         MenuGFX[2].w, MenuGFX[2].h, MenuGFX[2], 0, 0);
                 SuperPrint("Made By Core", 3, 20, 570);
+
                 if(MenuMode == 0)
                 {
                     SuperPrint("1 PLAYER GAME", 3, 300, 350);
@@ -2062,6 +2111,30 @@ void UpdateGraphics(bool skipRepaint)
                         if(PlayerCharacter >= 5)
                             C = C - 30;
                     }
+
+
+                    if(!blockCharacter[6])
+                        SuperPrint("WALUIGI GAME", 3, 300, 500 + A);
+                    else
+                    {
+                        A = A - 30;
+                        if(MenuCursor + 1 >= 6)
+                            B = B - 30;
+                        if(PlayerCharacter >= 6)
+                            C = C - 30;
+                    }
+
+                    if(!blockCharacter[7])
+                        SuperPrint("YOSHI GAME", 3, 300, 530 + A);
+                    else
+                    {
+                        A = A - 30;
+                        if(MenuCursor + 1 >= 7)
+                            B = B - 30;
+                        if(PlayerCharacter >= 7)
+                            C = C - 30;
+                    }
+
 
                     if(MenuMode == 300 || MenuMode == 500)
                     {

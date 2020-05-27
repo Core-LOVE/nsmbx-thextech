@@ -102,6 +102,8 @@ void PlayerCollide(int A); //PRIVATE
 void PlayerGrabCode(int A, bool DontResetGrabTime = false);
 // Public Sub LinkFrame(A As Integer)
 void LinkFrame(int A);
+// Public Sub YoshiFrame(A As Integer)
+void YoshiFrame(int A);
 // Private Sub PlayerEffects(A As Integer)
 void PlayerEffects(int A);
 

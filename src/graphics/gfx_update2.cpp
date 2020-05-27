@@ -644,6 +644,10 @@ void UpdateGraphics2()
             }
             else if(Player[A].Character == 6)
             {
+                frmMain.renderTexture(32 + (48 * A) + WaluigiFrameX[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], 124 - Player[A].Location.Height + WaluigiFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], 99, 99, GFXWaluigiBMP[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction), pfrY(100 + Player[A].Frame * Player[A].Direction), c, c, c);
+            }
+            else if(Player[A].Character == 8)
+            {
                 frmMain.renderTexture(32 + (48 * A) + WarioFrameX[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], 124 - Player[A].Location.Height + WarioFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], 99, 99, GFXWarioBMP[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction), pfrY(100 + Player[A].Frame * Player[A].Direction), c, c, c);
             }
         }

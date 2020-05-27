@@ -268,6 +268,57 @@ void SetupPhysics()
     Physics.PlayerGrabSpotY[5][8] = 16;     // ---------
 
 
+
+    Physics.PlayerHeight[6][1] = 30;        // Little Waluigi
+    Physics.PlayerWidth[6][1] = 24;         // ------------
+    Physics.PlayerGrabSpotX[6][1] = 16;     // ---------
+    Physics.PlayerGrabSpotY[6][1] = -4;     // ---------
+    Physics.PlayerHeight[6][2] = 60;        // Big Waluigi
+    Physics.PlayerWidth[6][2] = 24;         // ---------
+    Physics.PlayerDuckHeight[6][2] = 30;    // ---------
+    Physics.PlayerGrabSpotX[6][2] = 18;     // ---------
+    Physics.PlayerGrabSpotY[6][2] = 16;     // ---------
+    Physics.PlayerHeight[6][3] = 60;        // Fire Waluigi
+    Physics.PlayerWidth[6][3] = 24;         // ---------
+    Physics.PlayerDuckHeight[6][3] = 30;    // ---------
+    Physics.PlayerGrabSpotX[6][3] = 18;     // ---------
+    Physics.PlayerGrabSpotY[6][3] = 16;     // ---------
+    Physics.PlayerHeight[6][4] = 60;        // Racoon Waluigi
+    Physics.PlayerWidth[6][4] = 24;         // ---------
+    Physics.PlayerDuckHeight[6][4] = 30;    // ---------
+    Physics.PlayerGrabSpotX[6][4] = 18;     // ---------
+    Physics.PlayerGrabSpotY[6][4] = 16;     // ---------
+    Physics.PlayerHeight[6][5] = 60;        // Tanooki Waluigi
+    Physics.PlayerWidth[6][5] = 24;         // ---------
+    Physics.PlayerDuckHeight[6][5] = 30;    // ---------
+    Physics.PlayerGrabSpotX[6][5] = 18;     // ---------
+    Physics.PlayerGrabSpotY[6][5] = 16;     // ---------
+    Physics.PlayerHeight[6][6] = 60;        // Tanooki Waluigi
+    Physics.PlayerWidth[6][6] = 24;         // ---------
+    Physics.PlayerDuckHeight[6][6] = 30;    // ---------
+    Physics.PlayerGrabSpotX[6][6] = 18;     // ---------
+    Physics.PlayerGrabSpotY[6][6] = 16;     // ---------
+    Physics.PlayerHeight[6][7] = 60;        // Ice Waluigi
+    Physics.PlayerWidth[6][7] = 24;         // ---------
+    Physics.PlayerDuckHeight[6][7] = 30;    // ---------
+    Physics.PlayerGrabSpotX[6][7] = 18;     // ---------
+    Physics.PlayerGrabSpotY[6][7] = 16;     // ---------
+    Physics.PlayerHeight[6][8] = 48;        // Frog Waluigi
+    Physics.PlayerWidth[6][8] = 12;         // ---------
+    Physics.PlayerDuckHeight[6][8] = 48;    // ---------
+    Physics.PlayerGrabSpotX[6][8] = 18;     // ---------
+    Physics.PlayerGrabSpotY[6][8] = 16;     // ---------
+
+
+    for(int A=1; A <= 7; A++)
+    {
+        Physics.PlayerHeight[7][A] = 56;        // Yoshi
+        Physics.PlayerWidth[7][A] = 20;         // ---------
+        Physics.PlayerDuckHeight[7][A] = 24;    // ---------
+        Physics.PlayerGrabSpotX[7][A] = 18;     // ---------
+        Physics.PlayerGrabSpotY[7][A] = 16;     // ---------
+    }
+
     Physics.NPCTimeOffScreen = 180;         // How long NPCs are active offscreen before being reset
     Physics.NPCShellSpeed = 7.1f;            // Speed of kicked shells
     Physics.NPCShellSpeedY = 11;            // Vertical Speed of kicked shells
