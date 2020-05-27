@@ -2058,7 +2058,7 @@ void UpdatePlayer()
 
                         if(Player[A].Character == 7)
                         {
-                            if(Player[A].Flutter == 0 && Player[A].Wet == 0 && !Player[A].WetFrame && Player[A].Controls.Jump && Player[A].FloatRelease && Player[A].Jump == 0 && Player[A].Location.SpeedY >= 0)
+                            if(Player[A].Flutter == 0 && Player[A].Wet == 0 && !Player[A].WetFrame && Player[A].Controls.Jump && Player[A].FloatRelease && Player[A].Jump == 0 && Player[A].Location.SpeedY >= -1.5)
                             {
                                 Player[A].Flutter = 48;
                                 Player[A].Location.SpeedY = 3;
