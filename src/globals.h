@@ -979,6 +979,8 @@ struct Effect_t
     int NewNpc = 0;
 //    Shadow As Boolean 'for a black effect set to true
     bool Shadow = false;
+//    Special As Double 'for special behavior
+    double Special = 0;
 //End Type
 };
 

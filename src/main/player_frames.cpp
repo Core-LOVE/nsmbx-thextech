@@ -39,8 +39,6 @@ void SetupPlayerFrames()
         PeachFrameY[A] = 0;
         ToadFrameX[A] = 0;
         ToadFrameY[A] = 0;
-        WaluigiFrameX[A] = 0;
-        WaluigiFrameY[A] = 0;
     }
 
     LinkFrameY[101] = -8;
@@ -487,121 +485,11 @@ void SetupPlayerFrames()
     LuigiFrameX[421] = -16;
 
 
-    WaluigiFrameY[96] = 0;
-    WaluigiFrameX[97] = -4;
-    WaluigiFrameX[98] = -2;
-    WaluigiFrameY[98] = 0;
-    WaluigiFrameY[99] = 2;
-    WaluigiFrameY[101] = 2;
-    WaluigiFrameX[102] = -4;
-    WaluigiFrameY[102] = 0;
-    WaluigiFrameX[103] = -4;
-    WaluigiFrameY[104] = 0;
-    WaluigiFrameX[105] = -2;
-    WaluigiFrameX[106] = -4;
-    WaluigiFrameX[234] = 6;
-    WaluigiFrameX[236] = 6;
-    WaluigiFrameY[190] = 2;
-    WaluigiFrameY[191] = 2;
-    WaluigiFrameY[192] = 2;
-    WaluigiFrameY[193] = -6;
-    WaluigiFrameX[194] = -2;
-    WaluigiFrameY[194] = 0;
-    WaluigiFrameX[195] = -2;
-    WaluigiFrameX[196] = -10;
-    WaluigiFrameX[197] = -2;
-    WaluigiFrameY[197] = 2;
-    WaluigiFrameX[198] = -2;
-    WaluigiFrameY[198] = 2;
-    WaluigiFrameY[199] = 2;
-    WaluigiFrameY[201] = 2;
-    WaluigiFrameY[202] = 2;
-    WaluigiFrameX[202] = -2;
-    WaluigiFrameY[203] = 2;
-    WaluigiFrameX[203] = -2;
-    WaluigiFrameX[204] = -10;
-    WaluigiFrameX[205] = -2;
-    WaluigiFrameX[206] = -2;
-    WaluigiFrameY[206] = 0;
-    WaluigiFrameY[207] = -6;
-    WaluigiFrameY[208] = 2;
-    WaluigiFrameY[209] = 2;
-    WaluigiFrameY[210] = 2;
-    WaluigiFrameX[209] = -2;
-    WaluigiFrameX[210] = -4;
-    WaluigiFrameY[288] = 2;
-    WaluigiFrameY[289] = 2;
-    WaluigiFrameY[290] = 2;
-    WaluigiFrameY[291] = 2;
-    WaluigiFrameY[292] = 2;
-    WaluigiFrameY[293] = -6;
-    WaluigiFrameX[294] = -2;
-    WaluigiFrameY[294] = 0;
-    WaluigiFrameX[295] = -2;
-    WaluigiFrameX[296] = -10;
-    WaluigiFrameX[297] = -2;
-    WaluigiFrameY[297] = 2;
-    WaluigiFrameX[298] = -2;
-    WaluigiFrameY[298] = 2;
-    WaluigiFrameY[299] = 2;
-    WaluigiFrameY[301] = 2;
-    WaluigiFrameY[302] = 2;
-    WaluigiFrameX[302] = -2;
-    WaluigiFrameY[303] = 2;
-    WaluigiFrameX[303] = -2;
-    WaluigiFrameX[304] = -10;
-    WaluigiFrameX[305] = -2;
-    WaluigiFrameX[306] = -2;
-    WaluigiFrameY[306] = 0;
-    WaluigiFrameY[307] = -6;
-    WaluigiFrameY[308] = 2;
-    WaluigiFrameY[309] = 2;
-    WaluigiFrameY[310] = 2;
-    WaluigiFrameX[309] = -2;
-    WaluigiFrameX[310] = -4;
-    WaluigiFrameY[311] = 2;
-    WaluigiFrameY[312] = 2;
-    WaluigiFrameX[382] = -4;
-    WaluigiFrameX[383] = -4;
-    WaluigiFrameX[384] = -2;
-    WaluigiFrameX[386] = -14;
-    WaluigiFrameX[389] = -2;
-    WaluigiFrameY[393] = -4;
-    WaluigiFrameX[394] = -2;
-    WaluigiFrameY[394] = 0;
-    WaluigiFrameX[395] = -2;
-    WaluigiFrameX[396] = -2;
-    WaluigiFrameX[397] = -2;
-    WaluigiFrameX[398] = -2;
-    WaluigiFrameX[401] = -14;
-    WaluigiFrameX[402] = -14;
-    WaluigiFrameX[403] = -16;
-    WaluigiFrameX[404] = -16;
-    WaluigiFrameX[405] = -16;
-    WaluigiFrameY[406] = 0;
-    WaluigiFrameX[407] = -14;
-    WaluigiFrameY[407] = -4;
-    WaluigiFrameX[408] = -14;
-    WaluigiFrameX[409] = -16;
-    WaluigiFrameX[410] = -18;
-    WaluigiFrameX[411] = -14;
-    WaluigiFrameX[412] = -18;
-    WaluigiFrameX[413] = -4;
-    WaluigiFrameX[414] = -4;
-    WaluigiFrameX[415] = -4;
-    WaluigiFrameX[416] = -16;
-    WaluigiFrameX[417] = -16;
-    WaluigiFrameX[418] = -16;
-    WaluigiFrameX[419] = -16;
-    WaluigiFrameX[420] = -18;
-    WaluigiFrameX[421] = -16;
     For(A, 150, maxPlayerFrames) // Adjust the players frames to their new sizes
     {
         MarioFrameX[A] = MarioFrameX[A] - 2;
         LuigiFrameX[A] = LuigiFrameX[A] - 2;
         LuigiFrameY[A] = LuigiFrameY[A] - 2;
-        WaluigiFrameX[A] = WaluigiFrameX[A] - 14;
-        WaluigiFrameY[A] = WaluigiFrameY[A] - 14;
     }
     LuigiFrameY[101] = LuigiFrameY[101] - 2;
     LuigiFrameY[102] = LuigiFrameY[102] - 2;
@@ -612,14 +500,6 @@ void SetupPlayerFrames()
     LuigiFrameY[95] = LuigiFrameY[95] - 2;
     LuigiFrameY[94] = LuigiFrameY[94] - 2;
 
-    WaluigiFrameY[101] = WaluigiFrameY[101] - 2;
-    WaluigiFrameY[102] = WaluigiFrameY[102] - 2;
-    WaluigiFrameY[105] = WaluigiFrameY[105] - 2;
-    WaluigiFrameY[106] = WaluigiFrameY[106] - 2;
-    WaluigiFrameY[99] = WaluigiFrameY[99] - 2;
-    WaluigiFrameY[98] = WaluigiFrameY[98] - 2;
-    WaluigiFrameY[95] = WaluigiFrameY[95] - 2;
-    WaluigiFrameY[94] = WaluigiFrameY[94] - 2;
 // Yoshi Frames
     MarioFrameX[130] = -2 - 4;
     MarioFrameX[70] = 6 - 4;
@@ -650,23 +530,6 @@ void SetupPlayerFrames()
     LuigiFrameX[430] = -20 - 4;
     LuigiFrameX[370] = 4 - 4;
 
-
-    WaluigiFrameX[130] = -2 - 4;
-    WaluigiFrameX[70] = 6 - 4;
-    WaluigiFrameY[130] = 16;
-    WaluigiFrameY[70] = 16;
-    WaluigiFrameY[230] = -4;
-    WaluigiFrameY[170] = -4;
-    WaluigiFrameY[330] = -4;
-    WaluigiFrameY[270] = -4;
-    WaluigiFrameY[430] = -6;
-    WaluigiFrameY[370] = -6;
-    WaluigiFrameX[230] = -6 - 4;
-    WaluigiFrameX[170] = 4 - 4;
-    WaluigiFrameX[330] = -6 - 4;
-    WaluigiFrameX[270] = 4 - 4;
-    WaluigiFrameX[430] = -20 - 4;
-    WaluigiFrameX[370] = 4 - 4;
 
     MarioFrameX[131] = -2 - 2;
     MarioFrameX[69] = 6 - 4;
@@ -701,22 +564,6 @@ void SetupPlayerFrames()
     LuigiFrameY[431] = 2;
     LuigiFrameY[369] = 2;
 
-    WaluigiFrameX[131] = -2 - 2;
-    WaluigiFrameX[69] = 6 - 4;
-    WaluigiFrameY[131] = 22;
-    WaluigiFrameY[69] = 22;
-    WaluigiFrameX[231] = -6;
-    WaluigiFrameX[169] = 4 - 6;
-    WaluigiFrameY[231] = 4;
-    WaluigiFrameY[169] = 4;
-    WaluigiFrameX[331] = -6;
-    WaluigiFrameX[269] = 4 - 6;
-    WaluigiFrameY[331] = 4;
-    WaluigiFrameY[269] = 4;
-    WaluigiFrameX[431] = -20;
-    WaluigiFrameX[369] = 4 - 6;
-    WaluigiFrameY[431] = 2;
-    WaluigiFrameY[369] = 2;
 // Facing Frames
     MarioFrameX[113] = -2;
     MarioFrameY[113] = 2;
@@ -815,38 +662,6 @@ void SetupPlayerFrames()
     LuigiFrameX[385] = LuigiFrameX[415];
     LuigiFrameY[385] = LuigiFrameY[415];
 
-    WaluigiFrameX[113] = 0; // -2
-    WaluigiFrameY[113] = 0;
-    WaluigiFrameX[115] = 0; // -2
-    WaluigiFrameY[115] = 0;
-    WaluigiFrameX[87] = WaluigiFrameX[113];
-    WaluigiFrameY[87] = WaluigiFrameY[113];
-    WaluigiFrameX[85] = WaluigiFrameX[115];
-    WaluigiFrameY[85] = WaluigiFrameY[115];
-    WaluigiFrameX[213] = -14;
-    WaluigiFrameY[213] = -10;
-    WaluigiFrameX[215] = -14;
-    WaluigiFrameY[215] = -10;
-    WaluigiFrameX[187] = WaluigiFrameX[213];
-    WaluigiFrameY[187] = WaluigiFrameY[213];
-    WaluigiFrameX[185] = WaluigiFrameX[215];
-    WaluigiFrameY[185] = WaluigiFrameY[215];
-    WaluigiFrameX[313] = -14;
-    WaluigiFrameY[313] = -10;
-    WaluigiFrameX[315] = -14;
-    WaluigiFrameY[315] = -10;
-    WaluigiFrameX[287] = WaluigiFrameX[313];
-    WaluigiFrameY[287] = WaluigiFrameY[313];
-    WaluigiFrameX[285] = WaluigiFrameX[315];
-    WaluigiFrameY[285] = WaluigiFrameY[315];
-    WaluigiFrameX[413] = -14;
-    WaluigiFrameY[413] = -2;
-    WaluigiFrameX[415] = -14;
-    WaluigiFrameY[415] = -2;
-    WaluigiFrameX[387] = WaluigiFrameX[413];
-    WaluigiFrameY[387] = WaluigiFrameY[413];
-    WaluigiFrameX[385] = WaluigiFrameX[415];
-    WaluigiFrameY[385] = WaluigiFrameY[415];
 
     For(A, 450, 550)
     {
@@ -854,14 +669,10 @@ void SetupPlayerFrames()
         MarioFrameY[A] = MarioFrameY[A - 100];
         LuigiFrameX[A] = LuigiFrameX[A - 100];
         LuigiFrameY[A] = LuigiFrameY[A - 100];
-        WaluigiFrameX[A] = WaluigiFrameX[A - 100];
-        WaluigiFrameY[A] = WaluigiFrameY[A - 100];
         MarioFrameX[A + 100] = MarioFrameX[A - 200];
         MarioFrameY[A + 100] = MarioFrameY[A - 200];
         LuigiFrameX[A + 100] = LuigiFrameX[A - 200];
         LuigiFrameY[A + 100] = LuigiFrameY[A - 200];
-        WaluigiFrameX[A + 100] = WaluigiFrameX[A - 200];
-        WaluigiFrameY[A + 100] = WaluigiFrameY[A - 200];
     }
     MarioFrameY[508] = MarioFrameY[508] - 2;
     MarioFrameY[509] = MarioFrameY[509] - 2;
@@ -949,15 +760,6 @@ void SetupPlayerFrames()
     LuigiFrameY[607] = 0;
     LuigiFrameY[593] = 0;
 
-    WaluigiFrameX[601] = -6;
-    WaluigiFrameX[608] = -6;
-    WaluigiFrameX[609] = -6;
-    WaluigiFrameX[611] = -6;
-    WaluigiFrameX[612] = -6;
-    WaluigiFrameX[630] = -12;
-    WaluigiFrameY[607] = 0;
-    WaluigiFrameY[593] = 0;
-
     MarioFrameX[225] = -4;
     MarioFrameX[226] = -4;
     MarioFrameX[175] = -4;
@@ -1026,51 +828,6 @@ void SetupPlayerFrames()
     LuigiFrameY[476] = 0;
     LuigiFrameY[624] = 2;
     LuigiFrameY[576] = 2;
-
-    WaluigiFrameX[225] = -4;
-    WaluigiFrameX[226] = -4;
-    WaluigiFrameX[175] = -4;
-    WaluigiFrameX[174] = -4;
-    WaluigiFrameX[325] = -4;
-    WaluigiFrameX[326] = -4;
-    WaluigiFrameX[275] = -4;
-    WaluigiFrameX[274] = -4;
-    WaluigiFrameX[425] = -4;
-    WaluigiFrameX[426] = -4;
-    WaluigiFrameX[375] = -4;
-    WaluigiFrameX[374] = -4;
-    WaluigiFrameX[525] = -4;
-    WaluigiFrameX[526] = -4;
-    WaluigiFrameX[475] = -4;
-    WaluigiFrameX[474] = -4;
-    WaluigiFrameX[625] = -4;
-    WaluigiFrameX[626] = -4;
-    WaluigiFrameX[575] = -4;
-    WaluigiFrameX[574] = -4;
-
-    WaluigiFrameX[124] = -4;
-    WaluigiFrameX[76] = -4;
-    WaluigiFrameX[224] = -8;
-    WaluigiFrameX[176] = -8;
-    WaluigiFrameX[324] = -8;
-    WaluigiFrameX[276] = -8;
-    WaluigiFrameX[424] = -4;
-    WaluigiFrameX[376] = -4;
-    WaluigiFrameX[524] = -4;
-    WaluigiFrameX[476] = -4;
-    WaluigiFrameX[624] = -4;
-    WaluigiFrameX[576] = -4;
-
-    WaluigiFrameY[224] = 2;
-    WaluigiFrameY[176] = 2;
-    WaluigiFrameY[324] = 2;
-    WaluigiFrameY[276] = 2;
-    WaluigiFrameY[424] = 0;
-    WaluigiFrameY[376] = 0;
-    WaluigiFrameY[524] = 0;
-    WaluigiFrameY[476] = 0;
-    WaluigiFrameY[624] = 2;
-    WaluigiFrameY[576] = 2;
 
 
 
@@ -1349,132 +1106,6 @@ void SetupPlayerFrames()
     LuigiFrameY[356] = -2;
 
 
-    WaluigiFrameX[640] = -10;
-    WaluigiFrameY[640] = 0;
-    WaluigiFrameX[641] = -10;
-    WaluigiFrameY[641] = 0;
-    WaluigiFrameX[642] = -10;
-    WaluigiFrameY[642] = 0;
-    WaluigiFrameX[643] = -10;
-    WaluigiFrameY[643] = 0;
-    WaluigiFrameX[644] = -10;
-    WaluigiFrameY[644] = 0;
-
-    WaluigiFrameX[560] = -4;
-    WaluigiFrameY[560] = 0;
-    WaluigiFrameX[559] = -4;
-    WaluigiFrameY[559] = 0;
-    WaluigiFrameX[558] = -4;
-    WaluigiFrameY[558] = 0;
-    WaluigiFrameX[557] = -2;
-    WaluigiFrameY[557] = 0;
-    WaluigiFrameX[556] = -2;
-    WaluigiFrameY[556] = 0;
-
-
-    WaluigiFrameX[540] = -20;
-    WaluigiFrameY[540] = -2;
-    WaluigiFrameX[541] = -20;
-    WaluigiFrameY[541] = -2;
-    WaluigiFrameX[542] = -20;
-    WaluigiFrameY[542] = -2;
-    WaluigiFrameX[543] = -20;
-    WaluigiFrameY[543] = -2;
-    WaluigiFrameX[544] = -20;
-    WaluigiFrameY[544] = -2;
-    WaluigiFrameX[460] = -4;
-    WaluigiFrameY[460] = -2;
-    WaluigiFrameX[459] = -4;
-    WaluigiFrameY[459] = -2;
-    WaluigiFrameX[458] = -4;
-    WaluigiFrameY[458] = -2;
-    WaluigiFrameX[457] = -2;
-    WaluigiFrameY[457] = -2;
-    WaluigiFrameX[456] = -2;
-    WaluigiFrameY[456] = -2;
-
-
-
-    WaluigiFrameX[140] = -4;
-    WaluigiFrameY[140] = 0;
-    WaluigiFrameX[141] = -4;
-    WaluigiFrameY[141] = 0;
-    WaluigiFrameX[142] = -4;
-    WaluigiFrameY[142] = 0;
-    WaluigiFrameX[143] = -4;
-    WaluigiFrameY[143] = 0;
-    WaluigiFrameX[60] = -6;
-    WaluigiFrameY[60] = 0;
-    WaluigiFrameX[59] = -6;
-    WaluigiFrameY[59] = 0;
-    WaluigiFrameX[58] = 0;
-    WaluigiFrameY[58] = 0;
-    WaluigiFrameX[57] = 0;
-    WaluigiFrameY[57] = 0;
-
-    WaluigiFrameX[240] = -10;
-    WaluigiFrameY[240] = 0;
-    WaluigiFrameX[241] = -10;
-    WaluigiFrameY[241] = 0;
-    WaluigiFrameX[242] = -10;
-    WaluigiFrameY[242] = 0;
-    WaluigiFrameX[243] = -10;
-    WaluigiFrameY[243] = 0;
-    WaluigiFrameX[244] = -10;
-    WaluigiFrameY[244] = 0;
-    WaluigiFrameX[160] = -4;
-    WaluigiFrameY[160] = 0;
-    WaluigiFrameX[159] = -4;
-    WaluigiFrameY[159] = 0;
-    WaluigiFrameX[158] = -4;
-    WaluigiFrameY[158] = 0;
-    WaluigiFrameX[157] = -2;
-    WaluigiFrameY[157] = 0;
-    WaluigiFrameX[156] = -2;
-    WaluigiFrameY[156] = 0;
-
-    WaluigiFrameX[340] = -10;
-    WaluigiFrameY[340] = 0;
-    WaluigiFrameX[341] = -10;
-    WaluigiFrameY[341] = 0;
-    WaluigiFrameX[342] = -10;
-    WaluigiFrameY[342] = 0;
-    WaluigiFrameX[343] = -10;
-    WaluigiFrameY[343] = 0;
-    WaluigiFrameX[344] = -10;
-    WaluigiFrameY[344] = 0;
-    WaluigiFrameX[260] = -4;
-    WaluigiFrameY[260] = 0;
-    WaluigiFrameX[259] = -4;
-    WaluigiFrameY[259] = 0;
-    WaluigiFrameX[258] = -4;
-    WaluigiFrameY[258] = 0;
-    WaluigiFrameX[257] = -2;
-    WaluigiFrameY[257] = 0;
-    WaluigiFrameX[256] = -2;
-    WaluigiFrameY[256] = 0;
-
-
-    WaluigiFrameX[440] = -20;
-    WaluigiFrameY[440] = -2;
-    WaluigiFrameX[441] = -20;
-    WaluigiFrameY[441] = -2;
-    WaluigiFrameX[442] = -20;
-    WaluigiFrameY[442] = -2;
-    WaluigiFrameX[443] = -20;
-    WaluigiFrameY[443] = -2;
-    WaluigiFrameX[444] = -20;
-    WaluigiFrameY[444] = -2;
-    WaluigiFrameX[360] = -4;
-    WaluigiFrameY[360] = -2;
-    WaluigiFrameX[359] = -4;
-    WaluigiFrameY[359] = -2;
-    WaluigiFrameX[358] = -4;
-    WaluigiFrameY[358] = -2;
-    WaluigiFrameX[357] = -2;
-    WaluigiFrameY[357] = -2;
-    WaluigiFrameX[356] = -2;
-    WaluigiFrameY[356] = -2;
 
     MarioFrameY[122] = -8;
     MarioFrameY[123] = -6;
@@ -1579,62 +1210,6 @@ void SetupPlayerFrames()
     LuigiFrameY[193] = -6;
     LuigiFrameY[307] = -6;
     LuigiFrameY[293] = -6;
-    WaluigiFrameY[122] = -8;
-    WaluigiFrameY[123] = -6;
-    WaluigiFrameX[123] = -2;
-    WaluigiFrameY[78] = -8;
-    WaluigiFrameX[78] = -4;
-    WaluigiFrameY[77] = -6;
-    WaluigiFrameY[222] = -24 - 4;
-    WaluigiFrameX[222] = -4;
-    WaluigiFrameY[223] = -8 - 24;
-    WaluigiFrameX[223] = -4;
-    WaluigiFrameY[178] = -24 - 4;
-    WaluigiFrameX[178] = -4;
-    WaluigiFrameY[177] = -8 - 24;
-    WaluigiFrameX[177] = -4;
-
-    WaluigiFrameY[322] = -24 - 4;
-    WaluigiFrameX[322] = -4;
-    WaluigiFrameY[323] = -8 - 24;
-    WaluigiFrameX[323] = -4;
-    WaluigiFrameY[278] = -24 - 4;
-    WaluigiFrameX[278] = -4;
-    WaluigiFrameY[277] = -8 - 24;
-    WaluigiFrameX[277] = -4;
-
-    WaluigiFrameY[422] = -24 - 4;
-    WaluigiFrameX[422] = -4;
-    WaluigiFrameY[423] = -8 - 24;
-    WaluigiFrameX[423] = -4;
-    WaluigiFrameY[378] = -24 - 4;
-    WaluigiFrameX[378] = -4;
-    WaluigiFrameY[377] = -8 - 24;
-    WaluigiFrameX[377] = -4;
-
-    WaluigiFrameY[522] = -24 - 4;
-    WaluigiFrameX[522] = -4;
-    WaluigiFrameY[523] = -8 - 24;
-    WaluigiFrameX[523] = -4;
-    WaluigiFrameY[478] = -24 - 4;
-    WaluigiFrameX[478] = -4;
-    WaluigiFrameY[477] = -8 - 24;
-    WaluigiFrameX[477] = -4;
-
-    WaluigiFrameY[622] = -24 - 4;
-    WaluigiFrameX[622] = -4;
-    WaluigiFrameY[623] = -8 - 24;
-    WaluigiFrameX[623] = -4;
-    WaluigiFrameY[578] = -24 - 4;
-    WaluigiFrameX[578] = -4;
-    WaluigiFrameY[577] = -8 - 24;
-    WaluigiFrameX[577] = -4;
-
-
-    WaluigiFrameY[207] = -10;
-    WaluigiFrameY[193] = -10;
-    WaluigiFrameY[307] = -6;
-    WaluigiFrameY[293] = -6;
 
     For(A, 650, maxPlayerFrames)
     {
@@ -1648,15 +1223,8 @@ void SetupPlayerFrames()
         ToadFrameY[A] = ToadFrameY[A - 400];
         LinkFrameX[A] = LinkFrameX[A - 400];
         LinkFrameY[A] = LinkFrameY[A - 400];
-        WaluigiFrameX[A] = WaluigiFrameX[A - 400];
-        WaluigiFrameY[A] = WaluigiFrameY[A - 400];
     }
 
-
-    For(A, 50, 150)
-    {
-        WaluigiFrameX[A] = WaluigiFrameX[A] - 4;
-    }
 
     PeachFrameX[401] = -16;
     PeachFrameY[401] = -2;

@@ -355,6 +355,9 @@ void SetupVars()
     EffectHeight[47] = 44;
     EffectWidth[47] = 44;
 
+    EffectWidth[181] = 48;
+    EffectHeight[181] = 66;
+
     for(int A = 1; A <= maxNPCType; ++A)
     {
         NPCScore[A] = 2;

@@ -675,7 +675,7 @@ void UpdateEffects()
             if(e.Location.SpeedY >= 10)
                 e.Location.SpeedY = 10;
         }
-        else if(e.Type == 3 || e.Type == 5 || e.Type == 129 || e.Type == 130 || e.Type == 134) // Mario & Luigi death
+        else if(e.Type == 3 || e.Type == 5 || e.Type == 129 || e.Type == 130 || e.Type == 134 || e.Type == 181) // Mario & Luigi death
         {
             e.Location.SpeedY = e.Location.SpeedY + 0.25;
         }
@@ -1298,7 +1298,7 @@ void NewEffect(int A, Location_t Location, float Direction, int NewNpc, bool Sha
         Effect[numEffects].Life = 300;
         Effect[numEffects].Type = A;
     }
-    else if(A == 3 || A == 5 || A == 129 || A == 130 || A == 134) // Mario & Luigi died effect
+    else if(A == 3 || A == 5 || A == 129 || A == 130 || A == 134 || A == 181) // Mario & Luigi died effect
     {
         numEffects++;
         Effect[numEffects].Shadow = Shadow;

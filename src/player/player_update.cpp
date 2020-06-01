@@ -432,7 +432,7 @@ void UpdatePlayer()
                     Player[A].Slide = false;
                 if(Player[A].Slope > 0 && Player[A].Controls.Down &&
                    Player[A].Mount == 0 && Player[A].HoldingNPC == 0 &&
-                   !(Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 5) &&
+                   !(Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 5 || Player[A].Character == 7) &&
                    Player[A].GrabTime == 0)
                 {
                     if(Player[A].Duck)
@@ -767,7 +767,7 @@ void UpdatePlayer()
                                 }
                                 else // normal duck
                                 {
-                                    if(((Player[A].State > 1 && Player[A].HoldingNPC <= 0) || (Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 5)) || (Player[A].Character == 7 && !(!Player[A].CanJump || (Player[A].Location.SpeedY != 0 && Player[A].Slope == 0 && Player[A].StandingOnNPC == 0))))
+                                    if(((Player[A].State > 1 && Player[A].HoldingNPC <= 0) || (Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 5)) || (Player[A].Character == 7 && Player[A].HoldingNPC <= 0 && !(!Player[A].CanJump || (Player[A].Location.SpeedY != 0 && Player[A].Slope == 0 && Player[A].StandingOnNPC == 0))))
                                     {
                                         if(!Player[A].Duck && Player[A].TailCount == 0) // Player ducks
                                         {
@@ -1095,6 +1095,11 @@ void UpdatePlayer()
                             Player[A].RunCount = 10;
                         }
                         else if(Player[A].RunCount >= 30 && Player[A].Character == 6)
+                        {
+                            Player[A].CanFly = true;
+                            Player[A].RunCount = 30;
+                        }
+                        else if(Player[A].RunCount >= 35 && Player[A].Character == 7)
                         {
                             Player[A].CanFly = true;
                             Player[A].RunCount = 30;
@@ -2058,7 +2063,7 @@ void UpdatePlayer()
 
                         if(Player[A].Character == 7)
                         {
-                            if(Player[A].Flutter == 0 && Player[A].Wet == 0 && !Player[A].WetFrame && Player[A].Controls.Jump && Player[A].FloatRelease && Player[A].Jump == 0 && Player[A].Location.SpeedY >= -1.5)
+                            if(Player[A].Flutter == 0 && Player[A].Wet == 0 && !Player[A].WetFrame && Player[A].Controls.Jump && Player[A].FloatRelease && Player[A].Jump == 0)
                             {
                                 Player[A].Flutter = 48;
                                 Player[A].Location.SpeedY = 3;
@@ -2072,8 +2077,6 @@ void UpdatePlayer()
                                     Player[A].Flutter = -1;
                                 Player[A].Location.SpeedY = Player[A].Location.SpeedY - 0.65;
                             }
-                            //if(Player[A].Pinched3 != 0)
-                            //    Player[A].Flutter = 0;
 
                         }
 
@@ -2786,6 +2789,10 @@ void UpdatePlayer()
                                                             }
                                                         }
 
+
+                                                        if(!(BlockBouncy[Block[B].Type] && !Player[A].Controls.Jump && !Player[A].Controls.AltJump))
+                                                            Player[A].Flutter = 0;
+
                                                         Player[A].Slope = B;
                                                         if(BlockSlope[Block[B].Type] == 1 && GameMenu && Player[A].Location.SpeedX >= 2)
                                                         {
@@ -2908,7 +2915,8 @@ void UpdatePlayer()
                                             if(Player[A].Fairy && (Player[A].FairyCD > 0 || Player[A].Location.SpeedY > 0))
                                                 Player[A].FairyTime = 0;
                                             Player[A].Pinched1 = 2; // for players getting squashed
-                                            Player[A].Flutter = 0;
+                                            if(!(BlockBouncy[Block[B].Type] && !Player[A].Controls.Jump && !Player[A].Controls.AltJump))
+                                                Player[A].Flutter = 0;
                                             if(Block[B].Location.SpeedY != 0)
                                                 Player[A].NPCPinched = 2;
                                             Player[A].Vine = 0; // stop climbing because you are now walking
@@ -3223,12 +3231,14 @@ void UpdatePlayer()
                                 if(!Player[A].Slide)
                                     Player[A].Multiplier = 0;
                                 BlockHit(tempHit3, true);
+                                Player[A].Flutter = -1;
                                 Player[A].Location.SpeedY = Physics.PlayerJumpVelocity;
                                 PlaySound(3);
                                 if(Player[A].Controls.Jump || Player[A].Controls.AltJump)
                                 {
                                     PlaySound(1);
                                     Player[A].Jump = Physics.PlayerBlockJumpHeight;
+                                    Player[A].Flutter = 0;
                                     if(Player[A].Character == 6 || Player[A].Character == 7)
                                         Player[A].Jump = Player[A].Jump - 5;
                                     if(Player[A].Character == 2)
@@ -4451,6 +4461,7 @@ void UpdatePlayer()
                 {
                     if(Player[A].Character == 4 && (Player[A].State == 4 || Player[A].State == 5) && !Player[A].SpinJump)
                         Player[A].DoubleJump = true;
+                    Player[A].Flutter = 0;
                     Player[A].CanJump = true;
                     if(tempSpring)
                     {
@@ -4555,6 +4566,8 @@ void UpdatePlayer()
                 // .StandingOnNPC is the number of the NPC that the player was standing on last cycle
                 // if B = 0 and .standingonnpc > 0 then the player was standing on something and is no longer standing on something
 
+                if(B > 0)
+                    Player[A].Flutter = 0;
 
                 if(B > 0 && Player[A].SpinJump)
                 {

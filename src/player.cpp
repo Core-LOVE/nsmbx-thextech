@@ -518,7 +518,7 @@ void PlayerHurt(int A)
                 Player[A].Dismount = Player[A].Immune;
                 numNPCs++;
                 NPC[numNPCs] = NPC_t();
-                if(Player[A].YoshiNPC > 0 || Player[A].YoshiPlayer > 0)
+                if(Player[A].YoshiNPC > 0 || Player[A].YoshiPlayer > 0 || Player[A].Character == 7)
                 {
                     YoshiSpit(A);
                     Player[A].YoshiSeeds = 0;
@@ -557,7 +557,7 @@ void PlayerHurt(int A)
             else
             {
                 // waluigi dies 1 hit
-                if(Player[A].Character == 6)
+                if(Player[A].Character == 6 && !Player[A].Dead)
                     PlayerDead(A);
                 if(Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 7)
                 {
@@ -626,7 +626,8 @@ void PlayerHurt(int A)
                 }
                 else
                 {
-                    PlayerDead(A);
+                    if(!Player[A].Dead)
+                        PlayerDead(A);
                     Player[A].HoldingNPC = 0;
                     if(Player[A].Mount == 2)
                     {
@@ -714,7 +715,7 @@ void PlayerDead(int A)
         else
             PlaySound(8);
     }
-    if(Player[A].YoshiNPC > 0 || Player[A].YoshiPlayer > 0)
+    if(Player[A].YoshiNPC > 0 || Player[A].YoshiPlayer > 0 || Player[A].Character == 7)
     {
         YoshiSpit(A);
         Player[A].YoshiSeeds = 0;
@@ -753,7 +754,6 @@ void PlayerDead(int A)
         SizeCheck(A);
     }
     Player[A].Mount = 0;
-    Player[A].State = 1;
     Player[A].HoldingNPC = 0;
     Player[A].GroundPound = false;
     Player[A].GroundPound2 = false;
@@ -771,7 +771,13 @@ void PlayerDead(int A)
         Effect[numEffects].Location.SpeedX = 2 * -Player[A].Direction;
     }
     else if(Player[A].Character == 6)
-        NewEffect(69, Player[A].Location, 1, 0, ShadowMode);
+    {
+        NewEffect(181, Player[A].Location, 1, 0, ShadowMode);
+        Effect[numEffects].Special = Player[A].State * Player[A].Direction;
+        Effect[numEffects].Frame = Player[A].State - 1;
+        Effect[numEffects].Location.SpeedX = 2 * -Player[A].Direction;
+    }
+    Player[A].State = 1;
     Player[A].TimeToLive = 1;
     if(CheckLiving() == 0 && GameMenu == false && BattleMode == false)
     {
@@ -1890,7 +1896,7 @@ void PlayerFrame(int A)
             }
             if(Player[A].YoshiTFrameCount > 0)
             {
-                if(Player[A].YoshiNPC == 0 && Player[A].YoshiPlayer == 0)
+                if((Player[A].YoshiNPC == 0 && Player[A].YoshiPlayer == 0))
                     Player[A].YoshiTFrameCount = Player[A].YoshiTFrameCount + 1;
                 if(Player[A].YoshiTFrameCount < 10)
                     Player[A].YoshiTFrame = 1;
@@ -2359,13 +2365,19 @@ void YoshiEat(int A)
     }
     for(int numNPCsMax6 = numNPCs, B = 1; B <= numNPCsMax6; B++)
     {
-        if(((NPCIsACoin[NPC[B].Type] && NPC[B].Special == 1) || NPCNoYoshi[NPC[B].Type] == false) && NPC[B].Active == true && ((NPCIsACoin[NPC[B].Type] == false || NPC[B].Special == 1) || NPC[B].Type == 103) && NPCIsAnExit[NPC[B].Type] == false && NPC[B].Generator == false && NPC[B].Inert == false && NPCIsYoshi[NPC[B].Type] == false && NPC[B].Effect != 5 && NPC[B].Immune == 0 && NPC[B].Type != 91 && !(NPC[B].Projectile == true && NPC[B].Type == 17) && NPC[B].HoldingPlayer == 0)
+        if((((NPCIsACoin[NPC[B].Type] && NPC[B].Special == 1) || NPCNoYoshi[NPC[B].Type] == false) && NPC[B].Active == true && ((NPCIsACoin[NPC[B].Type] == false || NPC[B].Special == 1) || NPC[B].Type == 103) && NPCIsAnExit[NPC[B].Type] == false && NPC[B].Generator == false && NPC[B].Inert == false && (NPCIsYoshi[NPC[B].Type] == false) && NPC[B].Effect != 5 && NPC[B].Immune == 0 && NPC[B].Type != 91 && !(NPC[B].Projectile == true && NPC[B].Type == 17) && NPC[B].HoldingPlayer == 0))
         {
             tempLocation = NPC[B].Location;
             if(NPC[B].Type == 91)
                 tempLocation.Y = NPC[B].Location.Y - 16;
             if(CheckCollision(Player[A].YoshiTongue, tempLocation, Player[A].Section))
             {
+                if(Player[A].Character == 7)
+                {
+                    Player[A].Frame = 12;
+                    Player[A].FrameCount = 0;
+                    YoshiFrame(A);
+                }
                 if(NPC[B].Type == 91)
                 {
                     if(NPCNoYoshi[NPC[B].Special] == false)
@@ -2884,7 +2896,7 @@ void YoshiEatCode(int A)
     int B = 0;
     Location_t tempLocation;
 
-    if(Player[A].Mount == 3 && Player[A].Fairy == false)
+    if((Player[A].Mount == 3 && Player[A].Fairy == false) || Player[A].Character == 7)
     {
     // Shell Colors
         if(Player[A].MountSpecial == 0)
@@ -2967,7 +2979,7 @@ void YoshiEatCode(int A)
             {
                 if(Player[A].RunRelease == true)
                 {
-                    if(Player[A].YoshiNPC == 0 && Player[A].YoshiPlayer == 0)
+                    if((Player[A].YoshiNPC == 0 && Player[A].YoshiPlayer == 0))
                     {
                         if(Player[A].FireBallCD == 0)
                         {
@@ -3051,7 +3063,7 @@ void YoshiEatCode(int A)
             }
             if(Player[A].Direction == -1)
                 Player[A].YoshiTongue.X = Player[A].YoshiTongue.X - 16;
-            if(Player[A].YoshiNPC == 0 && Player[A].YoshiPlayer == 0)
+            if((Player[A].YoshiNPC == 0 && Player[A].YoshiPlayer == 0) || Player[A].Character == 7)
             {
                 YoshiEat(A);
             }
@@ -3182,6 +3194,13 @@ void YoshiEatCode(int A)
                             Coins = 99;
                     }
                     PlaySound(55);
+                }
+
+                if(Player[A].Character == 7)
+                {
+                    Player[A].Frame = 12;
+                    Player[A].FrameCount = 0;
+                    YoshiFrame(A);
                 }
             }
         }
@@ -3862,7 +3881,7 @@ void PowerUps(int A)
             }
         }
 // RacoonMario
-        if(Player[A].Slide == false && Player[A].Vine == 0 && (Player[A].State == 4 || Player[A].State == 5) && Player[A].Duck == false && Player[A].HoldingNPC == 0 && Player[A].Mount != 2 && Player[A].Stoned == false && Player[A].Effect == 0 && Player[A].Character != 5)
+        if(Player[A].Slide == false && Player[A].Vine == 0 && (Player[A].State == 4 || Player[A].State == 5) && Player[A].Duck == false && Player[A].HoldingNPC == 0 && Player[A].Mount != 2 && Player[A].Stoned == false && Player[A].Effect == 0 && Player[A].Character != 5 && Player[A].Character != 7)
         {
              if(Player[A].Controls.Run == true || Player[A].SpinJump == true)
              {
@@ -4391,13 +4410,13 @@ void PlayerGrabCode(int A, bool DontResetGrabTime)
         {
             if(((Player[A].Controls.Run == true && Player[A].Controls.Down == true) || ((Player[A].Controls.Down == true || Player[A].Controls.Run == true) && Player[A].GrabTime > 0)) && (Player[A].RunRelease == true || Player[A].GrabTime > 0) && Player[A].TailCount == 0 && Player[A].State != 9)
             {
-                if((Player[A].GrabTime >= 12 && Player[A].Character < 3) || (Player[A].GrabTime >= 16 && Player[A].Character == 3) || (Player[A].GrabTime >= 8 && Player[A].Character == 4))
+                if((Player[A].GrabTime >= 12 && (Player[A].Character < 3 || Player[A].Character > 5)) || (Player[A].GrabTime >= 16 && Player[A].Character == 3) || (Player[A].GrabTime >= 8 && Player[A].Character == 4))
                 {
                     Player[A].Location.SpeedX = Player[A].GrabSpeed;
                     Player[A].GrabSpeed = 0;
                     Player[A].GrabTime = 0;
                     Player[A].TailCount = 0;
-                    if(Player[A].Character == 1 || Player[A].Character == 2 || Player[A].Character == 6)
+                    if(Player[A].Character == 1 || Player[A].Character == 2 || Player[A].Character == 6 || Player[A].Character == 7)
                     {
                         UnDuck(A);
                     }
@@ -5296,7 +5315,7 @@ void PlayerEffects(int A)
                 Player[A].Location.X = Warp[Player[A].Warp].Entrance.X + Warp[Player[A].Warp].Entrance.Width / 2.0 - Player[A].Location.Width / 2.0;
                 if(Player[A].Location.Y > Warp[Player[A].Warp].Entrance.Y + Warp[Player[A].Warp].Entrance.Height + 8)
                     Player[A].Effect2 = 1;
-                if(Player[A].Mount == 0)
+                if(Player[A].Mount == 0 && Player[A].Character != 7)
                     Player[A].Frame = 15;
                 if(Player[A].HoldingNPC > 0)
                 {
@@ -5315,7 +5334,7 @@ void PlayerEffects(int A)
                     NPC[Player[A].HoldingNPC].Location.Y = Player[A].Location.Y + Physics.PlayerGrabSpotY[Player[A].Character][Player[A].State] + 32 - NPC[Player[A].HoldingNPC].Location.Height;
                     NPC[Player[A].HoldingNPC].Location.X = Player[A].Location.X + Player[A].Location.Width / 2.0 - NPC[Player[A].HoldingNPC].Location.Width / 2.0;
                 }
-                if(Player[A].Mount == 0)
+                if(Player[A].Mount == 0 && Player[A].Character != 7)
                     Player[A].Frame = 15;
             }
             else if(Warp[Player[A].Warp].Direction == 2)
@@ -5387,7 +5406,7 @@ void PlayerEffects(int A)
             {
                 Player[A].Location.X = Warp[Player[A].Warp].Exit.X + Warp[Player[A].Warp].Exit.Width / 2.0 - Player[A].Location.Width / 2.0;
                 Player[A].Location.Y = Warp[Player[A].Warp].Exit.Y - Player[A].Location.Height - 8;
-                if(Player[A].Mount == 0)
+                if(Player[A].Mount == 0 && Player[A].Character != 7)
                     Player[A].Frame = 15;
                 if(Player[A].HoldingNPC > 0)
                 {
@@ -5399,7 +5418,7 @@ void PlayerEffects(int A)
             {
                 Player[A].Location.X = Warp[Player[A].Warp].Exit.X + Warp[Player[A].Warp].Exit.Width / 2.0 - Player[A].Location.Width / 2.0;
                 Player[A].Location.Y = Warp[Player[A].Warp].Exit.Y + Warp[Player[A].Warp].Exit.Height + 8;
-                if(Player[A].Mount == 0)
+                if(Player[A].Mount == 0 && Player[A].Character != 7)
                     Player[A].Frame = 15;
                 if(Player[A].HoldingNPC > 0)
                 {
@@ -5416,7 +5435,7 @@ void PlayerEffects(int A)
                 }
                 Player[A].Location.X = Warp[Player[A].Warp].Exit.X - Player[A].Location.Width - 8;
                 Player[A].Location.Y = Warp[Player[A].Warp].Exit.Y + Warp[Player[A].Warp].Exit.Height - Player[A].Location.Height - 2;
-                if(Player[A].Mount == 0)
+                if(Player[A].Mount == 0 && Player[A].Character != 7)
                     Player[A].Frame = 1;
                 Player[A].Direction = 1;
                 if(Player[A].HoldingNPC > 0)
@@ -5536,7 +5555,7 @@ void PlayerEffects(int A)
                     NPC[Player[A].HoldingNPC].Location.Y = Player[A].Location.Y + Physics.PlayerGrabSpotY[Player[A].Character][Player[A].State] + 32 - NPC[Player[A].HoldingNPC].Location.Height;
                     NPC[Player[A].HoldingNPC].Location.X = Player[A].Location.X + Player[A].Location.Width / 2.0 - NPC[Player[A].HoldingNPC].Location.Width / 2.0;
                 }
-                if(Player[A].Mount == 0)
+                if(Player[A].Mount == 0 && Player[A].Character != 7)
                     Player[A].Frame = 15;
             }
             else if(Warp[Player[A].Warp].Direction2 == 3)
@@ -5549,7 +5568,7 @@ void PlayerEffects(int A)
                     NPC[Player[A].HoldingNPC].Location.Y = Player[A].Location.Y + Physics.PlayerGrabSpotY[Player[A].Character][Player[A].State] + 32 - NPC[Player[A].HoldingNPC].Location.Height;
                     NPC[Player[A].HoldingNPC].Location.X = Player[A].Location.X + Player[A].Location.Width / 2.0 - NPC[Player[A].HoldingNPC].Location.Width / 2.0;
                 }
-                if(Player[A].Mount == 0)
+                if(Player[A].Mount == 0 && Player[A].Character != 7)
                     Player[A].Frame = 15;
             }
             else if(Warp[Player[A].Warp].Direction2 == 4)
@@ -5688,10 +5707,12 @@ void PlayerEffects(int A)
             NPC[Player[A].HoldingNPC].Location.X = Player[A].Location.X + Player[A].Location.Width / 2.0 - NPC[Player[A].HoldingNPC].Location.Width / 2.0;
         }
         Player[A].Effect2 = Player[A].Effect2 + 1;
-        if(Player[A].Mount == 0 && Player[A].Character != 5)
+        if(Player[A].Mount == 0 && Player[A].Character != 5 && Player[A].Character != 7)
             Player[A].Frame = 13;
         if(Player[A].Character == 5)
             Player[A].Frame = 1;
+        if(Player[A].Character == 7)
+            Player[A].Frame = 0;
         if(Player[A].Effect2 >= 30)
         {
             if(Warp[Player[A].Warp].NoYoshi == true)
@@ -6382,10 +6403,10 @@ void PlayerEffects(int A)
 // YOSHI FRAMES
 void YoshiFrame(int A)
 {
-    if(!(Player[A].Frame == 23 || Player[A].Frame == 24 || Player[A].Frame == 25) && !Player[A].Duck)
+    if(!(Player[A].Frame == 23 || Player[A].Frame == 24 || Player[A].Frame == 25 || Player[A].Frame == 12 || Player[A].Frame == 13 || Player[A].Frame == 14) && !Player[A].Duck && Player[A].Flutter <= 0)
     {
         // standing
-        if((Player[A].Location.SpeedX == 0.0 || (Player[A].Slippy == true && Player[A].Controls.Left == false && Player[A].Controls.Right == false)) && !(Player[A].Frame == 23 || Player[A].Frame == 24 || Player[A].Frame == 25) && Player[A].Flutter <= 0) // Standing
+        if((Player[A].Location.SpeedX == 0.0 || (Player[A].Slippy == true && Player[A].Controls.Left == false && Player[A].Controls.Right == false)) && !(Player[A].Frame == 23 || Player[A].Frame == 24 || Player[A].Frame == 25 || Player[A].Frame == 12 || Player[A].Frame == 13 || Player[A].Frame == 14) && Player[A].Flutter <= 0) // Standing
         {
             Player[A].Frame = 0;
             Player[A].FrameCount = 0;
@@ -6408,12 +6429,36 @@ void YoshiFrame(int A)
             {
                 Player[A].FrameCount = 0;
             }
-            Player[A].Frame = (int)(Player[A].FrameCount / 8) + 11;
+            Player[A].Frame = (int)(Player[A].FrameCount / 8) + 10;
+        }
+    }
+
+    // swallow
+    if(Player[A].Frame == 12 || Player[A].Frame == 13 || Player[A].Frame == 14)
+    {
+        if(Player[A].FrameCount < 18)
+        {
+            Player[A].FrameCount++;
+            Player[A].Controls.Up = false;
+            Player[A].Controls.Down = false;
+            Player[A].Controls.Left = false;
+            Player[A].Controls.Right = false;
+        }
+        if(Player[A].FrameCount < 6)
+            Player[A].Frame = 12;
+        else if(Player[A].FrameCount < 12)
+            Player[A].Frame = 13;
+        else if(Player[A].FrameCount < 18)
+            Player[A].Frame = 14;
+        else
+        {
+            Player[A].Frame = 0;
+            YoshiFrame(A);
         }
     }
 
     // jumping
-    if((!Player[A].CanJump || (Player[A].Location.SpeedY != 0 && Player[A].Slope == 0 && Player[A].StandingOnNPC == 0)) && LevelSelect == false && Player[A].Pinched1 == 0)
+    if((!Player[A].CanJump || Player[A].Location.SpeedY != 0) && LevelSelect == false && Player[A].Pinched1 == 0 && Player[A].Slope == 0 && Player[A].StandingOnNPC == 0)
     {
         Player[A].Duck = false;
         Player[A].Frame = 18;
@@ -6437,16 +6482,18 @@ void YoshiFrame(int A)
         }
     }
 
+
+    // fluttering
     if(Player[A].Flutter > 0)
     {
         Player[A].FrameCount = Player[A].FrameCount + 1;
-        if(Player[A].FrameCount >= 16)
+        if(Player[A].FrameCount >= 12)
             Player[A].FrameCount = 0;
-        else if(Player[A].FrameCount >= 12)
+        else if(Player[A].FrameCount >= 9)
             Player[A].Frame = 26;
-        else if(Player[A].FrameCount >= 8)
+        else if(Player[A].FrameCount >= 6)
             Player[A].Frame = 27;
-        else if(Player[A].FrameCount >= 4)
+        else if(Player[A].FrameCount >= 3)
             Player[A].Frame = 28;
         else if(Player[A].FrameCount >= 0)
             Player[A].Frame = 29;
@@ -6465,6 +6512,7 @@ void YoshiFrame(int A)
         Player[A].Frame = 22;
 
 
+    // ducking
     if(Player[A].Duck)
     {
         if(Player[A].FrameCount < 12)
@@ -6476,5 +6524,17 @@ void YoshiFrame(int A)
         else if(Player[A].FrameCount >= 4)
             Player[A].Frame = 23;
     }
+
+
+
+
+    if(Player[A].MountSpecial > 0)
+    {
+        Player[A].Frame = 30;
+    }
+
+    // holding
+    if(Player[A].HoldingNPC > 0)
+        Player[A].Frame += 32;
 }
 

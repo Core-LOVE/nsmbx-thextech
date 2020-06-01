@@ -644,7 +644,17 @@ void UpdateGraphics2()
             }
             else if(Player[A].Character == 6)
             {
-                frmMain.renderTexture(32 + (48 * A) + WaluigiFrameX[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], 124 - Player[A].Location.Height + WaluigiFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], 99, 99, GFXWaluigiBMP[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction), pfrY(100 + Player[A].Frame * Player[A].Direction), c, c, c);
+                if(Player[A].Direction == 1)
+                    frmMain.renderTextureI(32 + 48 * A + Player[A].Location.Width * 0.5 - 64, 124 - 64, 127, 127, GFXWaluigi[Player[A].State], ((Player[A].Frame - 1) % 16) * 128, (int)((Player[A].Frame - 1)/16) * 128, 0.0, nullptr, SDL_FLIP_NONE, c, c, c);
+                else
+                    frmMain.renderTextureI(32 + 48 * A + Player[A].Location.Width * 0.5 - 64, 124 - 64, 127, 127, GFXWaluigi[Player[A].State], ((Player[A].Frame - 1) % 16) * 128, (int)((Player[A].Frame - 1)/16) * 128, 0.0, nullptr, SDL_FLIP_HORIZONTAL, c, c, c);
+            }
+            else if(Player[A].Character == 7)
+            {
+                if(Player[A].Direction == 1)
+                    frmMain.renderTextureI(32 + 48 * A + Player[A].Location.Width * 0.5 - 64, 124 - 64, 127, 127, GFXYoshi[Player[A].State], (Player[A].Frame % 16) * 128, (int)(Player[A].Frame/16) * 128, 0.0, nullptr, SDL_FLIP_NONE, c, c, c);
+                else
+                    frmMain.renderTextureI(32 + 48 * A + Player[A].Location.Width * 0.5 - 64, 124 - 64, 127, 127, GFXYoshi[Player[A].State], (Player[A].Frame % 16) * 128, (int)(Player[A].Frame/16) * 128, 0.0, nullptr, SDL_FLIP_HORIZONTAL, c, c, c);
             }
             else if(Player[A].Character == 8)
             {

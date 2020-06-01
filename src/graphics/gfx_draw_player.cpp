@@ -164,7 +164,10 @@ void DrawPlayer(int A, int Z)
             {
                 if(Player[A].Mount == 0)
                 {
-                    frmMain.renderTexture(vScreenX[Z] + Player[A].Location.X + WaluigiFrameX[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], vScreenY[Z] + Player[A].Location.Y + WaluigiFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], 99, 99, GFXWaluigi[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction) + Player[A].Direction, pfrY(100 + Player[A].Frame * Player[A].Direction), s, s, s);
+                    if(Player[A].Direction == 1)
+                        frmMain.renderTextureI(vScreenX[Z] + Player[A].Location.X + Player[A].Location.Width * 0.5 - 64, vScreenY[Z] + Player[A].Location.Y + Player[A].Location.Height - 64, 127, 127, GFXWaluigi[Player[A].State], ((Player[A].Frame - 1) % 16) * 128, (int)((Player[A].Frame - 1)/16) * 128, 0.0, nullptr, SDL_FLIP_NONE, s, s, s);
+                    else
+                        frmMain.renderTextureI(vScreenX[Z] + Player[A].Location.X + Player[A].Location.Width * 0.5 - 64, vScreenY[Z] + Player[A].Location.Y + Player[A].Location.Height - 64, 127, 127, GFXWaluigi[Player[A].State], ((Player[A].Frame - 1) % 16) * 128, (int)((Player[A].Frame - 1)/16) * 128, 0.0, nullptr, SDL_FLIP_HORIZONTAL, s, s, s);
                 }
             }
             else if(Player[A].Character == 7) // draw yoshi
@@ -173,6 +176,22 @@ void DrawPlayer(int A, int Z)
                     frmMain.renderTextureI(vScreenX[Z] + Player[A].Location.X + Player[A].Location.Width * 0.5 - 64, vScreenY[Z] + Player[A].Location.Y + Player[A].Location.Height - 64, 127, 127, GFXYoshi[Player[A].State], (Player[A].Frame % 16) * 128, (int)(Player[A].Frame/16) * 128, 0.0, nullptr, SDL_FLIP_NONE, s, s, s);
                 else
                     frmMain.renderTextureI(vScreenX[Z] + Player[A].Location.X + Player[A].Location.Width * 0.5 - 64, vScreenY[Z] + Player[A].Location.Y + Player[A].Location.Height - 64, 127, 127, GFXYoshi[Player[A].State], (Player[A].Frame % 16) * 128, (int)(Player[A].Frame/16) * 128, 0.0, nullptr, SDL_FLIP_HORIZONTAL, s, s, s);
+                if(Player[A].MountSpecial > 0)
+                {
+
+                    C = 0;
+                    if(Player[A].Direction == -1)
+                        C = Player[A].YoshiTongueLength;
+
+                    frmMain.renderTexture(vScreenX[Z] + double(Player[A].YoshiTongueX) - C - 1, vScreenY[Z] + Player[A].Location.Y + Player[A].Location.Height - 28, Player[A].YoshiTongueLength + 2, 16, Tongue[2], 0, 0, s, s, s);
+
+                    C = 1;
+                    if(Player[A].Direction == 1)
+                        C = 0;
+
+                    frmMain.renderTexture(vScreenX[Z] + static_cast<int>(floor(static_cast<double>(Player[A].YoshiTongue.X))), vScreenY[Z] + Player[A].Location.Y + Player[A].Location.Height - 28, 16, 16, Tongue[1], 0, 16 * C, s, s, s);
+
+                }
             }
             else if(Player[A].Character == 8) // draw wario
             {

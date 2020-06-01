@@ -963,7 +963,10 @@ void UpdateGraphics(bool skipRepaint)
                             Y2 = 0;
                             X2 = 0;
                             PlayerWarpGFX(A, tempLocation, X2, Y2);
-                            DrawTexture(vScreenX[Z] + tempLocation.X, vScreenY[Z] + tempLocation.Y, tempLocation.Width, tempLocation.Height, GFXWaluigi[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction) + X2, pfrY(100 + Player[A].Frame * Player[A].Direction) + Y2);
+                            if(Player[A].Direction == 1)
+                                frmMain.renderTextureI(vScreenX[Z] + Player[A].Location.X + Player[A].Location.Width * 0.5 - 64, vScreenY[Z] + Player[A].Location.Y + Player[A].Location.Height - 64, 127, 127, GFXWaluigi[Player[A].State], (Player[A].Frame % 16) * 128, (int)(Player[A].Frame/16) * 128, 0.0, nullptr, SDL_FLIP_NONE);
+                            else
+                                frmMain.renderTextureI(vScreenX[Z] + Player[A].Location.X + Player[A].Location.Width * 0.5 - 64, vScreenY[Z] + Player[A].Location.Y + Player[A].Location.Height - 64, 127, 127, GFXWaluigi[Player[A].State], (Player[A].Frame % 16) * 128, (int)(Player[A].Frame/16) * 128, 0.0, nullptr, SDL_FLIP_HORIZONTAL);
                             tempLocation = Player[A].Location;
                             tempLocation.Height = 32;
                             tempLocation.Width = 32;
@@ -976,16 +979,18 @@ void UpdateGraphics(bool skipRepaint)
                         }
                         else
                         {
-                            tempLocation = Player[A].Location;
-                            tempLocation.Height = 99;
-                            tempLocation.Width = 99;
-                            tempLocation.X = tempLocation.X + WaluigiFrameX[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)];
-                            tempLocation.Y = tempLocation.Y + WaluigiFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)] + Player[A].MountOffsetY;
-                            Y2 = 0;
-                            X2 = 0;
-                            PlayerWarpGFX(A, tempLocation, X2, Y2);
-                            DrawTexture(vScreenX[Z] + tempLocation.X, vScreenY[Z] + tempLocation.Y, tempLocation.Width, tempLocation.Height, GFXWaluigi[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction) + X2, pfrY(100 + Player[A].Frame * Player[A].Direction) + Y2);
+                            if(Player[A].Direction == 1)
+                                frmMain.renderTextureI(vScreenX[Z] + Player[A].Location.X + Player[A].Location.Width * 0.5 - 64, vScreenY[Z] + Player[A].Location.Y + Player[A].Location.Height - 64, 127, 127, GFXWaluigi[Player[A].State], (Player[A].Frame % 16) * 128, (int)(Player[A].Frame/16) * 128, 0.0, nullptr, SDL_FLIP_NONE);
+                            else
+                                frmMain.renderTextureI(vScreenX[Z] + Player[A].Location.X + Player[A].Location.Width * 0.5 - 64, vScreenY[Z] + Player[A].Location.Y + Player[A].Location.Height - 64, 127, 127, GFXWaluigi[Player[A].State], (Player[A].Frame % 16) * 128, (int)(Player[A].Frame/16) * 128, 0.0, nullptr, SDL_FLIP_HORIZONTAL);
                         }
+                    }
+                    else if(Player[A].Character == 7)
+                    {
+                        if(Player[A].Direction == 1)
+                            frmMain.renderTextureI(vScreenX[Z] + Player[A].Location.X + Player[A].Location.Width * 0.5 - 64, vScreenY[Z] + Player[A].Location.Y + Player[A].Location.Height - 64, 127, 127, GFXYoshi[Player[A].State], (Player[A].Frame % 16) * 128, (int)(Player[A].Frame/16) * 128, 0.0, nullptr, SDL_FLIP_NONE);
+                        else
+                            frmMain.renderTextureI(vScreenX[Z] + Player[A].Location.X + Player[A].Location.Width * 0.5 - 64, vScreenY[Z] + Player[A].Location.Y + Player[A].Location.Height - 64, 127, 127, GFXYoshi[Player[A].State], (Player[A].Frame % 16) * 128, (int)(Player[A].Frame/16) * 128, 0.0, nullptr, SDL_FLIP_HORIZONTAL);
                     }
                     else if(Player[A].Character == 8)
                     {
@@ -1787,17 +1792,23 @@ void UpdateGraphics(bool skipRepaint)
 //                        BitBlt myBackBuffer, vScreenX(Z) + .Location.X, vScreenY(Z) + .Location.Y, .Location.Width, .Location.Height, GFXEffectMask(.Type), 0, .Frame * EffectHeight(.Type), vbSrcAnd
 //                        If .Shadow = False Then BitBlt myBackBuffer, vScreenX(Z) + .Location.X, vScreenY(Z) + .Location.Y, .Location.Width, .Location.Height, GFXEffect(.Type), 0, .Frame * EffectHeight(.Type), vbSrcPaint
                     float c = e.Shadow ? 0.f : 1.f;
-                    if(e.Type != 174)
+                    if(e.Type == 174)
                     {
-                    DrawTexture(int(vScreenX[Z] + e.Location.X), int(vScreenY[Z] + e.Location.Y),
-                                          int(e.Location.Width), int(e.Location.Height),
-                                          GFXEffect[e.Type], 0, e.Frame * EffectHeight[e.Type], c, c, c);
+                        DrawTexture(int(vScreenX[Z] + e.Location.X), int(vScreenY[Z] + e.Location.Y),
+                                              int(e.Location.Width), int(e.Location.Height),
+                                              GFXEffect[e.Type], 0, e.Frame * EffectHeight[e.Type], e.Red, e.Green, e.Blue);
+                    }
+                    else if(e.Type == 181)
+                    {
+                        frmMain.renderTextureI(int(vScreenX[Z] + e.Location.X), int(vScreenY[Z] + e.Location.Y),
+                                              int(e.Location.Width), int(e.Location.Height),
+                                              GFXEffect[e.Type], 0, e.Frame * EffectHeight[e.Type], (150 - e.Life) * 8 * (e.Special) / (std::abs(e.Special)), nullptr, SDL_FLIP_NONE, e.Red, e.Green, e.Blue);
                     }
                     else
                     {
-                    DrawTexture(int(vScreenX[Z] + e.Location.X), int(vScreenY[Z] + e.Location.Y),
-                                          int(e.Location.Width), int(e.Location.Height),
-                                          GFXEffect[e.Type], 0, e.Frame * EffectHeight[e.Type], e.Red, e.Green, e.Blue);
+                        DrawTexture(int(vScreenX[Z] + e.Location.X), int(vScreenY[Z] + e.Location.Y),
+                                              int(e.Location.Width), int(e.Location.Height),
+                                              GFXEffect[e.Type], 0, e.Frame * EffectHeight[e.Type], c, c, c);
                     }
 //                    End If
                 }
