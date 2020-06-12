@@ -25,6 +25,8 @@
 
 #include "globals.h"
 #include <fmt_format_ne.h>
+#include <cmath>
+#include <cfenv>
 
 FrmMain frmMain;
 GFX_t GFX;
@@ -376,8 +378,8 @@ bool NextFrame = false;
 int StopHit = 0;
 bool MouseRelease = false;
 bool TestFullscreen = false;
-bool keyDownAlt = false;
-bool keyDownEnter = false;
+//bool keyDownAlt = false;
+//bool keyDownEnter = false;
 bool BlocksSorted = false;
 int SingleCoop = 0;
 std::string CheatString;
@@ -681,3 +683,68 @@ void initAll()
     NPC.fill(NPC_t());
 }
 
+
+const double power10[] =
+{
+    1.0,
+    10.0,
+    100.0,
+    1000.0,
+    10000.0,
+
+    100000.0,
+    1000000.0,
+    10000000.0,
+    100000000.0,
+    1000000000.0,
+
+    10000000000.0,
+    100000000000.0,
+    1000000000000.0,
+    10000000000000.0,
+    100000000000000.0,
+
+    1000000000000000.0,
+    10000000000000000.0,
+    100000000000000000.0,
+    1000000000000000000.0,
+    10000000000000000000.0,
+
+    100000000000000000000.0,
+    1000000000000000000000.0
+};
+
+int vb6Round(double x)
+{
+    return static_cast<int>(vb6Round(x, 0));
+}
+
+static SDL_INLINE double toNearest(double x)
+{
+    int round_old = std::fegetround();
+    if(round_old == FE_TONEAREST)
+        return std::nearbyint(x);
+    else
+    {
+        std::fesetround(FE_TONEAREST);
+        x = std::nearbyint(x);
+        std::fesetround(round_old);
+        return x;
+    }
+}
+
+double vb6Round(double x, int decimals)
+{
+    double res = x, decmul;
+
+    if(decimals < 0 || decimals > 22)
+        decimals = 0;
+
+    if(SDL_fabs(x) < 1.0e16)
+    {
+        decmul = power10[decimals];
+        res = toNearest(x * decmul) / decmul;
+    }
+
+    return res;
+}

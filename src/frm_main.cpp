@@ -334,13 +334,13 @@ void FrmMain::processEvent()
         {
             eventResize();
         }
-#ifndef __EMSCRIPTEN__
-        else if(m_event.window.event == SDL_WINDOWEVENT_MAXIMIZED)
-        {
-            SDL_RestoreWindow(m_window);
-            SetRes();
-        }
-#endif
+//#ifndef __EMSCRIPTEN__
+//        else if(m_event.window.event == SDL_WINDOWEVENT_MAXIMIZED)
+//        {
+//            SDL_RestoreWindow(m_window);
+//            SetRes();
+//        }
+//#endif
         break;
     case SDL_KEYDOWN:
         eventKeyDown(m_event.key);
@@ -395,6 +395,8 @@ void FrmMain::eventDoubleClick()
         resChanged = false;
         SDL_RestoreWindow(m_window);
         SDL_SetWindowSize(m_window, ScreenW, ScreenH);
+        if(!GameMenu && !MagicHand)
+            showCursor(1);
     }
     else
         SetRes();
@@ -405,17 +407,12 @@ void FrmMain::eventKeyDown(SDL_KeyboardEvent &evt)
 {
     int KeyCode = evt.keysym.scancode;
     inputKey = KeyCode;
-    if(KeyCode == SDL_SCANCODE_RETURN || KeyCode == SDL_SCANCODE_KP_ENTER)
-        keyDownEnter = true;
-    else if(KeyCode == SDL_SCANCODE_LALT || KeyCode == SDL_SCANCODE_RALT)
-        keyDownAlt = true;
 
-    if(keyDownAlt && keyDownEnter/* && !TestLevel*/)
-    {
-        keyDownAlt = false;
-        keyDownEnter = false;
+    bool ctrlF = ((evt.keysym.mod & KMOD_CTRL) != 0 && evt.keysym.scancode == SDL_SCANCODE_F);
+    bool altEnter = ((evt.keysym.mod & KMOD_ALT) != 0 && (evt.keysym.scancode == SDL_SCANCODE_RETURN || evt.keysym.scancode == SDL_SCANCODE_KP_ENTER));
+
+    if(ctrlF || altEnter)
         ChangeScreen();
-    }
 
 #ifndef __EMSCRIPTEN__
     if(KeyCode == SDL_SCANCODE_F12)
@@ -475,11 +472,7 @@ void FrmMain::eventKeyPress(SDL_Scancode KeyASCII)
 
 void FrmMain::eventKeyUp(SDL_KeyboardEvent &evt)
 {
-    int KeyCode = evt.keysym.scancode;
-    if(KeyCode == SDL_SCANCODE_RETURN || KeyCode == SDL_SCANCODE_KP_ENTER)
-        keyDownEnter = false;
-    else if(KeyCode == SDL_SCANCODE_LALT || KeyCode == SDL_SCANCODE_RALT)
-        keyDownAlt = false;
+    UNUSED(evt);
 }
 
 void FrmMain::eventMouseDown(SDL_MouseButtonEvent &event)

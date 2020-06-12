@@ -1336,8 +1336,8 @@ void CheckActive()
         cycleCount = 0;
         gameTime = 0;
         tempTime = 0;
-        keyDownEnter = false;
-        keyDownAlt = false;
+        //keyDownEnter = false;
+        //keyDownAlt = false;
 
         if(!focusLost)
         {
