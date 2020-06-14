@@ -50,6 +50,10 @@ void KillNPC(int A, int B)
     int C = 0;
     Location_t tempLocation;
 
+    if(NPC[A].Type == 362 && NPC[A].Killed != 9)
+    {
+        NewEffect(182, NPC[A].Location);
+    }
     if(NPC[A].Type == 263 && NPC[A].Special > 0 && NPC[A].Killed != 9)
     {
         NewEffect(10, NPC[A].Location);

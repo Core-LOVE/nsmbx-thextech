@@ -5167,6 +5167,69 @@ void SpecialNPC(int A)
            NPC[A].Special5 = 0;
        }
     }
+    else if(NPC[A].Type == 362)
+    {
+        NPC[A].Special3++;
+        for(int C = 1; C <= numPlayers; C++)
+        {
+            tempLocation = NPC[A].Location;
+            tempLocation.X = NPC[A].Location.X - 96;
+            tempLocation.Y = NPC[A].Location.Y - 24;
+            tempLocation.Width = NPC[A].Location.Width + 96 * 2;
+            tempLocation.Height = NPC[A].Location.Height + 24 * 2;
+            if(CheckCollision(Player[C].Location, tempLocation, NPC[A].Section) == false)
+                NPC[A].Special = 0;
+            else
+                NPC[A].Special = 1;
+
+            if(NPC[A].Special == 0)
+            {
+                NPC[A].Special2 = 0;
+                NPC[A].Location.SpeedX = 1 * NPC[A].Direction;
+            }
+            else
+            {
+                if(NPC[A].Special3 > 100)
+                {
+                    NPC[A].Special2++;
+                    NPC[A].Location.SpeedX = 0;
+                }
+                else
+                {
+                    NPC[A].Location.SpeedX = 1 * NPC[A].Direction;
+                    NPC[A].Special = 0;
+                }
+            }
+
+            if(NPC[A].Special2 > 48 && NPC[A].Special3 > 100)
+            {
+                for (int i = -1; i <= 1; i += 2)
+                {
+                    numNPCs++;
+                    NPC[numNPCs] = NPC_t();
+                    NPC[numNPCs].Type = 363;
+                    NPC[numNPCs].Location.Y = NPC[A].Location.Y;
+                    NPC[numNPCs].Location.Height = NPCHeight[NPC[numNPCs].Type];
+                    NPC[numNPCs].Location.Width = NPCWidth[NPC[numNPCs].Type];
+                    if(i == -1)
+                        NPC[numNPCs].Location.X = NPC[A].Location.X;
+                    else
+                        NPC[numNPCs].Location.X = (NPC[A].Location.X + NPC[A].Location.Width) + NPC[numNPCs].Location.Width;
+                    NPC[numNPCs].Location.SpeedY = -4;
+                    NPC[numNPCs].Location.SpeedX = 4 * i;
+                    NPC[numNPCs].Active = true;
+                    NPC[numNPCs].TimeLeft = 10;
+                    NPC[numNPCs].Section = NPC[A].Section;
+                    NPC[numNPCs].DefaultLocation = NPC[numNPCs].Location;
+                    NPC[numNPCs].DefaultType = NPC[numNPCs].Type;
+                    NPC[numNPCs].Layer = NPC[A].Layer;
+                    NPC[numNPCs].Shadow = NPC[A].Shadow;
+                }
+                NPC[A].Special2 = 0;
+                NPC[A].Special3 = 0;
+            }
+        }
+    }
     else if(NPC[A].Type == 356)
     {
         for(int C = 1; C <= numPlayers; C++)

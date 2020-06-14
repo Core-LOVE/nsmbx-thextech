@@ -86,7 +86,9 @@ void UpdateWeatherPhysics()
 void SpawnWeather(int A, Location_t Location, bool Shadow)
 {
     if(numWeather >= maxWeathers - 4 || FreezeNPCs)
+    {
         return;
+    }
 	
 	numWeather++;
 	Weather[numWeather].Shadow = Shadow;

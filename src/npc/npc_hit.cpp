@@ -651,6 +651,10 @@ void NPCHit(int A, int B, int C)
             NPC[A].Killed = B;
         // Metroid Crawler
     }
+    else if(NPC[A].Type == 362)
+    {
+         NPC[A].Killed = B;
+    }
     else if(NPC[A].Type == 205)
     {
         if(B == 3)

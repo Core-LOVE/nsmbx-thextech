@@ -53,6 +53,9 @@ void SetupVars()
         BackgroundFence[A] = true;
 
 
+    EffectWidth[182] = 76;
+    EffectHeight[182] = 76;
+
     EffectWidth[149] = 34;
     EffectHeight[149] = 34;
 
@@ -2500,7 +2503,24 @@ void SetupVars()
     NPCJumpBounce[356] = true;
 
 
+    NPCWidth[362] = 96;
+    NPCHeight[362] = 76;
+    NPCTurnsAtCliffs[362] = true;
 
+    NPCWidth[363] = 24;
+    NPCHeight[363] = 24;
+    NPCJumpHurt[363] = true;
+    NPCNoFireBall[363] = true;
+    NPCNoIceBall[363] = true;
+    NPCNoClipping[363] = true;
+
+    NPCWidth[365] = 72;
+    NPCHeight[365] = 46;
+    NPCNoGravity[365] = true;
+    NPCNoFireBall[365] = true;
+    NPCNoIceBall[365] = true;
+    NPCWontHurt[365] = true;
+    NPCJumpHurt[365] = true;
 
     For(A, 1, maxBlockType)
     {

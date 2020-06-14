@@ -105,6 +105,15 @@ void UpdateEffectFrames()
                     e.Frame = 0;
             }
         }
+        else if(e.Type == 182) // crabmeat
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 4)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+            }
+        }
         else if(e.Type == 140 || e.Type == 150) // larry & wendy's shell
         {
             e.FrameCount += 1;
@@ -626,6 +635,11 @@ void UpdateEffects()
             {
                 e.Location.SpeedY = e.Location.SpeedY + 0.5;
             }
+        }
+        else if(e.Type == 182) // crabmeat
+        {
+            if(e.Frame == 4)
+                e.Life = 0;
         }
         else if(e.Type == 1 || e.Type == 21 || e.Type == 30 || e.Type == 51 || e.Type == 100 || e.Type == 135 || e.Type == 170) // Block break
         {
@@ -1607,7 +1621,7 @@ void NewEffect(int A, Location_t Location, float Direction, int NewNpc, bool Sha
         Effect[numEffects].Life = 6;
         Effect[numEffects].Type = A;
     }
-    else if(A == 63) // Zelda Style Smoke
+    else if(A == 63 || A == 182) // Zelda Style Smoke
     {
         numEffects++;
         Effect[numEffects].Shadow = Shadow;
