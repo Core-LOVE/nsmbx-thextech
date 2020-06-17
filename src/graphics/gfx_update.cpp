@@ -32,7 +32,7 @@
 
 #include <fmt_format_ne.h>
 #include <Utils/maths.h>
-
+#include <IniProcessor/ini_processing.h>
 
 int Z = 0;
 
@@ -86,6 +86,15 @@ void DrawTexture(double xDst, double yDst, StdPicture &tx)
 // This draws the graphic to the screen when in a level/game menu/outro/level editor
 void UpdateGraphics(bool skipRepaint)
 {
+    int sW = 800;
+    int sH = 600;
+    std::string mainIni = AppPath + "main.ini";
+    IniProcessing config(mainIni);
+    config.beginGroup("main");
+    config.read("ScreenW", sW, 800);
+    config.read("ScreenH", sH, 600);
+    config.endGroup();
+
 //    On Error Resume Next
     float c = ShadowMode ? 0.f : 1.f;
     int A = 0;
@@ -1850,7 +1859,7 @@ void UpdateGraphics(bool skipRepaint)
             }
             if(vScreen[2].Visible)
             {
-                if(int(vScreen[Z].Width) == ScreenW)
+                if(int(vScreen[Z].Width) == sW)
                 {
                     if(vScreen[Z].Top != 0.0)
                     {
@@ -2047,7 +2056,7 @@ void UpdateGraphics(bool skipRepaint)
                 int menuFix = -44; // for Input Settings
 
                 DrawTexture(0, 0, MenuGFX[1].w, MenuGFX[1].h, MenuGFX[1], 0, 0);
-                DrawTexture(ScreenW / 2 - MenuGFX[2].w / 2, 70,
+                DrawTexture(sW / 2 - MenuGFX[2].w / 2, 70,
                         MenuGFX[2].w, MenuGFX[2].h, MenuGFX[2], 0, 0);
                 SuperPrint("Made By Core", 3, 20, 570);
 

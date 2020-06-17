@@ -121,7 +121,8 @@ void NPCFrames(int A)
             (NPC[A].Type >= 154 && NPC[A].Type <= 157) || NPC[A].Type == 159 || NPC[A].Type == 192 ||
             NPC[A].Type == 197 || NPCIsAVine[NPC[A].Type] || NPC[A].Type == 237 || NPC[A].Type == 239 ||
             NPC[A].Type == 240 || NPC[A].Type == 250 || NPC[A].Type == 289 || NPC[A].Type == 290 || NPC[A].Type == 300 ||
-            NPC[A].Type == 306 || NPC[A].Type == 307 || NPC[A].Type == 336 || (NPC[A].Type >= 348 && NPC[A].Type <= 354)) // no frames
+            NPC[A].Type == 306 || NPC[A].Type == 307 || NPC[A].Type == 336 || (NPC[A].Type >= 348 && NPC[A].Type <= 354) ||
+            NPC[A].Type == 366) // no frames
     {
         if(!(NPC[A].Type == 86 || NPC[A].Type == 284 || NPC[A].Type == 47) && A == 0) // Reset Frame to 0 unless a specific NPC type
             NPC[A].Frame = 0;
@@ -507,12 +508,54 @@ void NPCFrames(int A)
         if(NPC[A].Special == 0)
         {
             NPC[A].FrameCount = NPC[A].FrameCount + 1;
-            if(NPC[A].FrameCount >= 4)
+            if(NPC[A].FrameCount >= 8)
             {
                 NPC[A].Frame = NPC[A].Frame + 1;
                 NPC[A].FrameCount = 0;
                 if(NPC[A].Frame >= 4)
                     NPC[A].Frame = 0;
+            }
+        }
+        else if(NPC[A].Special == 1)
+        {
+            NPC[A].FrameCount = NPC[A].FrameCount + 1;
+            if(NPC[A].FrameCount >= 8)
+            {
+                NPC[A].Frame = NPC[A].Frame + 1;
+                NPC[A].FrameCount = 0;
+                if(NPC[A].Frame >= 10)
+                    NPC[A].Special = 2;
+                if(NPC[A].Frame < 4)
+                    NPC[A].Frame = 4;
+            }
+        }
+        else if(NPC[A].Special == 2)
+        {
+            NPC[A].FrameCount = NPC[A].FrameCount + 1;
+            if(NPC[A].FrameCount >= 4)
+            {
+                NPC[A].Frame = NPC[A].Frame + 1;
+                NPC[A].FrameCount = 0;
+                if(NPC[A].Frame >= 18)
+                    NPC[A].Special = 3;
+                if(NPC[A].Frame < 10)
+                    NPC[A].Frame = 10;
+            }
+        }
+        else if(NPC[A].Special == 3)
+        {
+            NPC[A].FrameCount = NPC[A].FrameCount + 1;
+            if(NPC[A].FrameCount >= 4)
+            {
+                NPC[A].Frame = NPC[A].Frame + 1;
+                NPC[A].FrameCount = 0;
+                if(NPC[A].Frame >= 22)
+                {
+                    NPC[A].Frame = 0;
+                    NPC[A].Special = 0;
+                }
+                if(NPC[A].Frame < 18)
+                    NPC[A].Frame = 18;
             }
         }
     }

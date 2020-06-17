@@ -1365,6 +1365,21 @@ void BlockShakeDown(int A)
     }
 }
 
+void BlockChangeIds(int A, int B)
+{
+    for(int C = 1; C <= numBlock; C++)
+    {
+        if(Block[B].Type == A)
+        {
+            Block[B].Type = B;
+        }
+        else if(Block[B].Type == B)
+        {
+            Block[B].Type = A;
+        }
+    }
+}
+
 void BlockHitHard(int A)
 {
     if(Block[A].Hidden == false && Block[A].Special == 0 && (BlockBrick[Block[A].Type] == true || BlockExplodable[Block[A].Type] == true || BlockHammer[Block[A].Type] == true))

@@ -127,6 +127,9 @@ void SetupVars()
     EffectWidth[135] = 16;
     EffectHeight[135] = 16;
 
+    EffectWidth[183] = 120;
+    EffectHeight[183] = 100;
+
     EffectWidth[104] = 32;
     EffectHeight[104] = 32;
     EffectWidth[105] = 64;
@@ -2503,12 +2506,12 @@ void SetupVars()
     NPCJumpBounce[356] = true;
 
 
-    NPCWidth[362] = 96;
-    NPCHeight[362] = 76;
+    NPCWidth[362] = 84;
+    NPCHeight[362] = 70;
     NPCTurnsAtCliffs[362] = true;
 
-    NPCWidth[363] = 24;
-    NPCHeight[363] = 24;
+    NPCWidth[363] = 20;
+    NPCHeight[363] = 20;
     NPCJumpHurt[363] = true;
     NPCNoFireBall[363] = true;
     NPCNoIceBall[363] = true;
@@ -2521,6 +2524,11 @@ void SetupVars()
     NPCNoIceBall[365] = true;
     NPCWontHurt[365] = true;
     NPCJumpHurt[365] = true;
+
+    NPCNoIceBall[366] = true;
+    NPCWontHurt[366] = true;
+    NPCJumpHurt[366] = true;
+    NPCIsGrabbable[366] = true;
 
     For(A, 1, maxBlockType)
     {

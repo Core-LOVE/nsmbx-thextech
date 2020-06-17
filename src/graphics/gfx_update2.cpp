@@ -28,10 +28,20 @@
 #include "../collision.h"
 #include "../player.h"
 
+#include <IniProcessor/ini_processing.h>
 
 // draws GFX to screen when on the world map/world map editor
 void UpdateGraphics2()
 {
+    int sW = 800;
+    int sH = 600;
+    std::string mainIni = AppPath + "main.ini";
+    IniProcessing config(mainIni);
+    config.beginGroup("main");
+    config.read("ScreenW", sW, 800);
+    config.read("ScreenH", sH, 600);
+    config.endGroup();
+
     if(!GameIsActive)
         return;
 
@@ -52,8 +62,8 @@ void UpdateGraphics2()
 
     vScreen[Z].Left = 0;
     vScreen[Z].Top = 0;
-    vScreen[Z].Width = ScreenW;
-    vScreen[Z].Height = ScreenH;
+    vScreen[Z].Width = sW;
+    vScreen[Z].Height = sH;
     SpecialFrames();
     // Update level frames
     for(A = 1; A <= maxLevelType; A++)

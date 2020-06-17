@@ -105,10 +105,19 @@ void UpdateEffectFrames()
                     e.Frame = 0;
             }
         }
-        else if(e.Type == 182) // crabmeat
+        else if(e.Type == 182) // crabmeat explosion
         {
             e.FrameCount += 1;
             if(e.FrameCount >= 4)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+            }
+        }
+        else if(e.Type == 183) // pearl explosion
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 2)
             {
                 e.FrameCount = 0;
                 e.Frame = e.Frame + 1;
@@ -636,9 +645,15 @@ void UpdateEffects()
                 e.Location.SpeedY = e.Location.SpeedY + 0.5;
             }
         }
-        else if(e.Type == 182) // crabmeat
+        else if(e.Type == 182) // crabmeat explosion
         {
             if(e.Frame == 4)
+                e.Life = 0;
+        }
+        else if(e.Type == 183) // pearl explosion
+        {
+            e.Location.SpeedY = e.Location.SpeedY + 0.3;
+            if(e.Frame == 11)
                 e.Life = 0;
         }
         else if(e.Type == 1 || e.Type == 21 || e.Type == 30 || e.Type == 51 || e.Type == 100 || e.Type == 135 || e.Type == 170) // Block break
@@ -1621,12 +1636,40 @@ void NewEffect(int A, Location_t Location, float Direction, int NewNpc, bool Sha
         Effect[numEffects].Life = 6;
         Effect[numEffects].Type = A;
     }
-    else if(A == 63 || A == 182) // Zelda Style Smoke
+    else if(A == 63) // Zelda Style Smoke
     {
         numEffects++;
         Effect[numEffects].Shadow = Shadow;
         Effect[numEffects].Location.Width = 48;
         Effect[numEffects].Location.Height = 48;
+        Effect[numEffects].Location.X = Location.X + Location.Width / 2.0 - Effect[numEffects].Location.Width / 2.0;
+        Effect[numEffects].Location.Y = Location.Y + Location.Height / 2.0 - Effect[numEffects].Location.Height / 2.0;
+        Effect[numEffects].Location.SpeedY = 0;
+        Effect[numEffects].Location.SpeedX = 0;
+        Effect[numEffects].Frame = 0;
+        Effect[numEffects].Life = 100;
+        Effect[numEffects].Type = A;
+    }
+    else if(A == 182) // Crabmeat Explosion
+    {
+        numEffects++;
+        Effect[numEffects].Shadow = Shadow;
+        Effect[numEffects].Location.Width = EffectWidth[Effect[numEffects].Type];
+        Effect[numEffects].Location.Height = EffectHeight[Effect[numEffects].Type];
+        Effect[numEffects].Location.X = Location.X + Location.Width / 2.0 - Effect[numEffects].Location.Width / 2.0;
+        Effect[numEffects].Location.Y = Location.Y + Location.Height / 2.0 - Effect[numEffects].Location.Height / 2.0;
+        Effect[numEffects].Location.SpeedY = 0;
+        Effect[numEffects].Location.SpeedX = 0;
+        Effect[numEffects].Frame = 0;
+        Effect[numEffects].Life = 100;
+        Effect[numEffects].Type = A;
+    }
+    else if(A == 183) // Pearl Explosion
+    {
+        numEffects++;
+        Effect[numEffects].Shadow = Shadow;
+        Effect[numEffects].Location.Width = 120;
+        Effect[numEffects].Location.Height = 100;
         Effect[numEffects].Location.X = Location.X + Location.Width / 2.0 - Effect[numEffects].Location.Width / 2.0;
         Effect[numEffects].Location.Y = Location.Y + Location.Height / 2.0 - Effect[numEffects].Location.Height / 2.0;
         Effect[numEffects].Location.SpeedY = 0;

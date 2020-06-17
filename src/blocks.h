@@ -39,6 +39,8 @@ void BlockShakeLeft(int A);
 //! Shake the block right
 void BlockShakeRight(int A);
 
+void BlockChangeIds(int A, int B);
+
 void BlockHitHard(int A);
 //! Destroy a block
 void KillBlock(int A, bool Splode = true);

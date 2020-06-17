@@ -54,6 +54,10 @@ void KillNPC(int A, int B)
     {
         NewEffect(182, NPC[A].Location);
     }
+    if(NPC[A].Type == 366)
+    {
+        NewEffect(183, NPC[A].Location);
+    }
     if(NPC[A].Type == 263 && NPC[A].Special > 0 && NPC[A].Killed != 9)
     {
         NewEffect(10, NPC[A].Location);

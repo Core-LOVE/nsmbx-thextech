@@ -33,7 +33,7 @@
 #include "pseudo_vb.h"
 
 #include <Utils/maths.h>
-
+#include <IniProcessor/ini_processing.h>
 
 //  Get the screen position
 void GetvScreen(int A)
@@ -128,6 +128,15 @@ float GetOptimalWrappingPlayerPosX(int A)
 // Get the average screen position for all players
 void GetvScreenAverage()
 {
+    int sW = 800;
+    int sH = 600;
+    std::string mainIni = AppPath + "main.ini";
+    IniProcessing config(mainIni);
+    config.beginGroup("main");
+    config.read("ScreenW", sW, 800);
+    config.read("ScreenH", sH, 600);
+    config.endGroup();
+
     int A = 0;
     int B = 0;
     double OldX = 0;
@@ -164,17 +173,17 @@ void GetvScreenAverage()
         else
             return;
     }
-    vScreenX[1] = (vScreenX[1] / B) + (ScreenW * 0.5);
-    vScreenY[1] = (vScreenY[1] / B) + (ScreenH * 0.5) - vScreenYOffset;
+    vScreenX[1] = (vScreenX[1] / B) + (sW * 0.5);
+    vScreenY[1] = (vScreenY[1] / B) + (sH * 0.5) - vScreenYOffset;
 
     if(-vScreenX[A] < level[Player[1].Section].X && !LevelWrap2[Player[A].Section])
         vScreenX[A] = -level[Player[1].Section].X;
-    if(-vScreenX[A] + ScreenW > level[Player[1].Section].Width && !LevelWrap2[Player[A].Section])
-        vScreenX[A] = -(level[Player[1].Section].Width - ScreenW);
+    if(-vScreenX[A] + sW > level[Player[1].Section].Width && !LevelWrap2[Player[A].Section])
+        vScreenX[A] = -(level[Player[1].Section].Width - sW);
     if(-vScreenY[A] < level[Player[1].Section].Y)
         vScreenY[A] = -level[Player[1].Section].Y;
-    if(-vScreenY[A] + ScreenH > level[Player[1].Section].Height)
-        vScreenY[A] = -(level[Player[1].Section].Height - ScreenH);
+    if(-vScreenY[A] + sH > level[Player[1].Section].Height)
+        vScreenY[A] = -(level[Player[1].Section].Height - sH);
 
     if(GameMenu)
     {
@@ -193,6 +202,15 @@ void GetvScreenAverage()
 // Get the average screen position for all players with no level edge detection
 void GetvScreenAverage2()
 {
+    int sW = 800;
+    int sH = 600;
+    std::string mainIni = AppPath + "main.ini";
+    IniProcessing config(mainIni);
+    config.beginGroup("main");
+    config.read("ScreenW", sW, 800);
+    config.read("ScreenH", sH, 600);
+    config.endGroup();
+
     int A = 0;
     int B = 0;
     vScreenX[1] = 0;
@@ -213,8 +231,8 @@ void GetvScreenAverage2()
     A = 1;
     if(B == 0)
         return;
-    vScreenX[1] = (vScreenX[1] / B) + (ScreenW * 0.5);
-    vScreenY[1] = (vScreenY[1] / B) + (ScreenH * 0.5) - vScreenYOffset;
+    vScreenX[1] = (vScreenX[1] / B) + (sW * 0.5);
+    vScreenY[1] = (vScreenY[1] / B) + (sH * 0.5) - vScreenYOffset;
 }
 
 void SetupGraphics()
@@ -223,12 +241,12 @@ void SetupGraphics()
 
     // Creates the back buffer for the main game
     // myBackBuffer = CreateCompatibleDC(GetDC(0))
-    // myBufferBMP = CreateCompatibleBitmap(GetDC(0), screenw, screenh)
+    // myBufferBMP = CreateCompatibleBitmap(GetDC(0), sW, sH)
 //    myBackBuffer = CreateCompatibleDC(frmMain::hdc);
-//    myBufferBMP = CreateCompatibleBitmap(frmMain::hdc, ScreenW, ScreenH);
+//    myBufferBMP = CreateCompatibleBitmap(frmMain::hdc, sW, sH);
 //    SelectObject myBackBuffer, myBufferBMP;
-//    GFX.Split(2).Width = ScreenW;
-//    GFX.Split(2).Height = ScreenH;
+//    GFX.Split(2).Width = sW;
+//    GFX.Split(2).Height = sH;
     // GFX.BackgroundColor(1).Width = Screen.Width
     // GFX.BackgroundColor(1).Height = Screen.Height
     // GFX.BackgroundColor(2).Width = Screen.Width
@@ -250,7 +268,7 @@ void SetupEditorGraphics()
 //    vScreen(2).Visible = False
 //    'Creates the back buffer for the level editor
 //    'myBackBuffer = CreateCompatibleDC(GetDC(0))
-//    'myBufferBMP = CreateCompatibleBitmap(GetDC(0), screenw, screenh)
+//    'myBufferBMP = CreateCompatibleBitmap(GetDC(0), sW, sH)
 //    'SelectObject myBackBuffer, myBufferBMP
 //    GFX.BackgroundColor(1).Width = frmLevelWindow.vScreen(1).Width
 //    GFX.BackgroundColor(1).Height = frmLevelWindow.vScreen(1).Height
@@ -469,6 +487,15 @@ void ChangeScreen()
 
 void GetvScreenCredits()
 {
+    int sW = 800;
+    int sH = 600;
+    std::string mainIni = AppPath + "main.ini";
+    IniProcessing config(mainIni);
+    config.beginGroup("main");
+    config.read("ScreenW", sW, 800);
+    config.read("ScreenH", sH, 600);
+    config.endGroup();
+
     int A = 0;
     int B = 0;
     vScreenX[1] = 0;
@@ -488,16 +515,16 @@ void GetvScreenCredits()
     A = 1;
     if(B == 0)
         return;
-    vScreenX[1] = (vScreenX[1] / B) + (ScreenW * 0.5);
-    vScreenY[1] = (vScreenY[1] / B) + (ScreenH * 0.5) - vScreenYOffset;
+    vScreenX[1] = (vScreenX[1] / B) + (sW * 0.5);
+    vScreenY[1] = (vScreenY[1] / B) + (sH * 0.5) - vScreenYOffset;
     if(-vScreenX[A] < level[Player[1].Section].X)
         vScreenX[A] = -level[Player[1].Section].X;
-    if(-vScreenX[A] + ScreenW > level[Player[1].Section].Width)
-        vScreenX[A] = -(level[Player[1].Section].Width - ScreenW);
+    if(-vScreenX[A] + sW > level[Player[1].Section].Width)
+        vScreenX[A] = -(level[Player[1].Section].Width - sW);
     if(-vScreenY[A] < level[Player[1].Section].Y + 100)
         vScreenY[A] = -level[Player[1].Section].Y + 100;
-    if(-vScreenY[A] + ScreenH > level[Player[1].Section].Height - 100)
-        vScreenY[A] = -(level[Player[1].Section].Height - ScreenH) - 100;
+    if(-vScreenY[A] + sH > level[Player[1].Section].Height - 100)
+        vScreenY[A] = -(level[Player[1].Section].Height - sH) - 100;
 }
 
 int pfrX(int plrFrame)

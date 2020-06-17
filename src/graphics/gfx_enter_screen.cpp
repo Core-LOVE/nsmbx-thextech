@@ -27,9 +27,19 @@
 #include "../graphics.h"
 #include "../player.h"
 
+#include <IniProcessor/ini_processing.h>
 
 void GameThing()
 {
+    int sW = 800;
+    int sH = 600;
+    std::string mainIni = AppPath + "main.ini";
+    IniProcessing config(mainIni);
+    config.beginGroup("main");
+    config.read("ScreenW", sW, 800);
+    config.read("ScreenH", sH, 600);
+    config.endGroup();
+
     int A = 0;
 //    int B = 0;
     Player_t tempPlayer[3];
@@ -42,17 +52,17 @@ void GameThing()
 
     if(numPlayers == 1)
     {
-        Player[1].Location.X = ScreenW / 2.0 - Player[1].Location.Width / 2.0;
-        Player[1].Location.Y = ScreenH / 2.0 - Player[1].Location.Height + 24;
+        Player[1].Location.X = sW / 2.0 - Player[1].Location.Width / 2.0;
+        Player[1].Location.Y = sH / 2.0 - Player[1].Location.Height + 24;
         Player[1].Direction = 1;
     }
     else
     {
-        Player[1].Location.X = ScreenW / 2.0 - Player[1].Location.Width / 2.0 - 30;
-        Player[1].Location.Y = ScreenH / 2.0 - Player[1].Location.Height + 24;
+        Player[1].Location.X = sW / 2.0 - Player[1].Location.Width / 2.0 - 30;
+        Player[1].Location.Y = sH / 2.0 - Player[1].Location.Height + 24;
         Player[1].Direction = -1;
-        Player[2].Location.X = ScreenW / 2.0 - Player[2].Location.Width / 2.0 + 32;
-        Player[2].Location.Y = ScreenH / 2.0 - Player[2].Location.Height + 24;
+        Player[2].Location.X = sW / 2.0 - Player[2].Location.Width / 2.0 + 32;
+        Player[2].Location.Y = sH / 2.0 - Player[2].Location.Height + 24;
         Player[2].Direction = 1;
     }
 
@@ -69,13 +79,13 @@ void GameThing()
     if(TestLevel)
     {
         std::string loading = "LOADING...";
-        SuperPrint(loading, 3, (ScreenW / 2.0f) - float(loading.size() / 2) * 18, ScreenH / 2.0f + 32);
+        SuperPrint(loading, 3, (sW / 2.0f) - float(loading.size() / 2) * 18, sH / 2.0f + 32);
     }
     else
     {
-        frmMain.renderTexture(ScreenW / 2.0 - 46, ScreenH / 2.0 + 31, Interface[3].w, Interface[3].h, Interface[3], 0, 0);
-        frmMain.renderTexture(ScreenW / 2.0 - Interface[1].w / 2, ScreenH / 2.0 + 32, Interface[1].w, Interface[1].h, Interface[1], 0, 0);
-        SuperPrint(std::to_string(int(Lives)), 1, ScreenW / 2.0 + 12, ScreenH / 2.0 + 32);
+        frmMain.renderTexture(sW / 2.0 - 46, sH / 2.0 + 31, Interface[3].w, Interface[3].h, Interface[3], 0, 0);
+        frmMain.renderTexture(sW / 2.0 - Interface[1].w / 2, sH / 2.0 + 32, Interface[1].w, Interface[1].h, Interface[1], 0, 0);
+        SuperPrint(std::to_string(int(Lives)), 1, sW / 2.0 + 12, sH / 2.0 + 32);
     }
 
     frmMain.repaint();

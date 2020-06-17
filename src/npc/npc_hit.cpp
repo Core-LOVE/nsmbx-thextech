@@ -653,7 +653,12 @@ void NPCHit(int A, int B, int C)
     }
     else if(NPC[A].Type == 362)
     {
-         NPC[A].Killed = B;
+        NPC[A].Killed = B;
+    }
+    else if(NPC[A].Type == 366)
+    {
+        NewEffect(183, NPC[A].Location);
+        NPC[A].Killed = 9;
     }
     else if(NPC[A].Type == 205)
     {
