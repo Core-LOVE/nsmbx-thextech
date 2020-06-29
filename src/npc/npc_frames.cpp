@@ -361,46 +361,16 @@ void NPCFrames(int A)
             NPC[A].Frame = 0;
 
     }
-    else if(NPC[A].Type == 299)
+    else if(NPC[A].Type == 298 || NPC[A].Type == 299)
     {
-        if(NPC[A].Special2 == 0)
+        NPC[A].FrameCount = NPC[A].FrameCount + 1;
+        if(NPC[A].FrameCount >= 8)
         {
-            NPC[A].FrameCount = NPC[A].FrameCount + 1;
-            if(NPC[A].FrameCount >= 4)
-            {
-                NPC[A].Frame = NPC[A].Frame + 1;
-                NPC[A].FrameCount = 0;
-            }
-            if(NPC[A].Frame >= 3)
-                NPC[A].Frame = 0;
+            NPC[A].Frame = NPC[A].Frame + 1;
+            NPC[A].FrameCount = 0;
         }
-        else if(NPC[A].Special2 == 1)
-        {
-            NPC[A].FrameCount = NPC[A].FrameCount + 1;
-            if(NPC[A].FrameCount >= 4)
-            {
-                NPC[A].Frame = NPC[A].Frame + 1;
-                NPC[A].FrameCount = 0;
-            }
-            if(NPC[A].Frame >= 6)
-            {
-                NPC[A].Frame = 7;
-                NPC[A].Special2 = 2;
-            }
-        }
-        else if(NPC[A].Special2 == 2)
-        {
-            NPC[A].FrameCount = NPC[A].FrameCount + 1;
-            if(NPC[A].FrameCount >= 4)
-            {
-                NPC[A].Frame = NPC[A].Frame + 1;
-                NPC[A].FrameCount = 0;
-            }
-            if(NPC[A].Frame >= 9)
-            {
-                NPC[A].Frame = 7;
-            }
-        }
+        if(NPC[A].Frame >= 4)
+            NPC[A].Frame = 0;
     }
     else if(NPC[A].Type == 280) // ludwig koopa
     {
@@ -561,20 +531,31 @@ void NPCFrames(int A)
     }
     else if(NPC[A].Type == 362) // crabmeat
     {
-        NPC[A].FrameCount = NPC[A].FrameCount + 1;
-        if(NPC[A].FrameCount >= 8)
+        if(NPCFrame[NPC[A].Type] == 0)
         {
-            NPC[A].Frame = NPC[A].Frame + NPC[A].Direction;
-            NPC[A].FrameCount = 0;
-            if(NPC[A].Frame < 0)
-                NPC[A].Frame = 3;
-            else if(NPC[A].Frame > 3 && NPC[A].Special == 0)
-                NPC[A].Frame = 0;
+            NPC[A].FrameCount = NPC[A].FrameCount + 1;
+            if(NPC[A].FrameCount >= 8)
+            {
+                NPC[A].Frame = NPC[A].Frame + NPC[A].Direction;
+                NPC[A].FrameCount = 0;
+                if(NPC[A].Frame < 0)
+                    NPC[A].Frame = 3;
+                else if(NPC[A].Frame > 3 && NPC[A].Special == 0)
+                    NPC[A].Frame = 0;
+            }
+            if(NPC[A].Special == 1)
+            {
+                NPC[A].FrameCount = 0;
+                NPC[A].Frame = 4;
+            }
         }
-        if(NPC[A].Special == 1)
+        else if(NPCFrame[NPC[A].Type] > 0)
         {
-            NPC[A].FrameCount = 0;
-            NPC[A].Frame = 4;
+            if(NPC[A].Special == 1)
+            {
+                NPC[A].FrameCount = 0;
+                NPC[A].Frame = NPCFrame[NPC[A].Type] + 1;
+            }
         }
     }
     else if(NPC[A].Type == 305) // red pow block

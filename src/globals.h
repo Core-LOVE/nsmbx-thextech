@@ -75,6 +75,7 @@ extern bool GameIsActive;
 //! Path to game resources assets (by default it's ~/.PGE_Project/thextech/)
 extern std::string AppPath;
 
+extern void ReadMainIni();
 /**
  * @brief Process internal events (mouse, keyboard, joysticks, window's update, OS communications, etc.)
  */
@@ -2455,5 +2456,8 @@ extern std::string GameVersion;
 //Public Const curRelease As Integer = 64
 const int curRelease = 64;
 
+extern bool WindowChanged;
+extern int ScreenW;
+extern int ScreenH;
 
 #endif // GLOBALS_H

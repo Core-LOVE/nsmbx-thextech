@@ -151,7 +151,37 @@ void TouchBonus(int A, int B)
                 return;
             }
         }
+        if(NPC[B].Type == 298 || NPC[B].Type == 299) // WL4 CrystalS
+        {
+            PlaySound(14);
+            NewEffect(184, NPC[B].Location);
+            if(NPC[B].Type != 299)
+            {
 
+                Coins = Coins + 1;
+                Effect[numEffects].Frame = 0;
+                Score += 10;
+            }
+            else
+            {
+                Coins = Coins + 10;
+                Effect[numEffects].Frame = 1;
+                Score += 100;
+            }
+            if(Coins >= 100)
+            {
+                if(Lives < 99)
+                {
+                    Lives = Lives + 1;
+                    PlaySound(15);
+                    Coins = Coins - 100;
+                }
+                else
+                    Coins = 99;
+            }
+            NPC[B].Killed = 9;
+            return;
+        }
         if(NPC[B].Type == 254) // Player is a fairy
         {
             if(Player[A].Mount == 2)

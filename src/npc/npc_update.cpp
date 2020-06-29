@@ -879,7 +879,7 @@ void UpdateNPCs()
                     Physics.NPCGravity = Physics.NPCGravityReal * 0.2;
                 if(NPC[A].Type == 195 && NPC[A].Special4 == 1)
                     NPC[A].Special5 = 0;
-                else if(!NPCIsCheep[NPC[A].Type] && NPC[A].Type != 190 && NPC[A].Type != 298 && NPC[A].Type != 205 && NPC[A].Type != 206 && NPC[A].Type != 207 && NPC[A].Type != 345)
+                else if(!NPCIsCheep[NPC[A].Type] && NPC[A].Type != 190 && NPC[A].Type != 205 && NPC[A].Type != 206 && NPC[A].Type != 207 && NPC[A].Type != 345)
                     speedVar = (float)(speedVar * 0.5);
                 else if(NPCIsCheep[NPC[A].Type] && NPC[A].Special == 2 && NPC[A].Location.SpeedY > 0)
                     speedVar = (float)(speedVar * 0.5);
@@ -888,7 +888,7 @@ void UpdateNPCs()
                 if(NPC[A].Location.SpeedY < -3)
                     NPC[A].Location.SpeedY = -3;
             }
-            else if(!((NPC[A].Type != 190 || NPC[A].Type != 298) && NPCIsCheep[NPC[A].Type] == false))
+            else if(!((NPC[A].Type != 190) && NPCIsCheep[NPC[A].Type] == false))
             {
                 NPC[A].WallDeath = NPC[A].WallDeath + 2;
                 if(NPC[A].WallDeath >= 10)
@@ -1502,13 +1502,6 @@ void UpdateNPCs()
                         }
 
                     }
-                    else if(NPC[A].Type == 298)
-                    {
-                        if(NPC[A].Special == 1)
-                            NPC[A].Location.SpeedX = 3 * NPC[A].Direction;
-
-                        // Big Koopa Movement Code
-                    }
                     else if(NPC[A].Type == 190)
                     {
                         if(NPC[A].Special == 1)
@@ -1885,7 +1878,7 @@ void UpdateNPCs()
                     }
                     else if(NPC[A].Type == 160 || NPC[A].Type == 188)
                         NPC[A].Location.SpeedY = 0;
-                    if(NPC[A].Type == 192 || NPC[A].Type == 299)
+                    if(NPC[A].Type == 192)
                     {
                         NPC[A].Projectile = false;
                         NPC[A].Location.SpeedX = 0;
@@ -1991,7 +1984,7 @@ void UpdateNPCs()
                     if(NPC[A].Location.X + NPC[A].Location.Width > (FLBlocks + 1) * 32)
                         NPC[A].Location.X = (FLBlocks + 1) * 32 - NPC[A].Location.Width;
 
-                    if(!(NPCIsACoin[NPC[A].Type] && NPC[A].Special == 0) && !(NPC[A].Type == 45 && NPC[A].Special == 0) && !(NPC[A].Type == 57) && !(NPC[A].Type == 85) && !(NPC[A].Type == 91) && !(NPC[A].Type == 97) && !(NPC[A].Type == 196) && !(NPC[A].Type >= 104 && NPC[A].Type <= 106) && !(NPCIsAnExit[NPC[A].Type] && ((NPC[A].DefaultLocation.X == NPC[A].Location.X && NPC[A].DefaultLocation.Y == NPC[A].Location.Y) || NPC[A].Inert == true)) && !(NPC[A].Type == 159) && !(NPC[A].Type == 192) && !(NPC[A].Type == 299) && !(NPC[A].Type == 202) && !(NPC[A].Type == 246 || NPC[A].Type == 255 || NPC[A].Type == 259 || NPC[A].Type == 260))
+                    if(!(NPCIsACoin[NPC[A].Type] && NPC[A].Special == 0) && !(NPC[A].Type == 45 && NPC[A].Special == 0) && !(NPC[A].Type == 57) && !(NPC[A].Type == 85) && !(NPC[A].Type == 91) && !(NPC[A].Type == 97) && !(NPC[A].Type == 196) && !(NPC[A].Type >= 104 && NPC[A].Type <= 106) && !(NPCIsAnExit[NPC[A].Type] && ((NPC[A].DefaultLocation.X == NPC[A].Location.X && NPC[A].DefaultLocation.Y == NPC[A].Location.Y) || NPC[A].Inert == true)) && !(NPC[A].Type == 159) && !(NPC[A].Type == 192) && !(NPC[A].Type == 202) && !(NPC[A].Type == 246 || NPC[A].Type == 255 || NPC[A].Type == 259 || NPC[A].Type == 260))
                     {
 
                         if((NPCNoClipping[NPC[A].Type] == false || (NPC[A].Projectile == true)) && !((NPC[A].Type == 40 || NPC[A].Type == 336) && NPC[A].Projectile == true) && !(NPC[A].Type == 50) && NPC[A].standingOnPlayer == 0 && !(NPCIsVeggie[NPC[A].Type] && NPC[A].Projectile == true) && !(NPC[A].Type == 30) && !(NPC[A].Type == 18) && !(NPC[A].Type == 108) && !(NPCIsCheep[NPC[A].Type] == true && NPC[A].Special == 2) && !(NPC[A].Type == 272))

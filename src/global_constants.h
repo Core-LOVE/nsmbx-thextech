@@ -102,11 +102,6 @@ const int maxTiles = 20000;
 //Public Const maxScenes As Integer = 5000
 const int maxScenes = 5000;
 
-//Public Const ScreenW As Integer = 800  'Game Screen Width
-const int ScreenW = 800;
-//Public Const ScreenH As Integer = 600  'Game Screen Height
-const int ScreenH = 600;
-
 //Public Const frameRate As Double = 15 'for controlling game speed
 const int frameRate = 15;
 

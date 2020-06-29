@@ -94,7 +94,7 @@ public:
     void resetViewport();
     void setViewport(int x, int y, int w, int h);
     void offsetViewport(int x, int y); // for screen-shaking
-
+    void resizeWindow(int w, int h);
     StdPicture LoadPicture(std::string path, std::string maskPath = std::string(), std::string maskFallbackPath = std::string());
     StdPicture lazyLoadPicture(std::string path, std::string maskPath = std::string(), std::string maskFallbackPath = std::string());
     void deleteTexture(StdPicture &tx, bool lazyUnload = false);

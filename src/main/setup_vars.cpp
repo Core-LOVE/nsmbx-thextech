@@ -113,6 +113,8 @@ void SetupVars()
     EffectWidth[130] = 30;
     EffectHeight[130] = 34;
 
+    EffectWidth[184] = 48;
+
     EffectWidth[132] = 32;
     EffectHeight[132] = 32;
     EffectWidth[133] = 10;
@@ -1438,9 +1440,6 @@ void SetupVars()
     NPCNoYoshi[151] = true;
     NPCWontHurt[151] = true;
     NPCNoClipping[151] = true;
-    NPCWidth[299] = 64; // SMM Checkpoint
-    NPCHeight[299] = 64;
-    NPCNoGravity[299] = true;
     NPCWidth[154] = 32; // SMB2 Mushroom Block
     NPCHeight[154] = 32;
     NPCWidth[155] = 32; // SMB2 Mushroom Block
@@ -1635,9 +1634,17 @@ void SetupVars()
 
     NPCWidthGFX[190] = 32;
     NPCHeightGFX[190] = 32;
-    NPCWidthGFX[298] = 32;
-    NPCHeightGFX[298] = 32;
 
+    For(A, 298, 299) // WL4 Crystals
+    {
+        NPCWidthGFX[A] = 16;
+        NPCWidth[A] = 16;
+        NPCHeightGFX[A] = 32;
+        NPCHeight[A] = 32;
+        NPCIsABonus[A] = true;
+        NPCNoIceBall[A] = true;
+        NPCNoGravity[A] = true;
+    }
 
     NPCWidthGFX[336] = 64;
     NPCHeightGFX[336] = 48;
@@ -1655,13 +1662,10 @@ void SetupVars()
     NPCJumpHurt[234] = true;
 
     NPCHeight[190] = 20;
-    NPCHeight[298] = 20;
     NPCFrameOffsetY[190] = 12;
-    NPCFrameOffsetY[298] = 12;
     NPCFrameOffsetY[194] = 2;
 
     NPCMovesPlayer[190] = true;
-    NPCMovesPlayer[298] = true;
 
     NPCTurnsAtCliffs[175] = true;
 
@@ -1677,7 +1681,6 @@ void SetupVars()
     NPCIsABonus[192] = true;
     NPCNoYoshi[299] = true;
     NPCIsABonus[299] = true;
-
 
     NPCIsAParaTroopa[176] = true;
     NPCIsAParaTroopa[177] = true;
@@ -2041,7 +2044,6 @@ void SetupVars()
     NPCIsABlock[83] = true;
     NPCIsABlock[84] = true;
     NPCIsABlock[190] = true;
-    NPCIsABlock[298] = true;
     NPCIsAHit1Block[35] = true;
     NPCIsAHit1Block[191] = true;
     NPCIsAHit1Block[193] = true;
@@ -2059,9 +2061,7 @@ void SetupVars()
     NPCIsAHit1Block[295] = true;
     NPCIsAHit1Block[106] = true;
     NPCWontHurt[190] = true;
-    NPCWontHurt[298] = true;
     NPCCanWalkOn[190] = true;
-    NPCCanWalkOn[298] = true;
     NPCStandsOnPlayer[22] = true;
     NPCStandsOnPlayer[26] = true;
     NPCStandsOnPlayer[31] = true;

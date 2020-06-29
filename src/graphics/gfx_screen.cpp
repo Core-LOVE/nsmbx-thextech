@@ -36,72 +36,63 @@
 // Sets up the split lines
 void SetupScreens()
 {
-    int sW = 800;
-    int sH = 600;
-    std::string mainIni = AppPath + "main.ini";
-    IniProcessing config(mainIni);
-    config.beginGroup("main");
-    config.read("ScreenW", sW, 800);
-    config.read("ScreenH", sH, 600);
-    config.endGroup();
-
     switch(ScreenType)
     {
     case 0: // Follows Player 1
-        vScreen[1].Height = sH;
-        vScreen[1].Width = sW;
+        vScreen[1].Height = ScreenH;
+        vScreen[1].Width = ScreenW;
         vScreen[1].Left = 0;
         vScreen[1].Top = 0;
         vScreen[2].Visible = false;
         break;
     case 1: // Split Screen vertical
-        vScreen[1].Height = sH / 2;
-        vScreen[1].Width = sW;
+        vScreen[1].Height = ScreenH / 2;
+        vScreen[1].Width = ScreenW;
         vScreen[1].Left = 0;
         vScreen[1].Top = 0;
-        vScreen[2].Height = sH / 2;
-        vScreen[2].Width = sW;
+        vScreen[2].Height = ScreenH / 2;
+        vScreen[2].Width = ScreenW;
         vScreen[2].Left = 0;
-        vScreen[2].Top = sH / 2;
+        vScreen[2].Top = ScreenH / 2;
         break;
     case 2: // Follows all players
-        vScreen[1].Height = sH;
-        vScreen[1].Width = sW;
+        vScreen[1].Height = ScreenH;
+        vScreen[1].Width = ScreenW;
         vScreen[1].Left = 0;
         vScreen[1].Top = 0;
         vScreen[2].Visible = false;
         break;
     case 3: // Follows all players. Noone leaves the screen
-        vScreen[1].Height = sH;
-        vScreen[1].Width = sW;
+        vScreen[1].Height = ScreenH;
+        vScreen[1].Width = ScreenW;
         vScreen[1].Left = 0;
         vScreen[1].Top = 0;
         vScreen[2].Visible = false;
         break;
     case 4: // Split Screen horizontal
-        vScreen[1].Height = sH;
-        vScreen[1].Width = sW / 2;
+        vScreen[1].Height = ScreenH;
+        vScreen[1].Width = ScreenW / 2;
         vScreen[1].Left = 0;
         vScreen[1].Top = 0;
-        vScreen[2].Height = sH;
-        vScreen[2].Width = sW / 2;
-        vScreen[2].Left = sW / 2;
+        vScreen[2].Height = ScreenH;
+        vScreen[2].Width = ScreenW / 2;
+        vScreen[2].Left = ScreenW / 2;
         vScreen[2].Top = 0;
         break;
     case 5: // Dynamic screen detection
-        vScreen[1].Height = sH;
-        vScreen[1].Width = sW;
+        vScreen[1].Height = ScreenH;
+        vScreen[1].Width = ScreenW;
         vScreen[1].Left = 0;
         vScreen[1].Top = 0;
         vScreen[2].Visible = false;
         break;
     case 6: // VScreen Coop
-        vScreen[1].Height = sH;
-        vScreen[1].Width = sW;
+        vScreen[1].Height = ScreenH;
+        vScreen[1].Width = ScreenW;
         vScreen[1].Left = 0;
         vScreen[1].Top = 0;
-        vScreen[2].Height = sH;
-        vScreen[2].Width = sW;
+        vScreen[2].Height = ScreenH;
+        vScreen[2].Width = ScreenW;
         vScreen[2].Left = 0;
         vScreen[2].Top = 0;
         break;
@@ -125,15 +116,6 @@ void SetupScreens()
 
 void DynamicScreen()
 {
-    int sW = 800;
-    int sH = 600;
-    std::string mainIni = AppPath + "main.ini";
-    IniProcessing config(mainIni);
-    config.beginGroup("main");
-    config.read("ScreenW", sW, 800);
-    config.read("ScreenH", sH, 600);
-    config.endGroup();
-
     int A = 0;
     GetvScreenAverage();
 
@@ -153,14 +135,14 @@ void DynamicScreen()
     {
         if(Player[1].Section == Player[2].Section)
         {
-            if(level[Player[1].Section].Width - level[Player[1].Section].X > sW && (((vScreen[2].Visible == false && Player[2].Location.X + vScreenX[1] >= sW * 0.75 - Player[2].Location.Width / 2.0) || (vScreen[2].Visible == true && Player[2].Location.X + vScreenX[1] >= sW * 0.75 - Player[2].Location.Width / 2.0)) && (Player[1].Location.X < level[Player[1].Section].Width - sW * 0.75 - Player[1].Location.Width / 2.0)))
+            if(level[Player[1].Section].Width - level[Player[1].Section].X > ScreenW && (((vScreen[2].Visible == false && Player[2].Location.X + vScreenX[1] >= ScreenW * 0.75 - Player[2].Location.Width / 2.0) || (vScreen[2].Visible == true && Player[2].Location.X + vScreenX[1] >= ScreenW * 0.75 - Player[2].Location.Width / 2.0)) && (Player[1].Location.X < level[Player[1].Section].Width - ScreenW * 0.75 - Player[1].Location.Width / 2.0)))
             {
-                vScreen[2].Height = sH;
-                vScreen[2].Width = sW / 2;
-                vScreen[2].Left = sW / 2.0;
+                vScreen[2].Height = ScreenH;
+                vScreen[2].Width = ScreenW / 2;
+                vScreen[2].Left = ScreenW / 2.0;
                 vScreen[2].Top = 0;
-                vScreen[1].Height = sH;
-                vScreen[1].Width = sW / 2;
+                vScreen[1].Height = ScreenH;
+                vScreen[1].Width = ScreenW / 2;
                 vScreen[1].Left = 0;
                 vScreen[1].Top = 0;
                 GetvScreenAverage2();
@@ -170,19 +152,19 @@ void DynamicScreen()
                 {
                     vScreen[A].TempDelay = 200;
                     vScreen[A].tempX = 0;
-                    vScreen[A].TempY = -vScreenY[1] + sH * 0.5 - Player[A].Location.Y - vScreenYOffset - Player[A].Location.Height;
+                    vScreen[A].TempY = -vScreenY[1] + ScreenH * 0.5 - Player[A].Location.Y - vScreenYOffset - Player[A].Location.Height;
                 }
                 vScreen[2].Visible = true;
                 DScreenType = 1;
             }
-            else if(level[Player[1].Section].Width - level[Player[1].Section].X > sW && (((vScreen[2].Visible == false && Player[1].Location.X + vScreenX[1] >= sW * 0.75 - Player[1].Location.Width / 2.0) || (vScreen[2].Visible == true && Player[1].Location.X + vScreenX[2] >= sW * 0.75 - Player[1].Location.Width / 2.0)) && (Player[2].Location.X < level[Player[1].Section].Width - sW * 0.75 - Player[2].Location.Width / 2.0)))
+            else if(level[Player[1].Section].Width - level[Player[1].Section].X > ScreenW && (((vScreen[2].Visible == false && Player[1].Location.X + vScreenX[1] >= ScreenW * 0.75 - Player[1].Location.Width / 2.0) || (vScreen[2].Visible == true && Player[1].Location.X + vScreenX[2] >= ScreenW * 0.75 - Player[1].Location.Width / 2.0)) && (Player[2].Location.X < level[Player[1].Section].Width - ScreenW * 0.75 - Player[2].Location.Width / 2.0)))
             {
-                vScreen[1].Height = sH;
-                vScreen[1].Width = sW / 2;
-                vScreen[1].Left = sW / 2.0;
+                vScreen[1].Height = ScreenH;
+                vScreen[1].Width = ScreenW / 2;
+                vScreen[1].Left = ScreenW / 2.0;
                 vScreen[1].Top = 0;
-                vScreen[2].Height = sH;
-                vScreen[2].Width = sW / 2;
+                vScreen[2].Height = ScreenH;
+                vScreen[2].Width = ScreenW / 2;
                 vScreen[2].Left = 0;
                 vScreen[2].Top = 0;
                 GetvScreenAverage2();
@@ -192,19 +174,19 @@ void DynamicScreen()
                 {
                     vScreen[A].TempDelay = 200;
                     vScreen[A].tempX = 0;
-                    vScreen[A].TempY = -vScreenY[1] + sH * 0.5 - Player[A].Location.Y - vScreenYOffset - Player[A].Location.Height;
+                    vScreen[A].TempY = -vScreenY[1] + ScreenH * 0.5 - Player[A].Location.Y - vScreenYOffset - Player[A].Location.Height;
                 }
                 DScreenType = 2;
                 vScreen[2].Visible = true;
             }
-            else if(level[Player[1].Section].Height - level[Player[1].Section].Y > sH && ((vScreen[2].Visible == false && Player[1].Location.Y + vScreenY[1] >= sH * 0.75 - vScreenYOffset - Player[1].Location.Height) || (vScreen[2].Visible == true && Player[1].Location.Y + vScreenY[2] >= sH * 0.75 - vScreenYOffset - Player[1].Location.Height)) && (Player[2].Location.Y < level[Player[1].Section].Height - sH * 0.75 - vScreenYOffset - Player[2].Location.Height))
+            else if(level[Player[1].Section].Height - level[Player[1].Section].Y > ScreenH && ((vScreen[2].Visible == false && Player[1].Location.Y + vScreenY[1] >= ScreenH * 0.75 - vScreenYOffset - Player[1].Location.Height) || (vScreen[2].Visible == true && Player[1].Location.Y + vScreenY[2] >= ScreenH * 0.75 - vScreenYOffset - Player[1].Location.Height)) && (Player[2].Location.Y < level[Player[1].Section].Height - ScreenH * 0.75 - vScreenYOffset - Player[2].Location.Height))
             {
-                vScreen[1].Height = sH / 2;
-                vScreen[1].Width = sW;
+                vScreen[1].Height = ScreenH / 2;
+                vScreen[1].Width = ScreenW;
                 vScreen[1].Left = 0;
-                vScreen[1].Top = sH / 2.0;
-                vScreen[2].Height = sH / 2;
-                vScreen[2].Width = sW;
+                vScreen[1].Top = ScreenH / 2.0;
+                vScreen[2].Height = ScreenH / 2;
+                vScreen[2].Width = ScreenW;
                 vScreen[2].Left = 0;
                 vScreen[2].Top = 0;
                 GetvScreenAverage2();
@@ -214,21 +196,21 @@ void DynamicScreen()
                 {
                     vScreen[A].TempDelay = 200;
                     vScreen[A].TempY = 0;
-                    vScreen[A].tempX = -vScreenX[1] + sW * 0.5 - Player[A].Location.X - Player[A].Location.Width * 0.5;
+                    vScreen[A].tempX = -vScreenX[1] + ScreenW * 0.5 - Player[A].Location.X - Player[A].Location.Width * 0.5;
                 }
                 vScreen[2].Visible = true;
                 DScreenType = 3;
             }
-            else if(level[Player[1].Section].Height - level[Player[1].Section].Y > sH && ((vScreen[2].Visible == false && Player[2].Location.Y + vScreenY[1] >= sH * 0.75 - vScreenYOffset - Player[2].Location.Height) || (vScreen[2].Visible == true && Player[2].Location.Y + vScreenY[1] >= sH * 0.75 - vScreenYOffset - Player[2].Location.Height)) && (Player[1].Location.Y < level[Player[1].Section].Height - sH * 0.75 - vScreenYOffset - Player[1].Location.Height))
+            else if(level[Player[1].Section].Height - level[Player[1].Section].Y > ScreenH && ((vScreen[2].Visible == false && Player[2].Location.Y + vScreenY[1] >= ScreenH * 0.75 - vScreenYOffset - Player[2].Location.Height) || (vScreen[2].Visible == true && Player[2].Location.Y + vScreenY[1] >= ScreenH * 0.75 - vScreenYOffset - Player[2].Location.Height)) && (Player[1].Location.Y < level[Player[1].Section].Height - ScreenH * 0.75 - vScreenYOffset - Player[1].Location.Height))
             {
-                vScreen[1].Height = sH / 2;
-                vScreen[1].Width = sW;
+                vScreen[1].Height = ScreenH / 2;
+                vScreen[1].Width = ScreenW;
                 vScreen[1].Left = 0;
                 vScreen[1].Top = 0;
-                vScreen[2].Height = sH / 2;
-                vScreen[2].Width = sW;
+                vScreen[2].Height = ScreenH / 2;
+                vScreen[2].Width = ScreenW;
                 vScreen[2].Left = 0;
-                vScreen[2].Top = sH / 2.0;
+                vScreen[2].Top = ScreenH / 2.0;
                 GetvScreenAverage2();
                 if(DScreenType != 4)
                     PlaySound(13);
@@ -236,7 +218,7 @@ void DynamicScreen()
                 {
                     vScreen[A].TempDelay = 200;
                     vScreen[A].TempY = 0;
-                    vScreen[A].tempX = -vScreenX[1] + sW * 0.5 - Player[A].Location.X - Player[A].Location.Width * 0.5;
+                    vScreen[A].tempX = -vScreenX[1] + ScreenW * 0.5 - Player[A].Location.X - Player[A].Location.Width * 0.5;
                 }
                 vScreen[2].Visible = true;
                 DScreenType = 4;
@@ -248,8 +230,8 @@ void DynamicScreen()
                     if(DScreenType != 5)
                         PlaySound(13);
                     vScreen[2].Visible = false;
-                    vScreen[1].Height = sH;
-                    vScreen[1].Width = sW;
+                    vScreen[1].Height = ScreenH;
+                    vScreen[1].Width = ScreenW;
                     vScreen[1].Left = 0;
                     vScreen[1].Top = 0;
                     vScreen[1].tempX = 0;
@@ -273,14 +255,14 @@ void DynamicScreen()
         }
         else
         {
-            vScreen[1].Height = sH / 2;
-            vScreen[1].Width = sW;
+            vScreen[1].Height = ScreenH / 2;
+            vScreen[1].Width = ScreenW;
             vScreen[1].Left = 0;
             vScreen[1].Top = 0;
-            vScreen[2].Height = sH / 2;
-            vScreen[2].Width = sW;
+            vScreen[2].Height = ScreenH / 2;
+            vScreen[2].Width = ScreenW;
             vScreen[2].Left = 0;
-            vScreen[2].Top = sH / 2.0;
+            vScreen[2].Top = ScreenH / 2.0;
             vScreen[1].tempX = 0;
             vScreen[1].TempY = 0;
             vScreen[2].tempX = 0;
@@ -298,8 +280,8 @@ void DynamicScreen()
         {
             vScreen[2].Visible = false;
             vScreen[1].Visible = false;
-            vScreen[1].Height = sH;
-            vScreen[1].Width = sW;
+            vScreen[1].Height = ScreenH;
+            vScreen[1].Width = ScreenW;
             vScreen[1].Left = 0;
             vScreen[1].Top = 0;
             vScreen[1].Visible = true;
@@ -318,17 +300,8 @@ void DynamicScreen()
 
 void SetRes()
 {
-    int sW = 800;
-    int sH = 600;
-    std::string mainIni = AppPath + "main.ini";
-    IniProcessing config(mainIni);
-    config.beginGroup("main");
-    config.read("ScreenW", sW, 800);
-    config.read("ScreenH", sH, 600);
-    config.endGroup();
-
 //    GetCurrentRes(); // Dummy, useless
     resChanged = true;
-    ChangeRes(sW, sH, 16, 60); // 800x600 pixels, 16 bit Color, 60Hz
+    ChangeRes(ScreenW, ScreenH, 16, 60); // 800x600 pixels, 16 bit Color, 60Hz
     showCursor(0);
 }

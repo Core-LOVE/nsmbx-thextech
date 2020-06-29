@@ -128,14 +128,17 @@ float GetOptimalWrappingPlayerPosX(int A)
 // Get the average screen position for all players
 void GetvScreenAverage()
 {
-    int sW = 800;
-    int sH = 600;
-    std::string mainIni = AppPath + "main.ini";
-    IniProcessing config(mainIni);
-    config.beginGroup("main");
-    config.read("ScreenW", sW, 800);
-    config.read("ScreenH", sH, 600);
-    config.endGroup();
+    int sW = ScreenW;
+    int sH = ScreenH;
+    if(WindowChanged)
+    {
+        std::string mainIni = AppPath + "main.ini";
+        IniProcessing config(mainIni);
+        config.beginGroup("main");
+        config.read("ScreenW", sW, ScreenW);
+        config.read("ScreenH", sH, ScreenH);
+        config.endGroup();
+    }
 
     int A = 0;
     int B = 0;
@@ -202,14 +205,17 @@ void GetvScreenAverage()
 // Get the average screen position for all players with no level edge detection
 void GetvScreenAverage2()
 {
-    int sW = 800;
-    int sH = 600;
-    std::string mainIni = AppPath + "main.ini";
-    IniProcessing config(mainIni);
-    config.beginGroup("main");
-    config.read("ScreenW", sW, 800);
-    config.read("ScreenH", sH, 600);
-    config.endGroup();
+    int sW = ScreenW;
+    int sH = ScreenH;
+    if(WindowChanged)
+    {
+        std::string mainIni = AppPath + "main.ini";
+        IniProcessing config(mainIni);
+        config.beginGroup("main");
+        config.read("ScreenW", sW, ScreenW);
+        config.read("ScreenH", sH, ScreenH);
+        config.endGroup();
+    }
 
     int A = 0;
     int B = 0;

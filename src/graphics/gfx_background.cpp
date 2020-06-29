@@ -31,15 +31,6 @@
 
 void DrawBackground(int S, int Z)
 {
-    int sW = 800;
-    int sH = 600;
-    std::string mainIni = AppPath + "main.ini";
-    IniProcessing config(mainIni);
-    config.beginGroup("main");
-    config.read("ScreenW", sW, 800);
-    config.read("ScreenH", sH, 600);
-    config.endGroup();
-
     int A = 0;
     int B = 0;
     Location_t tempLocation;
@@ -73,7 +64,7 @@ void DrawBackground(int S, int Z)
         for(B = -(BGOffset+1)*tempVar2; B <= (BGOffset+1)*tempVar2; B++)
         {
             tempLocation.X = level[S].X + ((B * GFXBackground2Width[A]) - (vScreenX[Z] + vScreen[Z].Left + level[S].X + BGOffset * (level[S].Width - level[S].X)) * 0.75);
-            tempLocation.Y = level[S].Height - GFXBackground2Height[A] - sH + 100;
+            tempLocation.Y = level[S].Height - GFXBackground2Height[A] - ScreenH + 100;
             tempLocation.Height = GFXBackground2Height[A];
             tempLocation.Width = GFXBackground2Width[A];
             if(vScreenCollision(Z, tempLocation))
@@ -93,7 +84,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -136,7 +127,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -185,7 +176,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -210,7 +201,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -253,7 +244,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -296,7 +287,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -321,7 +312,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -346,7 +337,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -371,7 +362,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -396,7 +387,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -421,7 +412,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -435,7 +426,7 @@ void DrawBackground(int S, int Z)
         }
     }
 
-    A = 17; // smb3 ship
+    A = 17; // smb3 Ship
     if(Background2[S] == 17)
     {
 
@@ -465,7 +456,7 @@ void DrawBackground(int S, int Z)
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - (600 - vScreen(Z).Top)) * (GFXBackground2Height(A) / 4 - (600 - vScreen(Z).Top))
                 // .Y = -vScreenY(Z) - .Y
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] / 4.0 - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] / 4.0 - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -490,7 +481,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -515,7 +506,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -540,7 +531,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -583,7 +574,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -674,7 +665,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -699,7 +690,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -725,7 +716,7 @@ void DrawBackground(int S, int Z)
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - (600 - vScreen(Z).Top)) * (GFXBackground2Height(A) / 4 - (600 - vScreen(Z).Top))
                 // .Y = -vScreenY(Z) - .Y
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] / 4.0 - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] / 4.0 - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -751,7 +742,7 @@ void DrawBackground(int S, int Z)
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - (600 - vScreen(Z).Top)) * (GFXBackground2Height(A) / 4 - (600 - vScreen(Z).Top))
                 // .Y = -vScreenY(Z) - .Y
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] / 4.0 - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] / 4.0 - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -779,7 +770,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -804,7 +795,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -829,7 +820,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -854,7 +845,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -894,7 +885,7 @@ void DrawBackground(int S, int Z)
         for(B = -(BGOffset+1)*tempVar37; B <= (BGOffset+1)*tempVar37; B++)
         {
             tempLocation.X = level[S].X + ((B * GFXBackground2Width[A]) - (vScreenX[Z] + vScreen[Z].Left + level[S].X + BGOffset * (level[S].Width - level[S].X)) * 0.75);
-            tempLocation.Y = level[S].Height - GFXBackground2Height[A] - sH + 100;
+            tempLocation.Y = level[S].Height - GFXBackground2Height[A] - ScreenH + 100;
             tempLocation.Height = GFXBackground2Height[A];
             tempLocation.Width = GFXBackground2Width[A];
             if(vScreenCollision(Z, tempLocation))
@@ -914,7 +905,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -975,7 +966,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -997,12 +988,12 @@ void DrawBackground(int S, int Z)
 
 
 
-            // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - (sH - vScreen(Z).Top)) * (GFXBackground2Height(A) - (sH - vScreen(Z).Top))
+            // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - (ScreenH - vScreen(Z).Top)) * (GFXBackground2Height(A) - (ScreenH - vScreen(Z).Top))
             // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
 
 
 
-            tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+            tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
             tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
         }
         else
@@ -1182,7 +1173,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -1209,7 +1200,7 @@ void DrawBackground(int S, int Z)
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - (600 - vScreen(Z).Top)) * (GFXBackground2Height(A) / 4 - (600 - vScreen(Z).Top))
                 // .Y = -vScreenY(Z) - .Y
 
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] / 4.0 - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] / 4.0 - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -1233,7 +1224,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -1280,7 +1271,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -1304,7 +1295,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -1328,7 +1319,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -1352,7 +1343,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -1371,7 +1362,7 @@ void DrawBackground(int S, int Z)
         if(level[S].Height - level[S].Y > GFXBackground2Height[A])
         {
             // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-            tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+            tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
             tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
         }
         else
@@ -1475,7 +1466,7 @@ void DrawBackground(int S, int Z)
         if(level[S].Height - level[S].Y > GFXBackground2Height[A])
         {
             // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-            tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+            tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
             tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
         }
         else
@@ -1520,7 +1511,7 @@ void DrawBackground(int S, int Z)
         if(level[S].Height - level[S].Y > GFXBackground2Height[A])
         {
             // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-            tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+            tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
             tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
         }
         else
@@ -1554,7 +1545,7 @@ void DrawBackground(int S, int Z)
         if(level[S].Height - level[S].Y > GFXBackground2Height[A])
         {
             // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-            tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+            tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
             tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
         }
         else
@@ -1663,7 +1654,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -1687,7 +1678,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -1712,7 +1703,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A] / 4.0)
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) / 4 - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] / 4.0 - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] / 4.0 - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -1732,7 +1723,7 @@ void DrawBackground(int S, int Z)
         if(level[S].Height - level[S].Y > GFXBackground2Height[A])
         {
             // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-            tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+            tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
             tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
         }
         else
@@ -1796,7 +1787,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -1826,7 +1817,7 @@ void DrawBackground(int S, int Z)
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - (600 - vScreen(Z).Top)) * (GFXBackground2Height(A) / 4 - (600 - vScreen(Z).Top))
                 // .Y = -vScreenY(Z) - .Y
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] / 4.0 - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] / 4.0 - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -1858,7 +1849,7 @@ void DrawBackground(int S, int Z)
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - (600 - vScreen(Z).Top)) * (GFXBackground2Height(A) / 4 - (600 - vScreen(Z).Top))
                 // .Y = -vScreenY(Z) - .Y
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] / 3.0 - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] / 3.0 - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -1907,7 +1898,7 @@ void DrawBackground(int S, int Z)
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - (600 - vScreen(Z).Top)) * (GFXBackground2Height(A) / 4 - (600 - vScreen(Z).Top))
                 // .Y = -vScreenY(Z) - .Y
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] / 2.0 - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] / 2.0 - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -1939,7 +1930,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -2031,7 +2022,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -2056,7 +2047,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else
@@ -2081,7 +2072,7 @@ void DrawBackground(int S, int Z)
             if(level[S].Height - level[S].Y > GFXBackground2Height[A])
             {
                 // .Y = (-vScreenY(Z) - level(S).Y) / (level(S).Height - level(S).Y - 600) * (GFXBackground2Height(A) - 600)
-                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - sH) * (GFXBackground2Height[A] - sH) + vScreen[Z].Top;
+                tempLocation.Y = (-vScreenY[Z] - vScreen[Z].Top - level[S].Y) / (level[S].Height - level[S].Y - ScreenH) * (GFXBackground2Height[A] - ScreenH) + vScreen[Z].Top;
                 tempLocation.Y = -vScreenY[Z] - tempLocation.Y;
             }
             else

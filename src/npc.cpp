@@ -383,7 +383,7 @@ void SkullRide(int A)
 
     for(B = 1; B <= numNPCs; B++) // Recursively activate all neihbour skull-ride segments
     {
-        if(NPC[B].Type == 190 || NPC[B].Type == 298)
+        if(NPC[B].Type == 190)
         {
             if(NPC[B].Active)
             {
@@ -5217,7 +5217,48 @@ void SpecialNPC(int A)
     }
     else if(NPC[A].Type == 362)
     {
+        if(NPC[A].Special == 0)
+            NPC[A].Location.SpeedX = 1 * NPC[A].Direction;
+        else
+        {
+            NPC[A].Location.SpeedX = 0;
+            NPC[A].Special2++;
+        }
 
+        if(NPC[A].Special2 > 50 && NPC[A].Special3 == 0)
+        {
+            for(int i = -1; i <= 1; i += 2)
+            {
+                numNPCs++;
+                NPC[numNPCs] = NPC_t();
+                NPC[numNPCs].Active = true;
+                NPC[numNPCs].Type = 363;
+                NPC[numNPCs].Location.Height = NPCHeight[NPC[numNPCs].Type];
+                NPC[numNPCs].Location.Width = NPCWidth[NPC[numNPCs].Type];
+                NPC[numNPCs].Location.Y = NPC[A].Location.Y;
+                if(i == 1)
+                    NPC[numNPCs].Location.X = NPC[A].Location.X + (NPC[A].Location.Width / 2.0) + (NPC[numNPCs].Location.Width / 2.0);
+                else
+                    NPC[numNPCs].Location.X = NPC[A].Location.X + NPC[numNPCs].Location.Width;
+                NPC[numNPCs].Direction = i;
+                NPC[numNPCs].Location.SpeedX = 1.75 * NPC[numNPCs].Direction;
+                NPC[numNPCs].Location.SpeedY = -2;
+                NPC[numNPCs].TimeLeft = 25;
+                NPC[numNPCs].Section = NPC[A].Section;
+            }
+            NPC[A].Special3 = 1;
+        }
+        if(NPC[A].Special2 > 100)
+        {
+            NPC[A].DefaultDirection = NPC[A].Direction;
+            NPC[A].Special = 0;
+            NPC[A].Special2 = 0;
+            NPC[A].Special3 = 0;
+        }
+        if(NPC[A].Direction != NPC[A].DefaultDirection)
+        {
+            NPC[A].Special = 1;
+        }
     }
     else if(NPC[A].Type == 356)
     {

@@ -605,6 +605,10 @@ void UpdateEffects()
             e.Location.SpeedY = 0;
             e.Location.SpeedX = 0;
         }
+        else if(e.Type == 184) // WL4 Score
+        {
+            e.Location.SpeedY -= 0.1;
+        }
         else if(e.Type == 112)
         {
             if(e.Life % 5 == 0)
@@ -1346,21 +1350,30 @@ void NewEffect(int A, Location_t Location, float Direction, int NewNpc, bool Sha
         Effect[numEffects].Life = 150;
         Effect[numEffects].Type = A;
     }
-    else if(A == 79) // Score
+    else if(A == 79 || A == 184) // Score and WL4 Score
     {
         numEffects++;
         Effect[numEffects].Type = A;
         Effect[numEffects].Shadow = Shadow;
         Effect[numEffects].Location.Width = EffectWidth[Effect[numEffects].Type];
         Effect[numEffects].Location.Height = EffectHeight[Effect[numEffects].Type];
-        Effect[numEffects].Location.X = Location.X - Effect[numEffects].Location.Width * 0.5 + Location.Width * 0.5;
-        Effect[numEffects].Location.Y = Location.Y - Effect[numEffects].Location.Height * 0.5 + Location.Height * 0.5;
-        Effect[numEffects].Location.X = Effect[numEffects].Location.X + dRand() * 32 - 16;
-        Effect[numEffects].Location.Y = Effect[numEffects].Location.Y + dRand() * 32 - 16;
-        Effect[numEffects].Location.SpeedY = -2;
+        if(Effect[numEffects].Type != 184)
+        {
+            Effect[numEffects].Location.X = Location.X - Effect[numEffects].Location.Width * 0.5 + Location.Width * 0.5;
+            Effect[numEffects].Location.Y = Location.Y - Effect[numEffects].Location.Height * 0.5 + Location.Height * 0.5;
+            Effect[numEffects].Location.X = Effect[numEffects].Location.X + dRand() * 32 - 16;
+            Effect[numEffects].Location.Y = Effect[numEffects].Location.Y + dRand() * 32 - 16;
+            Effect[numEffects].Location.SpeedY = -2;
+        }
+        else
+        {
+            Effect[numEffects].Location.X = Location.X + Location.Width / 2.0 - Effect[numEffects].Location.Width / 2.0;
+            Effect[numEffects].Location.Y = Location.Y + Location.Height / 2.0 - Effect[numEffects].Location.Height / 2.0;
+            Effect[numEffects].Location.SpeedY = 1.5;
+        }
         Effect[numEffects].Location.SpeedX = 0;
         Effect[numEffects].Frame = 0;
-        Effect[numEffects].Life = 60;
+        Effect[numEffects].Life = 45;
     }
     else if(A == 76) // SMW Smashed
     {

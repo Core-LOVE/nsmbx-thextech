@@ -58,15 +58,11 @@ static SDL_bool IsFullScreen(SDL_Window *win)
 
 FrmMain::FrmMain()
 {
-    int sW = 800;
-    int sH = 600;
     std::string mainIni = AppPath + "main.ini";
     IniProcessing config(mainIni);
     config.beginGroup("main");
-    config.read("ScreenW", sW, 800);
-    config.read("ScreenH", sH, 600);
-    ScaleWidth = sW;
-    ScaleHeight = sH;
+    ScaleWidth = ScreenW;
+    ScaleHeight = ScreenH;
     std::string gversion = "Super Mario ReInvent - 1.1.0";
     config.read("Name", gversion, "Super Mario ReInvent - 1.1.0");
     config.endGroup();
@@ -87,15 +83,6 @@ Uint8 FrmMain::getKeyState(SDL_Scancode key)
 
 bool FrmMain::initSDL(const CmdLineSetup_t &setup)
 {
-    int sW = 800;
-    int sH = 600;
-    std::string mainIni = AppPath + "main.ini";
-    IniProcessing config(mainIni);
-    config.beginGroup("main");
-    config.read("ScreenW", sW, 800);
-    config.read("ScreenH", sH, 600);
-    config.endGroup();
-
     bool res = false;
 
     LoadLogSettings(setup.interprocess, setup.verboseLogging);
@@ -255,7 +242,7 @@ bool FrmMain::initSDL(const CmdLineSetup_t &setup)
 
     SDL_GetRendererInfo(m_gRenderer, &m_ri);
 
-    m_tBuffer = SDL_CreateTexture(m_gRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, sW, sH);
+    m_tBuffer = SDL_CreateTexture(m_gRenderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, ScreenW, ScreenH);
     if(!m_tBuffer)
     {
         pLogCritical("Unable to create texture render buffer!");
@@ -308,6 +295,11 @@ void FrmMain::freeSDL()
 
     pLogDebug("<Application closed>");
     CloseLog();
+}
+
+void FrmMain::resizeWindow(int w, int h)
+{
+    SDL_SetWindowSize(m_window, w, h);
 }
 
 void FrmMain::show()
@@ -394,15 +386,6 @@ bool FrmMain::hasWindowMouseFocus()
 
 void FrmMain::eventDoubleClick()
 {
-    int sW = 800;
-    int sH = 600;
-    std::string mainIni = AppPath + "main.ini";
-    IniProcessing config(mainIni);
-    config.beginGroup("main");
-    config.read("ScreenW", sW, 800);
-    config.read("ScreenH", sH, 600);
-    config.endGroup();
-
     if(MagicHand)
         return; // Don't toggle fullscreen/window when magic hand is active
 #ifndef __EMSCRIPTEN__
@@ -411,7 +394,7 @@ void FrmMain::eventDoubleClick()
         frmMain.setFullScreen(false);
         resChanged = false;
         SDL_RestoreWindow(m_window);
-        SDL_SetWindowSize(m_window, sW, sH);
+        SDL_SetWindowSize(m_window, ScreenW, ScreenH);
         if(!GameMenu && !MagicHand)
             showCursor(1);
     }
@@ -524,17 +507,8 @@ void FrmMain::eventMouseDown(SDL_MouseButtonEvent &event)
 
 void FrmMain::eventMouseMove(SDL_MouseMotionEvent &event)
 {
-    int sW = 800;
-    int sH = 600;
-    std::string mainIni = AppPath + "main.ini";
-    IniProcessing config(mainIni);
-    config.beginGroup("main");
-    config.read("sW", sW, 800);
-    config.read("ScreenH", sH, 600);
-    config.endGroup();
-
     SDL_Point p = MapToScr(event.x, event.y);
-    MenuMouseX = p.x;// int(event.x * sW / ScaleWidth);
+    MenuMouseX = p.x;// int(event.x * ScreenW / ScaleWidth);
     MenuMouseY = p.y;//int(event.y * sH / ScaleHeight);
     MenuMouseMove = true;
     if(LevelEditor || MagicHand || TestLevel)
@@ -671,14 +645,6 @@ void FrmMain::repaint()
 
 void FrmMain::updateViewport()
 {
-    int sW = 800;
-    int sH = 600;
-    std::string mainIni = AppPath + "main.ini";
-    IniProcessing config(mainIni);
-    config.beginGroup("main");
-    config.read("ScreenW", sW, 800);
-    config.read("ScreenH", sH, 600);
-    config.endGroup();
 
     float w, w1, h, h1;
     int   wi, hi;
@@ -692,8 +658,8 @@ void FrmMain::updateViewport()
     }
     else
     {
-        wi = sW;
-        hi = sH;
+        wi = ScreenW;
+        hi = ScreenH;
     }
 #endif
 
@@ -1091,19 +1057,10 @@ void FrmMain::lazyUnLoad(StdPicture &target)
 
 void FrmMain::makeShot()
 {
-    int sW = 800;
-    int sH = 600;
-    std::string mainIni = AppPath + "main.ini";
-    IniProcessing config(mainIni);
-    config.beginGroup("main");
-    config.read("ScreenW", sW, 800);
-    config.read("ScreenH", sH, 600);
-    config.endGroup();
-
     if(!m_gRenderer || !m_tBuffer)
         return;
 
-    const int w = sW, h = sH;
+    const int w = ScreenW, h = ScreenH;
     uint8_t *pixels = new uint8_t[size_t(4 * w * h)];
     getScreenPixelsRGBA(0, 0, w, h, pixels);
     PGE_GL_shoot *shoot = new PGE_GL_shoot();
@@ -1243,15 +1200,6 @@ bool FrmMain::recordInProcess()
 
 void FrmMain::toggleGifRecorder()
 {
-    int sW = 800;
-    int sH = 600;
-    std::string mainIni = AppPath + "main.ini";
-    IniProcessing config(mainIni);
-    config.beginGroup("main");
-    config.read("ScreenW", sW, 800);
-    config.read("ScreenH", sH, 600);
-    config.endGroup();
-
     UNUSED(GIF_H::GifOverwriteLastDelay);// shut up a warning about unused function
 
     if(!m_gif.enabled)
@@ -1266,7 +1214,7 @@ void FrmMain::toggleGifRecorder()
         m_gif.worker = nullptr;
 
         FILE *gifFile = Files::utf8_fopen(saveTo.data(), "wb");
-        if(GIF_H::GifBegin(&m_gif.writer, gifFile, sW, sH, m_gif.delay, false))
+        if(GIF_H::GifBegin(&m_gif.writer, gifFile, ScreenW, ScreenH, m_gif.delay, false))
         {
             m_gif.enabled = true;
             m_gif.doFinalize = false;
@@ -1291,15 +1239,6 @@ void FrmMain::toggleGifRecorder()
 
 void FrmMain::processRecorder()
 {
-    int sW = 800;
-    int sH = 600;
-    std::string mainIni = AppPath + "main.ini";
-    IniProcessing config(mainIni);
-    config.beginGroup("main");
-    config.read("ScreenW", sW, 800);
-    config.read("ScreenH", sH, 600);
-    config.endGroup();
-
     if(!m_gif.enabled)
         return;
 
@@ -1312,7 +1251,7 @@ void FrmMain::processRecorder()
         return;
     }
 
-    const int w = sW, h = sH;
+    const int w = ScreenW, h = ScreenH;
 
     uint8_t *pixels = reinterpret_cast<uint8_t*>(SDL_malloc(size_t(4 * w * h) + 42));
     if(!pixels)

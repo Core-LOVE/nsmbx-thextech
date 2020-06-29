@@ -28,6 +28,8 @@
 #include <cmath>
 #include <cfenv>
 
+#include <IniProcessor/ini_processing.h>
+
 FrmMain frmMain;
 GFX_t GFX;
 
@@ -602,6 +604,23 @@ int BattleIntro = 0;
 int BattleOutro = 0;
 std::string LevelName;
 std::string GameVersion;
+bool WindowChanged = true;
+
+int ScreenW = 800;
+int ScreenH = 600;
+
+void ReadMainIni()
+{
+    if(WindowChanged)
+    {
+        std::string mainIni = AppPath + "main.ini";
+        IniProcessing config(mainIni);
+        config.beginGroup("main");
+        config.read("ScreenW", ScreenW, ScreenW);
+        config.read("ScreenH", ScreenH, ScreenH);
+        config.endGroup();
+    }
+}
 
 void DoEvents()
 {
