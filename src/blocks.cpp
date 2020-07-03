@@ -1280,7 +1280,7 @@ void BlockHit(int A, bool HitDown, int whatPlayer)
     {
         BlockHitHard(A);
     }
-    if(BlockBrick[b.Type] == true && whatPlayer > 0 && Player[whatPlayer].State > 1 && b.Special == 0)
+    if(BlockBrick[b.Type] == true && whatPlayer > 0 && Player[whatPlayer].State > 1 && Player[whatPlayer].State != 9 && b.Special == 0)
     {
         b.Kill = true;
         PlaySound(3);

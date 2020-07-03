@@ -1380,6 +1380,32 @@ void NPCSpecial(int A)
         while(NPC[A].Special6 < 0)
         NPC[A].Special6 += 360;
     }
+    else if(NPC[A].Type == 370)
+    {
+        if(NPC[A].Special == 0)
+        {
+            NPC[A].Special5 += 1.5 * -NPC[A].Direction;
+            NPC[A].Special6 += 1.5 * -NPC[A].Direction;
+            while(NPC[A].Special6 >= 360)
+            NPC[A].Special6 -= 360;
+            while(NPC[A].Special6 < 0)
+            NPC[A].Special6 += 360;
+        }
+        else
+        {
+            const double deg2rad = M_PI / 180.0;
+            NPC[A].Location.SpeedX = cos(NPC[A].Special5 * deg2rad) * 1.5;
+            NPC[A].Location.SpeedY = sin(NPC[A].Special5 * deg2rad) * 1.5;
+        }
+        for(C = 1; C <= numPlayers; C++)
+        {
+            if(CheckCollision(Player[C].Location, NPC[A].Location, NPC[A].Section) == true)
+            {
+                if(NPC[A].Special == 0)
+                    NPC[A].Special = 1;
+            }
+        }
+    }
     else if(NPC[A].Type == 303)
     {
         NPC[A].Location.SpeedX = 3 * NPC[A].Direction;
@@ -1424,10 +1450,20 @@ void NPCSpecial(int A)
         for(int B = 1; B <= numNPCs; B++)
         {
             if(CheckCollision(NPC[A].Location, NPC[B].Location, NPC[A].Section) == true &&
-               NPC[A].Special3 == 1 &&
-               NPCIsACoin[NPC[B].Type])
+               NPC[A].Special3 == 1)
             {
-                NPCHit(B, 10, A);
+                if(NPC[B].Type != 359)
+                {
+                    if(NPCIsACoin[NPC[B].Type] == true)
+                        NPCHit(B, 10, A);
+                }
+                else
+                {
+                    for(C = 1; C <= numPlayers; C++)
+                    {
+                        TouchBonus(C, B);
+                    }
+                }
             }
         }
     }
@@ -4710,15 +4746,101 @@ void SpecialNPC(int A)
         }
     // leaf
     }
+    else if(NPC[A].Type == 367) // stinger
+    {
+        NPC[A].Special3++;
+        if(NPC[A].Special != 2)
+            NPC[A].Location.SpeedX = 2.5 * NPC[A].Direction;
+        else
+            NPC[A].Location.SpeedX = 0;
+
+        if(NPC[A].Special3 > 160)
+            NPC[A].Special = 2;
+        if(NPC[A].Special3 > 172)
+        {
+            NPC[A].Special = 0;
+            NPC[A].Special3 = 0;
+            NPC[A].Direction = -NPC[A].Direction;
+        }
+
+        for(int i = 1; i <= numPlayers; i++)
+        {
+            tempLocation.Width = NPC[A].Location.Width;
+            tempLocation.Height = NPC[A].Location.Height;
+            tempLocation.X = NPC[A].Location.X + (NPC[A].Location.Width * NPC[A].Direction);
+            tempLocation.Y = NPC[A].Location.Y + NPC[A].Location.Height;
+            if(CheckCollision(tempLocation, Player[i].Location,
+            NPC[A].Section) == true)
+            {
+                if(NPC[A].Special == 2)
+                    break;
+                NPC[A].Special = 1;
+                if(NPC[A].Special2 >= 0)
+                {
+                    numNPCs++;
+                    NPC[numNPCs] = NPC_t();
+                    NPC[numNPCs].Active = true;
+                    NPC[numNPCs].TimeLeft = 100;
+                    NPC[numNPCs].Direction = NPC[A].Direction;
+                    NPC[numNPCs].Section = NPC[A].Section;
+                    NPC[numNPCs].Type = 368;
+                    NPC[numNPCs].Frame = 1;
+                    NPC[numNPCs].Location.Height = NPCHeight[NPC[numNPCs].Type];
+                    NPC[numNPCs].Location.Width = NPCWidth[NPC[numNPCs].Type];
+
+                    if(fEqual(NPC[numNPCs].Location.Width, 16))
+                    {
+                        NPC[numNPCs].Location.X = NPC[A].Location.X + 6;
+                        NPC[numNPCs].Location.Y = NPC[A].Location.Y + 6;
+                    }
+                    else // modified stinger projectile
+                    {
+                        NPC[numNPCs].Location.X = NPC[A].Location.X;
+                        NPC[numNPCs].Location.Y = NPC[A].Location.Y;
+                    }
+
+                    NPC[numNPCs].Location.SpeedX = double(3.f * NPC[numNPCs].Direction);
+                    C = float(NPC[numNPCs].Location.X + NPC[numNPCs].Location.Width / 2.0) -
+                        float(Player[i].Location.X + Player[i].Location.Width / 2.0);
+                    D = float(NPC[numNPCs].Location.Y + NPC[numNPCs].Location.Height / 2.0) -
+                        float(Player[i].Location.Y + Player[i].Location.Height / 2.0);
+
+                    if(C == 0.0f)
+                        C = -0.00001f;
+                    NPC[numNPCs].Location.SpeedY = (double(D) / double(C)) * NPC[numNPCs].Location.SpeedX;
+
+                    if(NPC[numNPCs].Location.SpeedY > 2)
+                        NPC[numNPCs].Location.SpeedY = 2;
+                    else if(NPC[numNPCs].Location.SpeedY < -2)
+                        NPC[numNPCs].Location.SpeedY = -2;
+
+                    NPC[numNPCs].Location.X = NPC[numNPCs].Location.X + NPC[numNPCs].Location.SpeedX * 3;
+                    NPC[numNPCs].Location.Y = NPC[numNPCs].Location.Y + NPC[numNPCs].Location.SpeedY * 3;
+                    NPC[A].Special2 = -60;
+                }
+            }
+            else
+            {
+                if(NPC[A].Special == 2)
+                    break;
+                if(NPC[A].Special == 1)
+                    NPC[A].Special = 0;
+            }
+        }
+    }
     else if(NPC[A].Type == 366) // pearl
     {
-        NPC[A].Projectile = true;
         for(int i = 1; i <= numBlock; i++)
         {
-            if(CheckCollision(NPC[A].Location, Block[i].Location, NPC[A].Section) == true && NPC[A].Location.SpeedY != Physics.NPCGravity)
+            if(CheckCollision(NPC[A].Location, Block[i].Location, NPC[A].Section) == true
+            && NPC[A].Location.SpeedY != Physics.NPCGravity
+            && BlockNoClipping[Block[i].Type] == false
+            && BlockNPCNoClipping[Block[i].Type] == false)
             {
                 NewEffect(183, NPC[A].Location);
+                BlockHit(i);
                 NPC[A].Killed = 9;
+                break;
             }
         }
     }

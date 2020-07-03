@@ -372,6 +372,22 @@ void TouchBonus(int A, int B)
             if(NPC[B].Effect != 2)
                 MoreScore(6, NPC[B].Location);
         }
+        else if(NPC[B].Type == 364) // Yoshi Mount
+        {
+            if(Player[A].Mount == 0)
+            {
+                PlaySound(48);
+                PlaySound(6);
+                Player[A].Mount = 3;
+                Player[A].MountType = NPC[B].Special + 1;
+            }
+            else
+            {
+                PlaySound(12);
+                Player[A].HeldBonus = NPC[B].Type;
+                Player[A].HeldBonusSpecial = NPC[B].DefaultSpecial;
+            }
+        }
         else if(NPC[B].Type == 34) // Bonus is a leaf
         {
             UpdatePlayerBonus(A, NPC[B].Type);
@@ -487,6 +503,8 @@ void TouchBonus(int A, int B)
         {
             UpdatePlayerBonus(A, NPC[B].Type);
             Player[A].StateNPC = NPC[B].Type;
+            if(Player[A].State != 9)
+                Player[A].Location.Y += Physics.PlayerHeight[Player[A].Character][Player[A].State] - Physics.PlayerHeight[Player[A].Character][9];
             if(Player[A].State != 6)
             {
                 Player[A].CanFly3 = false;
@@ -547,7 +565,28 @@ void TouchBonus(int A, int B)
             PlaySound(59);
             NewEffect(179, NPC[B].Location, NPC[B].Frame);
         }
-        else if(NPCIsACoin[NPC[B].Type]) // Bonus is a coin
+        else if(NPCIsACoin[NPC[B].Type] && NPC[B].Type == 369) // Bonus is a sonic red ring
+        {
+            PlaySound(56);
+            NewEffect(186, Player[A].Location);
+            Coins--;
+            if(Score > 0)
+            {
+                Score -= 10;
+            }
+            else if(Score < 0)
+            {
+                Score = 0;
+            }
+            if(Coins < 0)
+            {
+                Coins = 99;
+                if(Lives > 0)
+                    Lives--;
+            }
+            NewEffect(78, NPC[B].Location);
+        }
+        else if(NPCIsACoin[NPC[B].Type] && NPC[B].Type != 369) // Bonus is a coin
         {
             if(NPC[B].Type == 152)
                 PlaySound(56);
@@ -560,12 +599,12 @@ void TouchBonus(int A, int B)
             else if(NPC[B].Type == 253)
                 Coins = Coins + 20;
             else
-                Coins = Coins + 1;
+                Coins++;
             if(Coins >= 100)
             {
                 if(Lives < 99)
                 {
-                    Lives = Lives + 1;
+                    Lives++;
                     PlaySound(15);
                     Coins = Coins - 100;
                 }

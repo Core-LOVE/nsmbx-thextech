@@ -174,6 +174,10 @@ void UpdatePlayer()
 
 //        tempBlockA[1] = 0; // Unused
 //        tempBlockA[2] = 0;
+        if(Player[A].HeldBonus != 364 && Player[A].HeldBonusSpecial != 0)
+        {
+            Player[A].HeldBonusSpecial = 0;
+        }
         if(Player[A].YoshiSeeds > 0)
         {
             if(Player[A].YoshiMelonTimer <= 10)
@@ -242,6 +246,11 @@ void UpdatePlayer()
             Player[A].Controls.Down = true;
             Player[A].Controls.AltRun = false;
             Player[A].Controls.Jump = false;
+            Player[A].Controls.AltJump = false;
+        }
+        if(Player[A].State == 9)
+        {
+            Player[A].Controls.Down = false;
             Player[A].Controls.AltJump = false;
         }
         if(Player[A].Dismount > 0) // count down to being able to hop in a shoe or yoshi
@@ -485,7 +494,7 @@ void UpdatePlayer()
                     speedVar = (speedVar * 1.07f);
 
                 // modify speedvar to slow the player down under water
-                if(Player[A].Wet > 0)
+                if(Player[A].Wet > 0 && Player[A].State != 8)
                 {
                     if(Player[A].Location.SpeedY == 0.0 || Player[A].Slope > 0 || Player[A].StandingOnNPC != 0)
                         speedVar = (float)(speedVar * 0.25f); // if walking go really slow
@@ -578,7 +587,10 @@ void UpdatePlayer()
                             Player[A].CanJump = false;
                             PlaySound(1); // Jump sound
                             PlaySound(35);
-                            Player[A].Jump = Physics.PlayerJumpHeight;
+                            if(Player[A].State != 9)
+                                Player[A].Jump = Physics.PlayerJumpHeight;
+                            else
+                               Player[A].Jump = Physics.PlayerJumpHeight * 2;
                             if(Player[A].Character == 6 || Player[A].Character == 7)
                                 Player[A].Jump = Player[A].Jump - 5;
                             if(Player[A].Character == 2)
@@ -1013,12 +1025,29 @@ void UpdatePlayer()
                         }
                     }
                     // Frog Suit things
+                    if(Player[A].State == 8 && Player[A].Character == 5 && Player[A].Wet > 0)
+                    {
+                        if(!Player[A].Fairy)
+                        {
+                            Player[A].Immune = 30;
+                            Player[A].Effect = 8;
+                            Player[A].Effect2 = 4;
+                            Player[A].Fairy = true;
+                            SizeCheck(A);
+                            NewEffect(63, Player[A].Location);
+                        }
+                        PlaySound(87);
+                        Player[A].FairyTime = 20;
+                    }
                     if(Player[A].State == 8 && Player[A].Wet == 0 && Player[A].Duck == false && Player[A].Character != 5)
                     {
-                        if((Player[A].Location.SpeedX > 1.5 || Player[A].Location.SpeedX < -1.5) && Player[A].Location.SpeedY == 0)
+                        if((Player[A].Location.SpeedX > 1.5 || Player[A].Location.SpeedX < -1.5) && Player[A].Location.SpeedY == 0 && Player[A].HoldingNPC == 0)
                         {
-                            Player[A].Location.SpeedY = -4.5;
                             PlaySound(98);
+                            if(Player[A].Controls.Jump == false)
+                                Player[A].Location.SpeedY = -4.5;
+                            else
+                                Player[A].Jump = Physics.PlayerJumpHeight;
                         }
                     }
                     else if(Player[A].State == 8 && Player[A].Wet != 0 && Player[A].Character != 5)
@@ -1259,8 +1288,11 @@ void UpdatePlayer()
 
                 if(Player[A].Fairy) // the player is a fairy
                 {
-                    Player[A].WetFrame = false;
-                    Player[A].Wet = 0;
+                    if(Player[A].State != 8)
+                    {
+                        Player[A].WetFrame = false;
+                        Player[A].Wet = 0;
+                    }
                     if(Player[A].FairyCD == 0)
                     {
                         if(Player[A].Controls.Jump || Player[A].Controls.AltJump || Player[A].Controls.Up)
@@ -1690,7 +1722,10 @@ void UpdatePlayer()
                                 {
                                     PlaySound(1); // Jump sound
                                     Player[A].Location.SpeedY = Physics.PlayerJumpVelocity - tempSpeed;
-                                    Player[A].Jump = Physics.PlayerJumpHeight;
+                                    if(Player[A].State != 9)
+                                        Player[A].Jump = Physics.PlayerJumpHeight;
+                                    else
+                                        Player[A].Jump = Physics.PlayerJumpHeight * 2;
                                     if(Player[A].Character == 4 && (Player[A].State == 4 || Player[A].State == 5) && Player[A].SpinJump == false)
                                         Player[A].DoubleJump = true;
                                     if(Player[A].Character == 2)
@@ -1767,6 +1802,10 @@ void UpdatePlayer()
                             if(Player[A].Controls.Jump && Player[A].JumpRelease)
                             {
                                 PlaySound(1);
+                                if(Player[A].State != 9)
+                                    Player[A].Location.SpeedY = Physics.PlayerJumpVelocity;
+                                else
+                                    Player[A].Location.SpeedY = Physics.PlayerJumpVelocity * 2;
                                 Player[A].Location.SpeedY = Physics.PlayerJumpVelocity;
                                 Player[A].Jump = 10;
                                 Player[A].DoubleJump = false;
@@ -3237,7 +3276,10 @@ void UpdatePlayer()
                                 if(Player[A].Controls.Jump || Player[A].Controls.AltJump)
                                 {
                                     PlaySound(1);
-                                    Player[A].Jump = Physics.PlayerBlockJumpHeight;
+                                    if(Player[A].State != 9)
+                                        Player[A].Jump = Physics.PlayerBlockJumpHeight;
+                                    else
+                                        Player[A].Jump = Physics.PlayerBlockJumpHeight * 2;
                                     Player[A].Flutter = 0;
                                     if(Player[A].Character == 6 || Player[A].Character == 7)
                                         Player[A].Jump = Player[A].Jump - 5;
@@ -3345,7 +3387,10 @@ void UpdatePlayer()
                             if(Player[A].Controls.Jump || Player[A].Controls.AltJump)
                             {
                                 PlaySound(1);
-                                Player[A].Jump = Physics.PlayerBlockJumpHeight;
+                                if(Player[A].State != 9)
+                                    Player[A].Jump = Physics.PlayerBlockJumpHeight;
+                                else
+                                    Player[A].Jump = Physics.PlayerBlockJumpHeight * 2;
                                 if(Player[A].Character == 6 || Player[A].Character == 7)
                                     Player[A].Jump = Player[A].Jump - 5;
                                 if(Player[A].Character == 2)
@@ -4039,7 +4084,7 @@ void UpdatePlayer()
                                                         Player[A].MountType = 4;
                                                     PlaySound(2);
                                                 }
-                                                else if(NPCIsYoshi[NPC[B].Type] && (Player[A].Character == 1 || Player[A].Character == 2 || Player[A].Character == 6))
+                                                else if(NPCIsYoshi[NPC[B].Type] && (Player[A].Character == 1 || Player[A].Character == 2 || Player[A].Character == 6) && Player[A].State != 9)
                                                 {
                                                     UnDuck(A);
                                                     NPC[B].Killed = 9;
@@ -4465,7 +4510,10 @@ void UpdatePlayer()
                     Player[A].CanJump = true;
                     if(tempSpring)
                     {
-                        Player[A].Jump = Physics.PlayerSpringJumpHeight;
+                        if(Player[A].State != 9)
+                            Player[A].Jump = Physics.PlayerSpringJumpHeight;
+                        else
+                            Player[A].Jump = Physics.PlayerSpringJumpHeight * 2;
                         if(Player[A].Character == 6 || Player[A].Character == 7)
                             Player[A].Jump = Player[A].Jump - 5;
                         if(Player[A].Character == 2)
@@ -4480,7 +4528,10 @@ void UpdatePlayer()
                     {
                         if(!tempFriendlyHit)
                         {
-                        Player[A].Jump = Physics.PlayerNPCJumpHeight;
+                        if(Player[A].State != 9)
+                            Player[A].Jump = Physics.PlayerNPCJumpHeight;
+                        else
+                            Player[A].Jump = Physics.PlayerNPCJumpHeight * 2;
                         if(Player[A].Character == 6 || Player[A].Character == 7)
                             Player[A].Jump = Player[A].Jump - 5;
                         if(Player[A].Character == 2)

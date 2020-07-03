@@ -1455,6 +1455,41 @@ void MoreScore(int addScore, Location_t Loc, int &Multiplier)
     Effect[numEffects].Frame = A - 1;
 }
 
+void LessScore(int removeScore, Location_t Loc)
+{
+    int mult = 0; // dummy
+    LessScore(removeScore, Loc, mult);
+}
+
+void LessScore(int removeScore, Location_t Loc, int &Multiplier)
+{
+    int A = 0;
+
+    if(GameMenu || GameOutro || BattleMode)
+        return;
+    A = removeScore + Multiplier;
+    if(A == 0)
+        return;
+    Multiplier++;
+    if(A > 13)
+        A = 13;
+    if(A < removeScore)
+        A = removeScore;
+    if(Multiplier > 9)
+        Multiplier = 8;
+    if(A > 13)
+        A = 13;
+    if(Points[A] <= 5)
+    {
+        Lives -= Points[A];
+        PlaySound(15, Points[A] - 1);
+    }
+    else
+        Score -= Points[A];
+    NewEffect(186, Loc);
+    Effect[numEffects].Frame = A - 1;
+}
+
 void SizableBlocks()
 {
     BlockIsSizable[698] = true;

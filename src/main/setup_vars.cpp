@@ -290,6 +290,8 @@ void SetupVars()
     EffectHeight[78] = 10;
     EffectWidth[79] = 50;
     EffectHeight[79] = 24;
+    EffectWidth[186] = 50;
+    EffectHeight[186] = 24;
     EffectWidth[80] = 16;
     EffectHeight[80] = 16;
     EffectWidth[174] = 16;
@@ -1093,6 +1095,8 @@ void SetupVars()
     NPCWidth[94] = 32; // Inert Toad
     NPCHeight[94] = 54;
 
+
+
     NPCWidth[198] = 32; // Peach
     NPCHeight[198] = 64;
     NPCFrameOffsetY[198] = 2;
@@ -1333,6 +1337,10 @@ void SetupVars()
     NPCHeight[152] = 32;
     NPCIsABonus[152] = true;
     NPCIsACoin[152] = true;
+    NPCWidth[369] = 32; // Sonic Red Ring
+    NPCHeight[369] = 32;
+    NPCIsABonus[369] = true;
+    NPCIsACoin[369] = true;
     For(A, 139, 147) // Veggies
     {
         NPCWidth[A] = GFXNPCWidth[A];
@@ -1550,6 +1558,12 @@ void SetupVars()
     NPCIsABlock[241] = true;
     NPCGrabFromTop[241] = true;
     NPCIsGrabbable[241] = true;
+
+    NPCWidth[364] = 26; // Yoshi Mount
+    NPCHeight[364] = 34;
+    NPCWidthGFX[364] = NPCWidth[364];
+    NPCHeightGFX[364] = NPCHeight[364];
+    NPCIsABonus[364] = true;
 
     NPCWontHurt[181] = true; // SMW Bowser Statue
     NPCIsABlock[181] = true;
@@ -2128,6 +2142,17 @@ void SetupVars()
     NPCJumpHurt[270] = true;
     NPCNoClipping[270] = true;
 
+    NPCWidth[370] = 64; // sma4 arrow lift
+    NPCHeight[370] = 64;
+    NPCNoClipping[370] = true;
+    NPCIsABlock[370] = true;
+    NPCCanWalkOn[370] = true;
+    NPCMovesPlayer[370] = true;
+    NPCStandsOnPlayer[370] = true;
+    NPCNoGravity[370] = true;
+    NPCNoIceBall[370] = true;
+    NPCNoYoshi[370] = true;
+    NPCWontHurt[370] = true;
     NPCWidth[271] = 32;
     NPCHeight[271] = 32;
     NPCNoClipping[271] = true;
@@ -2505,10 +2530,25 @@ void SetupVars()
     NPCJumpBounce[302] = true;
     NPCJumpBounce[356] = true;
 
+    NPCWidth[367] = 58; // stinger
+    NPCHeight[367] = 74;
+    NPCNoClipping[367] = true;
+    NPCNoIceBall[367] = true;
+    NPCNoGravity[367] = true;
+
+    NPCWidth[368] = 12; // stinger's projectile
+    NPCHeight[368] = 12;
+    NPCWidthGFX[368] = NPCWidth[368];
+    NPCHeightGFX[368] = NPCHeight[368];
+    NPCNoIceBall[368] = true;
+    NPCJumpHurt[368] = true;
+    NPCNoClipping[368] = true;
+    NPCNoYoshi[368] = true;
 
     NPCWidth[362] = 84;
     NPCHeight[362] = 70;
     NPCTurnsAtCliffs[362] = true;
+    NPCNoIceBall[362] = true;
 
     NPCWidth[363] = 20;
     NPCHeight[363] = 20;

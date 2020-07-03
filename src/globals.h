@@ -709,6 +709,8 @@ struct Player_t
     bool CanGrabNPCs = false;
 //    HeldBonus As Integer 'the NPC that is in the player's container
     int HeldBonus = 0;
+    int HeldBonusSpecial = 0;
+
 //    Section As Integer 'What section of the level the player is in
     int Section = 0;
 //    WarpCD As Integer 'delay before allowing the player to warp again
@@ -1841,6 +1843,11 @@ extern RangeArrI<bool, 0, maxBlockType, false> BlockHammer;
 extern RangeArrI<int, 1, 10, 0> CoinFrame;
 //Public CoinFrame2(1 To 10) As Integer 'Counter to update the coin frames
 extern RangeArrI<int, 1, 10, 0> CoinFrame2;
+
+extern RangeArrI<int, 1, 10, 0> RedRingFrame;
+//Counter to update the red ring frames
+extern RangeArrI<int, 1, 10, 0> RedRingFrame2;
+
 //Public EditorCursor As EditorCursor
 extern EditorCursor_t EditorCursor;
 //Public EditorControls As EditorControls
@@ -2459,5 +2466,8 @@ const int curRelease = 64;
 extern bool WindowChanged;
 extern int ScreenW;
 extern int ScreenH;
+
+extern int LevelTimer;
+extern bool LevelTimerBool;
 
 #endif // GLOBALS_H

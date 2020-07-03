@@ -1211,7 +1211,7 @@ void SetupPlayerFrames()
     LuigiFrameY[307] = -6;
     LuigiFrameY[293] = -6;
 
-    For(A, 650, maxPlayerFrames)
+    For(A, 650, 750)
     {
         MarioFrameX[A] = MarioFrameX[A - 400];
         MarioFrameY[A] = MarioFrameY[A - 400];
@@ -1225,6 +1225,87 @@ void SetupPlayerFrames()
         LinkFrameY[A] = LinkFrameY[A - 400];
     }
 
+    For(A, 750, 850)
+    {
+        MarioFrameX[A] = MarioFrameX[A - 400];
+        MarioFrameY[A] = MarioFrameY[A - 400] - 16;
+        LuigiFrameX[A] = LuigiFrameX[A - 400];
+        LuigiFrameY[A] = LuigiFrameY[A - 400];
+        PeachFrameX[A] = PeachFrameX[A - 400];
+        PeachFrameY[A] = PeachFrameY[A - 400];
+        ToadFrameX[A] = ToadFrameX[A - 400];
+        ToadFrameY[A] = ToadFrameY[A - 400];
+        LinkFrameX[A] = LinkFrameX[A - 400];
+        LinkFrameY[A] = LinkFrameY[A - 400];
+    }
+
+    For(A, 850, 950)
+    {
+        MarioFrameY[A] -= 2;
+        PeachFrameY[A] -= 14;
+        ToadFrameY[A] -= 8;
+        LinkFrameY[A] -= 6;
+    }
+    For(A, 850, 900)
+    {
+        LuigiFrameY[A] += 2;
+    }
+    For(A, 900, 950)
+    {
+        MarioFrameX[A] += 4;
+        LuigiFrameX[A] += 4;
+        PeachFrameX[A] -= 2;
+        ToadFrameX[A] -= 2;
+        LinkFrameX[A] += 2;
+    }
+
+    LinkFrameY[907] += 2;
+    LinkFrameY[904] += 2;
+    LinkFrameY[893] += 2;
+    LinkFrameX[893] -= 8;
+
+    //frog suit
+
+    //mario
+    MarioFrameX[795] -= 4;
+    MarioFrameX[796] -= 4;
+    MarioFrameX[804] += 4;
+    MarioFrameX[805] += 4;
+    MarioFrameX[802] += 9;
+    MarioFrameX[803] += 9;
+    MarioFrameX[797] -= 12;
+    MarioFrameX[798] -= 12;
+    MarioFrameX[799] -= 12;
+    MarioFrameX[801] += 12;
+    MarioFrameX[804] += 6;
+    MarioFrameX[805] += 6;
+    MarioFrameX[793] += 2;
+    MarioFrameX[807] += 16;
+
+    MarioFrameX[807] -= 8;
+    MarioFrameX[793] -= 8;
+
+    MarioFrameY[807] -= 4;
+    MarioFrameY[793] -= 4;
+    MarioFrameY[802] -= 10;
+    MarioFrameY[803] -= 10;
+
+    MarioFrameY[798] -= 10;
+    MarioFrameY[797] -= 10;
+
+    For(A, 790, 792)
+    {
+        MarioFrameY[A] -= 14;
+    }
+
+    For(A, 808, 810)
+    {
+        MarioFrameX[A] += 4;
+        MarioFrameY[A] -= 14;
+    }
+
+
+    //end
 
     PeachFrameX[401] = -16;
     PeachFrameY[401] = -2;

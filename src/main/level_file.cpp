@@ -158,6 +158,19 @@ bool OpenLevelData(LevelData &lvl, const std::string FilePath)
     LevelName = lvl.LevelName;
 
     numSections = 0;
+
+    LevelTimer = 0;
+    LevelTimerBool = false;
+
+    if(!lvl.custom_params.empty())
+    {
+        auto lvlsettings = nlohmann::json::parse(lvl.custom_params);
+        if(lvlsettings.contains("time"))
+            LevelTimer = lvlsettings["time"];
+        if(lvlsettings.contains("timer"))
+            LevelTimerBool = lvlsettings["timer"];
+    }
+
     B = 0;
     for(auto & s : lvl.sections)
     {
@@ -375,6 +388,12 @@ bool OpenLevelData(LevelData &lvl, const std::string FilePath)
         }
 
         if(npc.Type == 260)
+        {
+            npc.Special = n.special_data;
+            npc.DefaultSpecial = int(npc.Special);
+        }
+
+        if(npc.Type == 364)
         {
             npc.Special = n.special_data;
             npc.DefaultSpecial = int(npc.Special);
@@ -833,6 +852,9 @@ void ClearLevel()
     BlocksSorted = true;
     qScreen = false;
     UnloadCustomGFX();
+
+    LevelTimer = 0;
+    LevelTimerBool = false;
 
     numSections = 0;
 

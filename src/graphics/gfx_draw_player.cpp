@@ -37,6 +37,11 @@ void DrawPlayer(int A, int Z)
     {
         if(vScreenCollision(Z, Player[A].Location))
         {
+            SuperPrint(std::to_string(
+            (Player[A].State * 100) +
+            (Player[A].Frame * Player[A].Direction)),
+            3, 10, 10);
+
             if(Player[A].Mount == 3 && Player[A].Fairy == false)
             {
                 B = Player[A].MountType;
@@ -82,7 +87,20 @@ void DrawPlayer(int A, int Z)
             {
                 if(Player[A].Mount == 0)
                 {
-                    frmMain.renderTexture(vScreenX[Z] + static_cast<int>(floor(static_cast<double>(Player[A].Location.X))) + MarioFrameX[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], vScreenY[Z] + Player[A].Location.Y + MarioFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)], 99, 99, GFXMario[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction), pfrY(100 + Player[A].Frame * Player[A].Direction), Player[A].Red, Player[A].Green, Player[A].Blue);
+                    frmMain.renderTexture(
+                    vScreenX[Z] + static_cast<int>(floor(static_cast<double>(Player[A].Location.X))) +
+                    MarioFrameX[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)],
+                    vScreenY[Z] + Player[A].Location.Y +
+                    MarioFrameY[(Player[A].State * 100) + (Player[A].Frame * Player[A].Direction)],
+                    99, 99, GFXMario[Player[A].State],
+                    pfrX(100 + Player[A].Frame * Player[A].Direction),
+                    pfrY(100 + Player[A].Frame * Player[A].Direction),
+                    Player[A].Red, Player[A].Green, Player[A].Blue);
+
+                    SuperPrint(std::to_string(
+                    (Player[A].State * 100) +
+                    (Player[A].Frame * Player[A].Direction)),
+                    3, 10, 10);
                 }
                 else if(Player[A].Mount == 1)
                 {

@@ -102,6 +102,10 @@ void AddCredit(std::string newCredit);
 // calcualtes scores based on the multiplyer and how much the NPC is worth
 void MoreScore(int addScore, Location_t Loc);
 void MoreScore(int addScore, Location_t Loc, int &Multiplier);
+
+void LessScore(int removeScore, Location_t Loc);
+void LessScore(int removeScore, Location_t Loc, int &Multiplier);
+
 // sets up player frame offsets so they are displayed correctly on the screen
 void SetupPlayerFrames();
 

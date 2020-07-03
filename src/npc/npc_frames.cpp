@@ -363,14 +363,44 @@ void NPCFrames(int A)
     }
     else if(NPC[A].Type == 298 || NPC[A].Type == 299)
     {
-        NPC[A].FrameCount = NPC[A].FrameCount + 1;
-        if(NPC[A].FrameCount >= 8)
+        NPC[A].Frame = CoinFrame[3];
+    }
+    else if(NPC[A].Type == 367) // stinger
+    {
+        if(NPC[A].Special == 0)
         {
-            NPC[A].Frame = NPC[A].Frame + 1;
-            NPC[A].FrameCount = 0;
+            NPC[A].FrameCount++;
+            if(NPC[A].FrameCount < 4)
+                NPC[A].Frame = 0;
+            else if(NPC[A].FrameCount < 8)
+                NPC[A].Frame = 1;
+            else
+            {
+                NPC[A].Frame = 0;
+                NPC[A].FrameCount = 0;
+            }
+            if(NPC[A].Direction == 1)
+                NPC[A].Frame += 4;
         }
-        if(NPC[A].Frame >= 4)
-            NPC[A].Frame = 0;
+        else if(NPC[A].Special == 1)
+        {
+            NPC[A].FrameCount++;
+            if(NPC[A].FrameCount < 4)
+                NPC[A].Frame = 2;
+            else if(NPC[A].FrameCount < 8)
+                NPC[A].Frame = 3;
+            else
+            {
+                NPC[A].Frame = 2;
+                NPC[A].FrameCount = 0;
+            }
+            if(NPC[A].Direction == 1)
+                NPC[A].Frame += 4;
+        }
+        else
+        {
+            NPC[A].Frame = 8;
+        }
     }
     else if(NPC[A].Type == 280) // ludwig koopa
     {
@@ -823,6 +853,8 @@ void NPCFrames(int A)
         else
             NPC[A].Frame = 0;
     }
+    else if(NPC[A].Type == 364)
+        NPC[A].Frame = NPC[A].Special;
     else if(NPC[A].Type == 211)
     {
         NPC[A].FrameCount = NPC[A].FrameCount + 1;
@@ -1468,7 +1500,7 @@ void NPCFrames(int A)
     {
         NPC[A].Frame = 0;
     }
-    else if(NPC[A].Type == 294 || NPC[A].Type == 309 || NPC[A].Type == 337 || NPC[A].Type == 329)
+    else if(NPC[A].Type == 294 || NPC[A].Type == 309 || NPC[A].Type == 337 || NPC[A].Type == 329 || NPC[A].Type == 370)
     {
         if(NPC[A].Special6 != 0)
             NPC[A].Frame = -1;
@@ -1926,13 +1958,17 @@ void NPCFrames(int A)
             NPC[A].Frame = 0;
         }
     }
-    else if(NPCIsACoin[NPC[A].Type]) // Coin
+    else if(NPCIsACoin[NPC[A].Type] && NPC[A].Type != 369) // Coin
     {
         NPC[A].Frame = CoinFrame[3];
         if(NPC[A].Type == 138)
             NPC[A].Frame = CoinFrame[2];
         if(NPC[A].Type == 152)
             NPC[A].Frame = CoinFrame[3];
+    }
+    else if(NPCIsACoin[NPC[A].Type] && NPC[A].Type == 369) // Red Ring
+    {
+        NPC[A].Frame = RedRingFrame[1];
     }
     else if(NPC[A].Type == 359) // Ace Coin
     {

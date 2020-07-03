@@ -1236,7 +1236,7 @@ void UpdateGraphics(bool skipRepaint)
         for(A = 1; A <= numNPCs; A++)
         {
             float cn = NPC[A].Shadow ? 0.f : 1.f;
-            if((NPC[A].Type == 294 || NPC[A].Type == 309 || NPC[A].Type == 329 || NPC[A].Type == 337) && NPC[A].Active == true)
+            if((NPC[A].Type == 294 || NPC[A].Type == 309 || NPC[A].Type == 329 || NPC[A].Type == 337 || NPC[A].Type == 370) && NPC[A].Active == true)
             {
                 frmMain.renderTextureI(vScreenX[Z] + NPC[A].Location.X + NPCFrameOffsetX[NPC[A].Type], vScreenY[Z] + NPC[A].Location.Y + NPCFrameOffsetY[NPC[A].Type], NPC[A].Location.Width, NPC[A].Location.Height, GFXNPC[NPC[A].Type], 0, 0, NPC[A].Special6, nullptr, SDL_FLIP_NONE, cn, cn, cn);
             }
@@ -2888,6 +2888,15 @@ void UpdateGraphics(bool skipRepaint)
         CoinFrame[3] = CoinFrame[3] + 1;
         if(CoinFrame[3] >= 4)
             CoinFrame[3] = 0;
+    }
+    //Update Red Ring Frames
+    RedRingFrame2[1]++;
+    if(RedRingFrame2[1] >= 7)
+    {
+        RedRingFrame[1]--;
+        RedRingFrame2[1] = 0;
+        if(RedRingFrame[1] < 0)
+            RedRingFrame[1] = 3;
     }
 //    if(nPlay.Mode == 0)
 //    {

@@ -418,6 +418,12 @@ void PlayerHurt(int A)
 {
     if(GodMode == true || GameOutro == true || BattleOutro > 0)
             return;
+
+    if(Player[A].State == 9)
+    {
+        PlayerDead(A);
+        return;
+    }
     Location_t tempLocation;
     int B = 0;
 
@@ -6266,7 +6272,7 @@ void PlayerEffects(int A)
         }
         Player[A].MountSpecial = 0;
         Player[A].YoshiTongueLength = 0;
-        Player[A].Immune = Player[A].Immune + 1;
+        Player[A].Immune++;
         if(Player[A].Immune >= 5)
         {
             Player[A].Immune = 0;

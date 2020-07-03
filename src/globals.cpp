@@ -311,6 +311,8 @@ RangeArrI<bool, 0, maxBlockType, false> BlockHammer;
 RangeArrI<int, 0, maxBlockType, 2> BlockHitTransform;
 RangeArrI<int, 1, 10, 0> CoinFrame;
 RangeArrI<int, 1, 10, 0> CoinFrame2;
+RangeArrI<int, 1, 10, 0> RedRingFrame;
+RangeArrI<int, 1, 10, 0> RedRingFrame2;
 EditorCursor_t EditorCursor;
 EditorControls_t EditorControls;
 
@@ -608,6 +610,9 @@ bool WindowChanged = true;
 
 int ScreenW = 800;
 int ScreenH = 600;
+
+int LevelTimer = 0;
+bool LevelTimerBool = false;
 
 void ReadMainIni()
 {

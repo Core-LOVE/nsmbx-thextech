@@ -966,7 +966,7 @@ void UpdateEffects()
             else if(e.NewNpc == 228)
                 e.Frame = e.Frame + 14;
         }
-        else if(e.Type == 79)
+        else if(e.Type == 79 || e.Type == 186)
             e.Location.SpeedY = e.Location.SpeedY * 0.97;
     } //for
 
@@ -1371,6 +1371,22 @@ void NewEffect(int A, Location_t Location, float Direction, int NewNpc, bool Sha
             Effect[numEffects].Location.Y = Location.Y + Location.Height / 2.0 - Effect[numEffects].Location.Height / 2.0;
             Effect[numEffects].Location.SpeedY = 1.5;
         }
+        Effect[numEffects].Location.SpeedX = 0;
+        Effect[numEffects].Frame = 0;
+        Effect[numEffects].Life = 45;
+    }
+    else if(A == 186) // Negative score
+    {
+        numEffects++;
+        Effect[numEffects].Type = A;
+        Effect[numEffects].Shadow = Shadow;
+        Effect[numEffects].Location.Width = EffectWidth[Effect[numEffects].Type];
+        Effect[numEffects].Location.Height = EffectHeight[Effect[numEffects].Type];
+        Effect[numEffects].Location.X = Location.X - Effect[numEffects].Location.Width * 0.5 + Location.Width * 0.5;
+        Effect[numEffects].Location.Y = Location.Y - Effect[numEffects].Location.Height * 0.5 + Location.Height * 0.5;
+        Effect[numEffects].Location.X = Effect[numEffects].Location.X + dRand() * 32 - 16;
+        Effect[numEffects].Location.Y = Effect[numEffects].Location.Y + dRand() * 32 - 16;
+        Effect[numEffects].Location.SpeedY = 2;
         Effect[numEffects].Location.SpeedX = 0;
         Effect[numEffects].Frame = 0;
         Effect[numEffects].Life = 45;

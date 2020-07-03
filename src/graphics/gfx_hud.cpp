@@ -125,7 +125,7 @@ void DrawInterface(int Z, int numScreens)
                     DrawTextureF(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C, 16, Container[1].w, Container[1].h, Container[Player[B].Character], 0, 0);
                     if(Player[B].HeldBonus > 0)
                     {
-                        DrawTextureF(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C + 12, 16 + 12, NPCWidth[Player[B].HeldBonus], NPCHeight[Player[B].HeldBonus], GFXNPC[Player[B].HeldBonus], 0, 0);
+                        DrawTextureF(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C + 12, 16 + 12, NPCWidth[Player[B].HeldBonus], NPCHeight[Player[B].HeldBonus], GFXNPC[Player[B].HeldBonus], 0, Player[B].HeldBonusSpecial * NPCHeight[Player[B].HeldBonus]);
                     }
                 }
             }
@@ -181,14 +181,16 @@ void DrawInterface(int Z, int numScreens)
                 SuperPrint(livesStr, 1,
                            float(-80 + (vScreen[Z].Width / 2.0) - (Container[1].w / 2) + C - 122 + 12 + 18 + Interface[5].w),
                            16 + 11);
-                // Print stars on the screen
+                // Print stars and timer on the screen
+                int starY = 16 + 30;
+
                 if(numStars > 0)
                 {
-                    DrawTextureF(-80 + vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122, 16 + 30, Interface[5].w, Interface[5].h, Interface[5], 0, 0);
-                    DrawTextureF(-80 + vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122 + 10 + Interface[1].w, 16 + 31, Interface[1].w, Interface[1].h, Interface[1], 0, 0);
+                    DrawTextureF(-80 + vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122, starY, Interface[5].w, Interface[5].h, Interface[5], 0, 0);
+                    DrawTextureF(-80 + vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122 + 10 + Interface[1].w, starY + 1, Interface[1].w, Interface[1].h, Interface[1], 0, 0);
                     SuperPrint(numStarsStr, 1,
                                float(-80 + (vScreen[Z].Width / 2.0) - (Container[1].w / 2) + C - 122 + 12 + 18 + Interface[5].w),
-                               16 + 31);
+                               starY + 1);
                 }
             }
             else
@@ -454,19 +456,37 @@ void DrawInterface(int Z, int numScreens)
                    float(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122 + 12 + 18 + Interface[5].w),
                    16 + 11);
         // Print stars on the screen
+        int star_y = 16 + 30;
+
+        if(LevelTimerBool == true)
+        {
+            star_y = 16 + 50;
+        }
+
         if(numStars > 0)
         {
-            DrawTextureF(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122, 16 + 30, Interface[5].w, Interface[5].h, Interface[5], 0, 0);
-            DrawTextureF(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122 + 10 + Interface[1].w, 16 + 31, Interface[1].w, Interface[1].h, Interface[1], 0, 0);
+            DrawTextureF(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122, star_y, Interface[5].w, Interface[5].h, Interface[5], 0, 0);
+            DrawTextureF(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122 + 10 + Interface[1].w, star_y + 1, Interface[1].w, Interface[1].h, Interface[1], 0, 0);
             SuperPrint(numStarsStr, 1,
                        float(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122 + 12 + 18 + Interface[5].w),
-                       16 + 31);
+                       star_y + 1);
         }
+        // Print advanced coins
         if(maxAceCoins >= 0)
         {
             int offY = 30;
             if(numStars > 0)
+            {
                 offY = 50;
+                if(LevelTimerBool == true)
+                {
+                    offY = 70;
+                }
+            }
+            if(LevelTimerBool == true)
+            {
+                offY = 50;
+            }
             for(int i = 0; i <= maxAceCoins; i++)
             {
                 int graphic = 10;
@@ -474,6 +494,15 @@ void DrawInterface(int Z, int numScreens)
                     graphic = 11;
                 DrawTextureF(((vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122 - 16) + (Interface[graphic].w * (i % 8))), 16 + offY + 20 * std::floor(i / 8), Interface[graphic].w, Interface[graphic].h, Interface[graphic], 0, 0);
             }
+        }
+        // Print Timer
+        if(LevelTimerBool == true)
+        {
+            DrawTextureF(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122, 16 + 30, Interface[9].w, Interface[9].h, Interface[9], 0, 0);
+            DrawTextureF(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122 + 10 + Interface[1].w, 16 + 31, Interface[1].w, Interface[1].h, Interface[1], 0, 0);
+            SuperPrint(std::to_string(LevelTimer), 1,
+                       float(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122 + 12 + 18 + Interface[9].w),
+                       16 + 31);
         }
     }
     if(BattleIntro > 0)

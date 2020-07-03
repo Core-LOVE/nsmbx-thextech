@@ -74,11 +74,13 @@ void SetupPhysics()
     Physics.PlayerDuckHeight[1][5] = 30;    // ---------
     Physics.PlayerGrabSpotX[1][5] = 18;     // ---------
     Physics.PlayerGrabSpotY[1][5] = 16;     // ---------
-    Physics.PlayerHeight[1][8] = 48;        // Frog Mario
-    Physics.PlayerWidth[1][8] = 12;         // ---------
-    Physics.PlayerDuckHeight[1][8] = 46;    // ---------
-    Physics.PlayerGrabSpotX[1][8] = 18;     // ---------
-    Physics.PlayerGrabSpotY[1][8] = 16;     // ---------
+
+    Physics.PlayerHeight[1][8] = 32;        // Frog Mario
+    Physics.PlayerWidth[1][8] = 16;         // ---------
+    Physics.PlayerDuckHeight[1][8] = 22;    // ---------
+    Physics.PlayerGrabSpotX[1][8] = 7;     // ---------
+    Physics.PlayerGrabSpotY[1][8] = 0;     // ---------
+
     Physics.PlayerHeight[1][9] = 20;        // Mini Mario
     Physics.PlayerWidth[1][9] = 18;         // ---------
     Physics.PlayerDuckHeight[1][9] = 23;    // ---------
@@ -125,6 +127,12 @@ void SetupPhysics()
     Physics.PlayerDuckHeight[2][8] = 48;    // ---------
     Physics.PlayerGrabSpotX[2][8] = 18;     // ---------
     Physics.PlayerGrabSpotY[2][8] = 16;     // ---------
+
+    Physics.PlayerHeight[2][9] = 20;        // Mini Luigi
+    Physics.PlayerWidth[2][9] = 18;         // ---------
+    Physics.PlayerDuckHeight[2][9] = 23;    // ---------
+    Physics.PlayerGrabSpotX[2][9] = 9;     // ---------
+    Physics.PlayerGrabSpotY[2][9] = 8;     // ---------
 
     Physics.PlayerHeight[3][1] = 38;        // Little Peach
     Physics.PlayerDuckHeight[3][1] = 26;    // ---------
@@ -173,6 +181,12 @@ void SetupPhysics()
     Physics.PlayerGrabSpotX[3][8] = 18;
     Physics.PlayerGrabSpotY[3][8] = 16;
 
+    Physics.PlayerHeight[3][9] = 20;        // Mini Peach
+    Physics.PlayerWidth[3][9] = 18;         // ---------
+    Physics.PlayerDuckHeight[3][9] = 23;    // ---------
+    Physics.PlayerGrabSpotX[3][9] = 9;     // ---------
+    Physics.PlayerGrabSpotY[3][9] = 8;     // ---------
+
     Physics.PlayerHeight[4][1] = 30;        // Little Toad
     Physics.PlayerWidth[4][1] = 24;         // ------------
     Physics.PlayerDuckHeight[4][1] = 26;    // ---------
@@ -218,6 +232,12 @@ void SetupPhysics()
     Physics.PlayerDuckHeight[4][8] = 44;    // ---------
     Physics.PlayerGrabSpotX[4][8] = 18;     // ---------
     Physics.PlayerGrabSpotY[4][8] = 16;     // ---------
+
+    Physics.PlayerHeight[4][9] = 20;        // Mini Toad
+    Physics.PlayerWidth[4][9] = 18;         // ---------
+    Physics.PlayerDuckHeight[4][9] = 23;    // ---------
+    Physics.PlayerGrabSpotX[4][9] = 9;     // ---------
+    Physics.PlayerGrabSpotY[4][9] = 8;     // ---------
 
     Physics.PlayerHeight[5][1] = 54;        // Green Link
     Physics.PlayerWidth[5][1] = 22;         // ---------
@@ -267,6 +287,11 @@ void SetupPhysics()
     Physics.PlayerGrabSpotX[5][8] = 18;     // ---------
     Physics.PlayerGrabSpotY[5][8] = 16;     // ---------
 
+    Physics.PlayerHeight[5][9] = 20;        // Mini Link
+    Physics.PlayerWidth[5][9] = 18;         // ---------
+    Physics.PlayerDuckHeight[5][9] = 23;    // ---------
+    Physics.PlayerGrabSpotX[5][9] = 9;     // ---------
+    Physics.PlayerGrabSpotY[5][9] = 8;     // ---------
 
 
     Physics.PlayerHeight[6][1] = 30;        // Little Waluigi
