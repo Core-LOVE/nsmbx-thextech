@@ -53,6 +53,7 @@ void CheckActive();
 // set up sizable blocks
 void SizableBlocks();
 
+void GameLevelTimer();
 // game_main_setupphysics.cpp
 
 int GameMain(const CmdLineSetup_t &setup)
@@ -131,6 +132,7 @@ int GameMain(const CmdLineSetup_t &setup)
 //    Load GFX 'load the graphics form
 //    GFX.load(); // load the graphics form // Moved to before sound load
     SizableBlocks();
+    GameLevelTimer();
     LoadGFX(); // load the graphics from file
     SetupVars(); //Setup Variables
 
@@ -1526,6 +1528,20 @@ void SizableBlocks()
     BlockIsSizable[440] = true;
     BlockIsSizable[445] = true;
     BlockIsSizable[685] = true;
+}
+
+void GameLevelTimer()
+{
+    if(LevelTimer.enable != true || GamePaused || !GameIsActive || !frmMain.hasWindowMouseFocus())
+        return;
+
+    LevelTimer.subTimer++;
+    if(LevelTimer.subTimer > LevelTimer.timeSpeed)
+    {
+        LevelTimer.subTimer = 0;
+        if(LevelTimer.time > 0)
+            LevelTimer.time--;
+    }
 }
 
 void StartBattleMode()

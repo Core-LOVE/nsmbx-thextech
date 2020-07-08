@@ -176,6 +176,7 @@ RangeArrI<bool, 0, maxNPCType, false> NPCIsAVine;
 RangeArrI<bool, 0, maxNPCType, false> NPCIsAnExit;
 RangeArrI<bool, 0, maxNPCType, false> NPCIsAParaTroopa;
 RangeArrI<bool, 0, maxNPCType, false> NPCIsCheep;
+RangeArrI<bool, 0, maxNPCType, false> NPCIsHeavy;
 RangeArrI<bool, 0, maxNPCType, false> NPCJumpHurt;
 RangeArrI<bool, 0, maxNPCType, true> NPCSpinJumpHurt;
 RangeArrI<bool, 0, maxNPCType, false> NPCJumpBounce;
@@ -420,6 +421,8 @@ RangeArr<Player_t, 0, 10> SavedChar;
 bool LoadingInProcess = false;
 int LoadCoins = 0;
 float LoadCoinsT = 0.0f;
+int LoadCursors = 0;
+float LoadCursorsT = 0.0f;
 
 RangeArrI<bool, 1, maxWeatherType, false> GFXWeatherCustom;
 RangeArrI<long, 1, maxWeatherType, 0> GFXWeatherMask;
@@ -564,9 +567,9 @@ RangeArr<StdPicture, 1, 4> Boot;
 RangeArr<StdPicture, 1, 5> CharacterName;
 StdPicture Chat;
 RangeArr<StdPicture, 0, 2> Container;
-RangeArr<StdPicture, 1, 3> ECursor;
+RangeArr<StdPicture, 1, 4> ECursor;
 RangeArr<StdPicture, 0, 9> Font1;
-RangeArr<StdPicture, 1, 3> Font2;
+RangeArr<StdPicture, 1, 4> Font2;
 StdPicture Font2S;
 RangeArr<StdPicture, 1, 2> Heart;
 RangeArr<StdPicture, 0, 11> Interface;
@@ -611,8 +614,13 @@ bool WindowChanged = true;
 int ScreenW = 800;
 int ScreenH = 600;
 
-int LevelTimer = 0;
-bool LevelTimerBool = false;
+void LevelTimer_t::reset()
+{
+    enable = false;
+    time = 0;
+    subTimer = 0;
+    timeSpeed = 0;
+}
 
 void ReadMainIni()
 {
@@ -772,3 +780,5 @@ double vb6Round(double x, int decimals)
 
     return res;
 }
+
+LevelTimer_t LevelTimer;

@@ -146,5 +146,14 @@ void SpecialFrames()
             SpecialFrame[12] = 0;
         SpecialFrameCount[12] = 0;
     }
+
+    SpecialFrameCount[13]++;
+    if(SpecialFrameCount[13] >= EffectFrameSpeed[187])
+    {
+        SpecialFrame[13]++;
+        if(SpecialFrame[13] >= EffectFrameAmount[187])
+            SpecialFrame[13] = 0;
+        SpecialFrameCount[13] = 0;
+    }
 }
 

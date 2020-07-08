@@ -107,5 +107,6 @@ void YoshiFrame(int A);
 // Private Sub PlayerEffects(A As Integer)
 void PlayerEffects(int A);
 
+void PlayerPropellerMushroom(int A);
 
 #endif // PLAYER_H

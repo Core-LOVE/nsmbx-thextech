@@ -1288,12 +1288,29 @@ void PlayerFrame(int A)
             if(NPC[Player[A].StandingOnNPC].Location.SpeedX > 0)
                 Player[A].Direction = -Player[A].Direction;
         }
-        Player[A].SpinFrame = Player[A].SpinFrame + 1;
+        if(Player[A].State != 10)
+            Player[A].SpinFrame = Player[A].SpinFrame + 1;
+        else
+        {
+            if(Player[A].PropellerJump != 0)
+            {
+                Player[A].SpinFrame2++;
+                if(Player[A].SpinFrame2 > 2)
+                {
+                    Player[A].SpinFrame++;
+                    Player[A].SpinFrame2 = 0;
+                }
+            }
+            else
+                Player[A].SpinFrame++;
+        }
         if(Player[A].SpinFrame < 0)
             Player[A].SpinFrame = 14;
         if(Player[A].SpinFrame < 3)
         {
             Player[A].Frame = 1;
+            if(Player[A].State == 10 && Player[A].PropellerJump != 0)
+                Player[A].Frame = 17;
             if(Player[A].HoldingNPC > 0)
             {
                 if(Player[A].State == 1)
@@ -1305,10 +1322,16 @@ void PlayerFrame(int A)
                 Player[A].Frame = 12;
         }
         else if(Player[A].SpinFrame < 6)
+        {
             Player[A].Frame = 13;
+            if(Player[A].State == 10 && Player[A].PropellerJump != 0)
+                Player[A].Frame = 16;
+        }
         else if(Player[A].SpinFrame < 9)
         {
             Player[A].Frame = 1;
+            if(Player[A].State == 10 && Player[A].PropellerJump != 0)
+                Player[A].Frame = 17;
             if(Player[A].HoldingNPC > 0)
             {
                 if(Player[A].State == 1)
@@ -1320,10 +1343,16 @@ void PlayerFrame(int A)
                 Player[A].Frame = 12;
         }
         else if(Player[A].SpinFrame < 12 - 1)
+        {
             Player[A].Frame = 15;
+            if(Player[A].State == 10 && Player[A].PropellerJump != 0)
+                Player[A].Frame = 18;
+        }
         else
         {
             Player[A].Frame = 15;
+            if(Player[A].State == 10 && Player[A].PropellerJump != 0)
+                Player[A].Frame = 18;
             Player[A].SpinFrame = -1;
         }
     }
@@ -2067,6 +2096,10 @@ void UpdatePlayerBonus(int A, int B)
             }
             if(Player[A].State == 8 || Player[A].Effect == 42)
                 Player[A].HeldBonus = 304;
+            if(Player[A].State == 9 || Player[A].Effect == 43)
+                Player[A].HeldBonus = 357;
+            if(Player[A].State == 10 || Player[A].Effect == 44)
+                Player[A].HeldBonus = 372;
         }
     }
     if(Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 5)
@@ -4408,8 +4441,9 @@ void PlayerGrabCode(int A, bool DontResetGrabTime)
     double lyrX = 0;
     double lyrY = 0;
 
-    if(Player[A].State == 9)
+    if(Player[A].State == 9 && NPCIsHeavy[NPC[Player[A].StandingOnNPC].Type] == true)
         return;
+
     if(Player[A].StandingOnNPC != 0 && Player[A].HoldingNPC == 0)
     {
         if(NPCGrabFromTop[NPC[Player[A].StandingOnNPC].Type] == true)
@@ -6012,6 +6046,46 @@ void PlayerEffects(int A)
             Player[A].StandUp = true;
         }
     }
+    else if(Player[A].Effect == 44) // Player got propeller suit
+    {
+        Player[A].Frame = 1;
+        Player[A].Immune2 = true;
+        if(Player[A].Effect2 == 0.0)
+        {
+            if(Player[A].State == 1 && Player[A].Mount == 0)
+            {
+                Player[A].Location.X = Player[A].Location.X - Physics.PlayerWidth[Player[A].Character][2] * 0.5 + Physics.PlayerWidth[Player[A].Character][1] * 0.5;
+                Player[A].Location.Y = Player[A].Location.Y - Physics.PlayerHeight[Player[A].Character][2] + Physics.PlayerHeight[Player[A].Character][1];
+                Player[A].State = 10;
+                Player[A].Location.Width = Physics.PlayerWidth[Player[A].Character][Player[A].State];
+                Player[A].Location.Height = Physics.PlayerHeight[Player[A].Character][Player[A].State];
+            }
+            else if(Player[A].Mount == 3)
+            {
+                YoshiHeight(A);
+            }
+            else if(Player[A].Character == 2 && Player[A].State == 1 && Player[A].Mount == 1)
+            {
+                Player[A].Location.Y = Player[A].Location.Y - Physics.PlayerHeight[2][2] + Physics.PlayerHeight[1][2];
+                Player[A].Location.Height = Physics.PlayerHeight[Player[A].Character][6];
+            }
+            Player[A].State = 10;
+            tempLocation.Width = 32;
+            tempLocation.Height = 32;
+            tempLocation.X = Player[A].Location.X + Player[A].Location.Width / 2.0 - tempLocation.Width / 2.0;
+            tempLocation.Y = Player[A].Location.Y + Player[A].Location.Height / 2.0 - tempLocation.Height / 2.0;
+            NewEffect(131, tempLocation, 1, 0, ShadowMode);
+        }
+        Player[A].Effect2 = Player[A].Effect2 + 1;
+        if(Player[A].Effect2 == 14.0)
+        {
+            Player[A].Immune = Player[A].Immune + 50;
+            Player[A].Immune2 = true;
+            Player[A].Effect = 0;
+            Player[A].Effect2 = 0;
+            Player[A].StandUp = true;
+        }
+    }
     else if(Player[A].Effect == 42) // Player got frog suit
     {
         Player[A].Frame = 1;
@@ -6544,3 +6618,27 @@ void YoshiFrame(int A)
         Player[A].Frame += 32;
 }
 
+void PlayerPropellerMushroom(int A)
+{
+    if(Player[A].PropellerJump != 0 && Player[A].Controls.AltJump)
+    {
+        if(Player[A].Location.SpeedY > Physics.PlayerTerminalVelocity / 4)
+        {
+            Player[A].Location.SpeedY = Physics.PlayerTerminalVelocity / 4;
+        }
+    }
+    //functionality
+    if(Player[A].Character < 4)
+    {
+        if(Player[A].Location.SpeedY > -4.1
+        && Player[A].Controls.AltJump
+        && Player[A].PropellerJump ==  0
+        && Player[A].SpinJump == false)
+        {
+            PlaySound(33);
+            Player[A].Jump = Physics.PlayerBlockJumpHeight;
+            Player[A].SpinJump = true;
+            Player[A].PropellerJump = 1;
+        }
+    }
+}

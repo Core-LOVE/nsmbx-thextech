@@ -28,6 +28,14 @@
 
 #include <string>
 
+struct CurPoint_t
+{
+    int X = 0;
+    int Y = 0;
+};
+
+extern CurPoint_t CurPos;
+
 extern bool gfxLoaderTestMode;
 
 // Public Sub LoadGFX()

@@ -52,6 +52,10 @@ void SetupVars()
     for(int A = 174; A <= 186; ++A)
         BackgroundFence[A] = true;
 
+    EffectWidth[187] = 32;
+    EffectHeight[187] = 12;
+    EffectFrameAmount[187] = 6;
+    EffectFrameSpeed[187] = 6;
 
     EffectWidth[182] = 76;
     EffectHeight[182] = 76;
@@ -383,6 +387,8 @@ void SetupVars()
     NPCJumpHurt[291] = true;
     NPCNoYoshi[291] = true;
 
+    NPCIsHeavy[327] = true;
+    NPCIsHeavy[329] = true;
 
     NPCNoYoshi[256] = true;
     NPCNoYoshi[257] = true;
@@ -1540,6 +1546,15 @@ void SetupVars()
     NPCHeight[174] = 28; //  Red SMB1 Shell
     NPCIsAShell[174] = true;
     NPCIsAShell[195] = true;
+
+    NPCHeightGFX[372] = 42; // propeller mushroom
+    NPCHeight[372] = 42;
+    NPCWidth[372] = 32;
+    NPCIsABonus[372] = true;
+    NPCNoGravity[372] = true;
+    NPCNoIceBall[372] = true;
+    NPCFrame[372] = 6;
+    NPCFrameSpeed[372] = 6;
 
     NPCJumpHurt[179] = true; // Razor Blade
     NPCWidthGFX[179] = 64;

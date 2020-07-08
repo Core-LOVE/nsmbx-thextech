@@ -42,6 +42,8 @@ void DrawPlayer(int A, int Z)
             (Player[A].Frame * Player[A].Direction)),
             3, 10, 10);
 
+            //SuperPrint(std::to_string(LevelTimer.enable), 3, 10, 30);
+
             if(Player[A].Mount == 3 && Player[A].Fairy == false)
             {
                 B = Player[A].MountType;
@@ -96,11 +98,6 @@ void DrawPlayer(int A, int Z)
                     pfrX(100 + Player[A].Frame * Player[A].Direction),
                     pfrY(100 + Player[A].Frame * Player[A].Direction),
                     Player[A].Red, Player[A].Green, Player[A].Blue);
-
-                    SuperPrint(std::to_string(
-                    (Player[A].State * 100) +
-                    (Player[A].Frame * Player[A].Direction)),
-                    3, 10, 10);
                 }
                 else if(Player[A].Mount == 1)
                 {

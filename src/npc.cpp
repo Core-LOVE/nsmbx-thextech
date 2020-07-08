@@ -3418,6 +3418,12 @@ void SpecialNPC(int A)
         else
             NPC[A].Location.SpeedX = 0;
     }
+    else if(NPC[A].Type == 372) // propeller mushroom
+    {
+        NPC[A].Special += 0.1;
+        NPC[A].Location.SpeedX = 1.5 * NPC[A].Direction;
+        NPC[A].Location.SpeedY = sin(NPC[A].Special) / 1.5;
+    }
     else if(NPC[A].Type == 237 || NPC[A].Type == 263) // Yoshi Ice
     {
         if(dRand() * 100 > 93)

@@ -569,6 +569,7 @@ struct Player_t
     bool SpinJump = false;
 //    SpinFrame As Integer 'frame for spinning
     int SpinFrame = 0;
+    int SpinFrame2 = 0;
 //    SpinFireDir As Integer 'for shooting fireballs while spin jumping
     int SpinFireDir = 0;
 //    Multiplier As Integer 'for score increase for multiple hops
@@ -749,6 +750,7 @@ struct Player_t
 //    Flutter As Integer 'Yoshi's Flutter
     int Flutter = 0;
 
+    int PropellerJump = 0;
 //End Type
 };
 
@@ -1566,6 +1568,7 @@ extern RangeArrI<bool, 0, maxNPCType, false> NPCIsVeggie;
 //Public NPCNoFireBall(0 To maxNPCType) As Boolean 'not hurt by fireball
 extern RangeArrI<bool, 0, maxNPCType, false> NPCNoFireBall;
 extern RangeArrI<bool, 0, maxNPCType, false> NPCNoLava;
+extern RangeArrI<bool, 0, maxNPCType, false> NPCIsHeavy;
 //Public NPCNoIceBall(0 To maxNPCType) As Boolean 'not hurt by fireball
 extern RangeArrI<bool, 0, maxNPCType, false> NPCNoIceBall;
 //Public NPCNoGravity(0 To maxNPCType) As Boolean 'not affected by gravity
@@ -1660,6 +1663,7 @@ struct NPCDefaults_t
 //    NPCNoGravity(0 To maxNPCType) As Boolean
     RangeArrI<bool, 0, maxNPCType, false> NPCNoGravity;
     RangeArrI<bool, 0, maxNPCType, true> NPCDespawn;
+    RangeArrI<bool, 0, maxNPCType, true> NPCIsHeavy;
 //End Type
 };
 //Public NPCDefaults As NPCDefaults
@@ -2105,6 +2109,9 @@ extern int LoadCoins;
 //Public LoadCoinsT As Single
 extern float LoadCoinsT;
 
+extern int LoadCursors;
+extern float LoadCursorsT;
+
 //'Game Graphics
 //Public GFXBlockCustom(1 To maxBlockType) As Boolean
 extern RangeArrI<bool, 1, maxBlockType, false> GFXBlockCustom;
@@ -2269,9 +2276,9 @@ extern RangeArr<StdPicture, 1, 4> Boot;
 extern RangeArr<StdPicture, 1, 5> CharacterName;
 extern StdPicture Chat;
 extern RangeArr<StdPicture, 0, 2> Container;
-extern RangeArr<StdPicture, 1, 3> ECursor;
+extern RangeArr<StdPicture, 1, 4> ECursor;
 extern RangeArr<StdPicture, 0, 9> Font1;
-extern RangeArr<StdPicture, 1, 3> Font2;
+extern RangeArr<StdPicture, 1, 4> Font2;
 extern StdPicture Font2S;
 extern RangeArr<StdPicture, 1, 2> Heart;
 extern RangeArr<StdPicture, 0, 11> Interface;
@@ -2467,7 +2474,15 @@ extern bool WindowChanged;
 extern int ScreenW;
 extern int ScreenH;
 
-extern int LevelTimer;
-extern bool LevelTimerBool;
+struct LevelTimer_t
+{
+    bool enable = false;
+    int time = 0;
+    double subTimer = 0;
+    int timeSpeed = 0;
+    void reset();
+};
+
+extern LevelTimer_t LevelTimer;
 
 #endif // GLOBALS_H

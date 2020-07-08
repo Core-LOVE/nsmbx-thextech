@@ -117,27 +117,39 @@ void SuperPrint(std::string SuperWords, int Font, float X, float Y,
     }
     else if(Font == 4)
     {
-//        Do While Len(Words) > 0
         for(auto c : SuperWords)
         {
-//            If Asc(Left(Words, 1)) >= 33 And Asc(Left(Words, 1)) <= 126 Then
             if(c >= 33 && c <= 126)
             {
-//                C = (Asc(Left(Words, 1)) - 33) * 16
                 C = (c - 33) * 16;
-//                BitBlt myBackBuffer, X + B, Y, 18, 16, Font2(3).hdc, 2, C, vbSrcPaint
                 DrawTextureF(int(X + B), int(Y), 18, 16, Font2[3], 2, C, r, g, b, a);
-//                B = B + 18
                 B += 18;
-//            Else
             } else {
-//                B = B + 18
                 B += 18;
-//            End If
             }
-//            Words = Right(Words, Len(Words) - 1)
-//        Loop
         }
-//    End If
+    }
+    else if(Font == 5)
+    {
+        for(auto c : SuperWords)
+        {
+            if(c >= '0' && c <= '9')
+                DrawTextureF(int(X + B), int(Y), 16, 14, Font1[c - '0'], 0, 0, r, g, b, a);
+            B += 16;
+        }
+    }
+    else if (Font == 6)
+    {
+        for(auto c : SuperWords)
+        {
+            if(c >= 33 && c <= 126)
+            {
+                C = (c - 33) * 16;
+                DrawTextureF(int(X + B), int(Y), 18, 16, Font2[4], 2, C, r, g, b, a);
+                B += 18;
+            } else {
+                B += 18;
+            }
+        }
     }
 }

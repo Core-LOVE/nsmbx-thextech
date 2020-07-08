@@ -38,8 +38,6 @@ void GameThing()
     tempPlayer[2] = Player[2];
 
     SetupPlayers();
-    ReadMainIni();
-    frmMain.resizeWindow(ScreenW, ScreenH);
 
     Player[1].Location.SpeedY = 0;
     Player[2].Location.SpeedY = 0;
@@ -86,6 +84,5 @@ void GameThing()
 
     Player[1] = tempPlayer[1];
     Player[2] = tempPlayer[2];
-    WindowChanged = false;
     DoEvents();
 }

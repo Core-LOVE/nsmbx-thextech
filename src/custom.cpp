@@ -58,6 +58,7 @@ void SaveNPCDefaults()
         NPCDefaults.NPCIsAnExit[A] = NPCIsAnExit[A];
         NPCDefaults.NPCIsAParaTroopa[A] = NPCIsAParaTroopa[A];
         NPCDefaults.NPCIsCheep[A] = NPCIsCheep[A];
+        NPCDefaults.NPCIsHeavy[A] = NPCIsHeavy[A];
         NPCDefaults.NPCJumpHurt[A] = NPCJumpHurt[A];
         NPCDefaults.NPCSpinJumpHurt[A] = NPCSpinJumpHurt[A];
         NPCDefaults.NPCJumpBounce[A] = NPCJumpBounce[A];
@@ -107,6 +108,7 @@ void LoadNPCDefaults()
         NPCIsAnExit[A] = NPCDefaults.NPCIsAnExit[A];
         NPCIsAParaTroopa[A] = NPCDefaults.NPCIsAParaTroopa[A];
         NPCIsCheep[A] = NPCDefaults.NPCIsCheep[A];
+        NPCIsHeavy[A] = NPCDefaults.NPCIsHeavy[A];
         NPCJumpHurt[A] = NPCDefaults.NPCJumpHurt[A];
         NPCSpinJumpHurt[A] = NPCDefaults.NPCSpinJumpHurt[A];
         NPCJumpBounce[A] = NPCDefaults.NPCJumpBounce[A];
@@ -214,6 +216,7 @@ void LoadCustomNPC(int A, std::string cFileName)
     boolVAR(npc, "jumpbounce", NPCJumpBounce[A]);
     boolVAR(npc, "nolava", NPCNoLava[A]);
     boolVAR(npc, "despawn", NPCDespawn[A]);
+    boolVAR(npc, "isheavy", NPCIsHeavy[A]);
 
     if(npc.en_nohurt)
         NPCWontHurt[A] = npc.nohurt;

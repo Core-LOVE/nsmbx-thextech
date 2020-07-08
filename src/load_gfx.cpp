@@ -41,6 +41,8 @@
 
 #include <set>
 
+CurPoint_t CurPos;
+
 static DirListCI s_dirEpisode;
 static DirListCI s_dirCustom;
 
@@ -435,7 +437,7 @@ void LoadGFX()
     }
     UpdateLoad();
 
-    for(int A = 1; A <= 3; ++A)
+    for(int A = 1; A <= 4; ++A)
     {
         p = GfxRoot + fmt::format_ne("ui/ECursor{0}.png", A);
         if(Files::fileExists(p))
@@ -463,7 +465,7 @@ void LoadGFX()
     }
     UpdateLoad();
 
-    for(int A = 1; A <= 3; ++A)
+    for(int A = 1; A <= 4; ++A)
     {
         p = GfxRoot + fmt::format_ne("ui/Font2_{0}.png", A);
         if(Files::fileExists(p))
@@ -1029,24 +1031,39 @@ void UpdateLoad()
     {
         LoadCoinsT = SDL_GetTicks() + 100;
         LoadCoins += 1;
-        if(LoadCoins > 7)
+        if(LoadCoins >= 4)
             LoadCoins = 0;
         draw = true;
     }
 
+    if(LoadCursorsT <= SDL_GetTicks())
+    {
+        LoadCursorsT = SDL_GetTicks() + 50;
+        LoadCursors += 1;
+        if(LoadCursors >= 8)
+            LoadCursors = 0;
+    }
+
     if(draw)
     {
+        CurPos.X = MenuMouseX;
+        CurPos.Y = MenuMouseY;
+
         frmMain.clearBuffer();
-        if(!gfxLoaderTestMode)
-            frmMain.renderTexture(0, 0, MenuGFX[4]);
+        if(!state.empty())
+            SuperPrint(state, 6, 8, 8);
         else
-        {
-            if(!state.empty())
-                SuperPrint(state, 3, 10, 10);
-            else
-                SuperPrint("Loading data...", 3, 10, 10);
-        }
-        frmMain.renderTexture(760, 560, LoadCoin.w, LoadCoin.h / 8, LoadCoin, 0, 32 * LoadCoins);
+            SuperPrint("Loading data...", 6, 8, 8);
+
+        frmMain.renderTexture(760, 560, LoadCoin.w, LoadCoin.h / 4, LoadCoin, 0, 32 * LoadCoins);
+
+        if(frmMain.hasWindowMouseFocus() || CurPos.X >= 0 || CurPos.Y <= ScreenW || CurPos.Y >= 0 || CurPos.Y <= ScreenH)
+            SDL_ShowCursor(SDL_DISABLE);
+
+        frmMain.renderTexture(730, 560,
+        ECursor[4].w, ECursor[4].h / 8,
+        ECursor[4],
+        0, 30 * LoadCursors);
 
         frmMain.repaint();
         DoEvents();

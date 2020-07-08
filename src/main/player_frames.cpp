@@ -1225,6 +1225,28 @@ void SetupPlayerFrames()
         LinkFrameY[A] = LinkFrameY[A - 400];
     }
 
+    For(A, 950, 1050)
+    {
+        MarioFrameX[A] = MarioFrameX[A - 400];
+        MarioFrameY[A] = MarioFrameY[A - 400] - 2;
+        LuigiFrameX[A] = LuigiFrameX[A - 400];
+        LuigiFrameY[A] = LuigiFrameY[A - 400] - 6;
+        PeachFrameX[A] = PeachFrameX[A - 400];
+        PeachFrameY[A] = PeachFrameY[A - 400] - 4;
+        ToadFrameX[A] = ToadFrameX[A - 400];
+        ToadFrameY[A] = ToadFrameY[A - 400] - 2;
+        LinkFrameX[A] = LinkFrameX[A - 400];
+        LinkFrameY[A] = LinkFrameY[A - 400];
+    }
+    //propeller suit
+    MarioFrameX[983] -= 13;
+    MarioFrameX[984] -= 13;
+    MarioFrameX[1017] -= 13;
+    MarioFrameX[1018] -= 13;
+
+    MarioFrameY[1007] -= 8;
+    MarioFrameY[993] -= 8;
+
     For(A, 750, 850)
     {
         MarioFrameX[A] = MarioFrameX[A - 400];

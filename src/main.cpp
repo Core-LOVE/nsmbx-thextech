@@ -31,7 +31,6 @@
 #include <Utils/files.h>
 #include <CrashHandler/crash_handler.h>
 
-
 #ifdef __APPLE__
 #include <Utils/files.h>
 #include <Logger/logger.h>
@@ -92,13 +91,13 @@ static void strToPlayerSetup(int player, const std::string &setupString)
 
     if(p.Character < 1)
         p.Character = 1;
-    if(p.Character > 5)
-        p.Character = 5;
+    if(p.Character > 7)
+        p.Character = 7;
 
     if(p.State < 1)
         p.State = 1;
-    if(p.State > 7)
-        p.State = 7;
+    if(p.State > 10)
+        p.State = 10;
 
 
     switch(p.Mount)

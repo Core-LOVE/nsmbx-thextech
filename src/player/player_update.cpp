@@ -174,6 +174,8 @@ void UpdatePlayer()
 
 //        tempBlockA[1] = 0; // Unused
 //        tempBlockA[2] = 0;
+        if(Player[A].State == 10)
+            PlayerPropellerMushroom(A);
         if(Player[A].HeldBonus != 364 && Player[A].HeldBonusSpecial != 0)
         {
             Player[A].HeldBonusSpecial = 0;
@@ -1726,8 +1728,10 @@ void UpdatePlayer()
                                         Player[A].Jump = Physics.PlayerJumpHeight;
                                     else
                                         Player[A].Jump = Physics.PlayerJumpHeight * 2;
-                                    if(Player[A].Character == 4 && (Player[A].State == 4 || Player[A].State == 5) && Player[A].SpinJump == false)
+                                    if((Player[A].Character == 4 && (Player[A].State == 4 || Player[A].State == 5) && Player[A].SpinJump == false))
+                                    {
                                         Player[A].DoubleJump = true;
+                                    }
                                     if(Player[A].Character == 2)
                                         Player[A].Jump = Player[A].Jump + 3;
                                     if(Player[A].SpinJump)
@@ -2951,6 +2955,8 @@ void UpdatePlayer()
 
                                         if(HitSpot == 1) // landed on the block from the top V
                                         {
+                                            if(Player[A].PropellerJump != 0)
+                                                Player[A].PropellerJump = 0;
                                             if(Player[A].Fairy && (Player[A].FairyCD > 0 || Player[A].Location.SpeedY > 0))
                                                 Player[A].FairyTime = 0;
                                             Player[A].Pinched1 = 2; // for players getting squashed

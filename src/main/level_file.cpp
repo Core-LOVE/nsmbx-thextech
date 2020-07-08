@@ -159,18 +159,6 @@ bool OpenLevelData(LevelData &lvl, const std::string FilePath)
 
     numSections = 0;
 
-    LevelTimer = 0;
-    LevelTimerBool = false;
-
-    if(!lvl.custom_params.empty())
-    {
-        auto lvlsettings = nlohmann::json::parse(lvl.custom_params);
-        if(lvlsettings.contains("time"))
-            LevelTimer = lvlsettings["time"];
-        if(lvlsettings.contains("timer"))
-            LevelTimerBool = lvlsettings["timer"];
-    }
-
     B = 0;
     for(auto & s : lvl.sections)
     {
@@ -853,10 +841,9 @@ void ClearLevel()
     qScreen = false;
     UnloadCustomGFX();
 
-    LevelTimer = 0;
-    LevelTimerBool = false;
-
     numSections = 0;
+
+    LevelTimer.reset();
 
     for(A = 1; A <= newEventNum; A++)
     {

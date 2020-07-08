@@ -221,7 +221,7 @@ void SetupCredits()
     AddCredit("Eclipsed");
     AddCredit("1230m 1");
     AddCredit("FireSeraphim");
-    AddCredit("");
+    AddCredit("FanofSMBX");
     AddCredit("");
     AddCredit("");
     AddCredit("");

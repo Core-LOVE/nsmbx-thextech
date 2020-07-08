@@ -457,35 +457,36 @@ void DrawInterface(int Z, int numScreens)
                    16 + 11);
         // Print stars on the screen
         int star_y = 16 + 30;
+        int star_x = vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122;
 
-        if(LevelTimerBool == true)
+        if(LevelTimer.enable == true)
         {
-            star_y = 16 + 50;
+            star_y += 20;
+            star_x = vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 136;
         }
-
         if(numStars > 0)
         {
-            DrawTextureF(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122, star_y, Interface[5].w, Interface[5].h, Interface[5], 0, 0);
-            DrawTextureF(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122 + 10 + Interface[1].w, star_y + 1, Interface[1].w, Interface[1].h, Interface[1], 0, 0);
+            DrawTextureF(star_x, star_y, Interface[5].w, Interface[5].h, Interface[5], 0, 0);
+            DrawTextureF(star_x + 10 + Interface[1].w, star_y + 1, Interface[1].w, Interface[1].h, Interface[1], 0, 0);
             SuperPrint(numStarsStr, 1,
-                       float(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122 + 12 + 18 + Interface[5].w),
+                       float(star_x + 12 + 18 + Interface[5].w),
                        star_y + 1);
         }
         // Print advanced coins
         if(maxAceCoins >= 0)
         {
             int offY = 30;
+            if(LevelTimer.enable == true)
+            {
+                offY = 50;
+            }
             if(numStars > 0)
             {
                 offY = 50;
-                if(LevelTimerBool == true)
+                if(LevelTimer.enable == true)
                 {
                     offY = 70;
                 }
-            }
-            if(LevelTimerBool == true)
-            {
-                offY = 50;
             }
             for(int i = 0; i <= maxAceCoins; i++)
             {
@@ -496,13 +497,13 @@ void DrawInterface(int Z, int numScreens)
             }
         }
         // Print Timer
-        if(LevelTimerBool == true)
+        if(LevelTimer.enable == true)
         {
-            DrawTextureF(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122, 16 + 30, Interface[9].w, Interface[9].h, Interface[9], 0, 0);
-            DrawTextureF(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122 + 10 + Interface[1].w, 16 + 31, Interface[1].w, Interface[1].h, Interface[1], 0, 0);
-            SuperPrint(std::to_string(LevelTimer), 1,
-                       float(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 122 + 12 + 18 + Interface[9].w),
-                       16 + 31);
+            DrawTextureF(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 136,
+            16 + 30, Interface[9].w, Interface[9].h, Interface[9], 0, 0);
+            SuperPrint(std::to_string(LevelTimer.time), 5,
+                       float(vScreen[Z].Width / 2.0 - Container[1].w / 2 + C - 82),
+                       16 + 30);
         }
     }
     if(BattleIntro > 0)
