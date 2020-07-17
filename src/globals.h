@@ -1711,11 +1711,16 @@ struct EffectDefaults_t
 {
     RangeArrI<int, 1, maxEffectType, 0> EffectWidth;
     RangeArrI<int, 1, maxEffectType, 0> EffectHeight;
+    //EXTRA: count of frames (compute from the GFX height)
+    RangeArrI<int, 1, maxEffectType, 0> EffectFrames;
     RangeArrI<int, 0, maxEffectType, 0> EffectFrameAmount;
     RangeArrI<int, 0, maxEffectType, 0> EffectFrameSpeed;
     RangeArrI<int, 0, maxEffectType, 0> EffectLifeTime;
     RangeArrI<int, 0, maxEffectType, 0> EffectAcceleration;
+//End Type
 };
+
+//Public EffectDefaults As EffectDefaults
 extern EffectDefaults_t EffectDefaults;
 
 //Public SceneWidth(1 To 100) As Integer 'Scene width

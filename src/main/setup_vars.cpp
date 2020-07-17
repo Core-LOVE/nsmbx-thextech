@@ -2956,6 +2956,10 @@ void SetupVars()
     {
         EffectDefaults.EffectHeight[A] = EffectHeight[A];
         EffectDefaults.EffectWidth[A] = EffectWidth[A];
+        if(EffectHeight[A] > 0)
+            EffectDefaults.EffectFrames[A] = GFXEffectHeight[A] / EffectHeight[A];
+        else
+            EffectDefaults.EffectFrames[A] = 1;
     }
 
     For(A, 1, maxWeatherType)

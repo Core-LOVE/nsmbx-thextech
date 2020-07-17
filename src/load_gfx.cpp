@@ -856,6 +856,12 @@ void LoadCustomGFX()
                  FileNamePath, FileName,
                  fmt::format_ne("effect-{0}", A),
                  &GFXEffectWidth[A], &GFXEffectHeight[A], GFXEffectCustom[A], GFXEffectBMP[A]);
+
+        if(GFXEffectCustom[A])
+        {
+            EffectWidth[A] = GFXEffectWidth[A];
+            EffectHeight[A] = GFXEffectHeight[A] / EffectDefaults.EffectFrames[A];
+        }
     }
 
     for(int A = 1; A < maxWeatherType; ++A)
@@ -896,6 +902,18 @@ void LoadCustomGFX()
                  FileNamePath, FileName,
                  fmt::format_ne("mario-{0}", A),
                  &GFXMarioWidth[A], &GFXMarioHeight[A], GFXMarioCustom[A], GFXMarioBMP[A]);
+
+        // 'This is a REALLY drunken code, why it was here mixed with CGFX loading when different array is fetched?!
+        // 'By this condition, B will always 1, because array can't go more than maximum players
+        //If A < 150 Then
+        //    B = 1
+        //Else
+        //    B = 2
+        //End If
+
+        // ' This code has no sense as it affects currently usued frames of a "state 1" of this character
+        //MarioFrameX(A) = -(GFXMarioWidth(A) / 2 - Physics.PlayerWidth(1, B) / 2)
+        //MarioFrameY(A) = -(GFXMarioHeight(A) - Physics.PlayerHeight(1, B) - 2)
     }
 
     for(int A = 1; A < 10; ++A)
@@ -904,6 +922,15 @@ void LoadCustomGFX()
                  FileNamePath, FileName,
                  fmt::format_ne("luigi-{0}", A),
                  &GFXLuigiWidth[A], &GFXLuigiHeight[A], GFXLuigiCustom[A], GFXLuigiBMP[A]);
+
+        // ' Same as above at Mario
+        //If A < 150 Then
+        //    B = 1
+        //Else
+        //    B = 2
+        //End If
+        //LuigiFrameX(A) = -(GFXLuigiWidth(A) / 2 - Physics.PlayerWidth(1, B) / 2)
+        //LuigiFrameY(A) = -(GFXLuigiHeight(A) - Physics.PlayerHeight(1, B) - 2)
     }
 
     for(int A = 1; A < 10; ++A)
@@ -912,6 +939,14 @@ void LoadCustomGFX()
                  FileNamePath, FileName,
                  fmt::format_ne("peach-{0}", A),
                  &GFXPeachWidth[A], &GFXPeachHeight[A], GFXPeachCustom[A], GFXPeachBMP[A]);
+        // ' Same as above at Mario
+        //If A < 150 Then
+        //    B = 1
+        //Else
+        //    B = 2
+        //End If
+        //PeachFrameX(A) = -(GFXPeachWidth(A) / 2 - Physics.PlayerWidth(1, B) / 2)
+        //PeachFrameY(A) = -(GFXPeachHeight(A) - Physics.PlayerHeight(1, B) - 2)
     }
 
     for(int A = 1; A < 10; ++A)
@@ -920,6 +955,14 @@ void LoadCustomGFX()
                  FileNamePath, FileName,
                  fmt::format_ne("toad-{0}", A),
                  &GFXToadWidth[A], &GFXToadHeight[A], GFXToadCustom[A], GFXToadBMP[A]);
+        // ' Same as above at Mario
+        //If A < 150 Then
+        //    B = 1
+        //Else
+        //    B = 2
+        //End If
+        //ToadFrameX(A) = -(GFXToadWidth(A) / 2 - Physics.PlayerWidth(1, B) / 2)
+        //ToadFrameY(A) = -(GFXToadHeight(A) - Physics.PlayerHeight(1, B) - 2)
     }
 
     for(int A = 1; A < 10; ++A)
@@ -928,6 +971,14 @@ void LoadCustomGFX()
                  FileNamePath, FileName,
                  fmt::format_ne("link-{0}", A),
                  &GFXLinkWidth[A], &GFXLinkHeight[A], GFXLinkCustom[A], GFXLinkBMP[A]);
+        // ' Same as above at Mario
+        //If A < 150 Then
+        //    B = 1
+        //Else
+        //    B = 2
+        //End If
+        //LinkFrameX(A) = -(GFXLinkWidth(A) / 2 - Physics.PlayerWidth(1, B) / 2)
+        //LinkFrameY(A) = -(GFXLinkHeight(A) - Physics.PlayerHeight(1, B) - 2)
     }
 
     for(int A = 1; A < 10; ++A)
@@ -957,6 +1008,13 @@ void LoadCustomGFX()
 
 void UnloadCustomGFX()
 {
+    // Restore default sizes of custom effects
+    for(int A = 1; A < maxEffectType; ++A)
+    {
+        EffectWidth[A] = EffectDefaults.EffectWidth[A];
+        EffectHeight[A] = EffectDefaults.EffectHeight[A];
+    }
+
     restoreLevelBackupTextures();
 }
 
