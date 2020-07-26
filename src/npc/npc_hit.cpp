@@ -516,10 +516,12 @@ void NPCHit(int A, int B, int C)
             NPC[A].Type == 89 || (NPC[A].Type >= 117 && NPC[A].Type <= 120) || NPC[A].Type == 162 ||
             NPC[A].Type == 163 || NPC[A].Type == 229 || NPC[A].Type == 236 || NPC[A].Type == 230 ||
             NPC[A].Type == 232 || NPC[A].Type == 233 || NPC[A].Type == 234 || NPC[A].Type == 293 ||
-            NPC[A].Type == 338)
+            NPC[A].Type == 338 || NPC[A].Type == 375)
     {
         if(B == 1)
         {
+            if(NPC[A].Type == 338 || NPC[A].Type == 375)
+                PlaySound(2);
             if(NPC[A].Type == 162)
             {
                 NPC[A].Location.Y = NPC[A].Location.Y + NPC[A].Location.Height;
@@ -1161,6 +1163,45 @@ void NPCHit(int A, int B, int C)
         if(NPC[A].Type == 137)
             NPC[A].Location.Height = 28;
         // Friendly NPCs (Toad, Peach, Link, Luigi, Etc.)
+    }
+    else if(NPC[A].Type == 377)
+    {
+        if(B == 1)
+        {
+            NPC[A].CantHurt = 11;
+            NPC[A].Special2 = 1;
+            PlaySound(2);
+            NPC[A].Projectile = true;
+        }
+        else if(B == 2)
+        {
+            if(NPC[A].Location.SpeedY > -4)
+            {
+                PlaySound(2);
+                NPC[A].Location.SpeedY = -5;
+                NPC[A].Projectile = true;
+                NPC[A].Location.Y = Block[C].Location.Y - NPC[A].Location.Height - 0.01;
+            }
+            NPC[A].Special2 = 1;
+        }
+        else if(B == 7 || B == 10)
+        {
+            NPC[A].Special2 = 1;
+            PlaySound(2);
+            NPC[A].Location.SpeedY = -5;
+            NPC[A].Location.SpeedX = 3 * Player[C].Direction;
+            NPC[A].Projectile = true;
+        }
+        else
+        {
+            if(B == 3 || B == 5)
+            {
+                if(NPC[C].Type != 13 && NPC[C].Type != 108)
+                    NPC[A].Killed = B;
+            }
+            else if(B != 8)
+                NPC[A].Killed = B;
+        }
     }
     else if(NPCIsToad[NPC[A].Type] == true)
     {
@@ -2200,9 +2241,7 @@ void NPCHit(int A, int B, int C)
             NPC[A].Location.SpeedX = 0;
         }
         else if(B == 5)
-        {
             NPC[A].Killed = B;
-        }
     }
     else if(NPCIsAnExit[NPC[A].Type])
     {

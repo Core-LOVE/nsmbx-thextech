@@ -232,7 +232,12 @@ void KillNPC(int A, int B)
     if(!(B == 9))
     {
         NPC[A].Location.SpeedX = -NPC[A].Location.SpeedX;
-        if(NPC[A].Type == 235 || NPC[A].Type == 231 || NPC[A].Type == 1 || NPC[A].Type == 242 || NPC[A].Type == 243 || NPC[A].Type == 244 || NPC[A].Type == 356 || NPC[A].Type == 162 || NPC[A].Type == 163 || NPC[A].Type == 164 || NPC[A].Type == 165 || NPC[A].Type == 166 || NPC[A].Type == 167 || NPC[A].Type == 229 || NPC[A].Type == 236 || NPC[A].Type == 230 || NPC[A].Type == 232 || NPC[A].Type == 233 || NPC[A].Type == 234 || NPC[A].Type == 237 || NPC[A].Type == 263 || NPC[A].Type == 338) // Goomba / Rex
+        if(NPC[A].Type == 235 || NPC[A].Type == 231 || NPC[A].Type == 1 || NPC[A].Type == 242 ||
+           NPC[A].Type == 243 || NPC[A].Type == 244 || NPC[A].Type == 356 || NPC[A].Type == 162 ||
+           NPC[A].Type == 163 || NPC[A].Type == 164 || NPC[A].Type == 165 || NPC[A].Type == 166 ||
+           NPC[A].Type == 167 || NPC[A].Type == 229 || NPC[A].Type == 236 || NPC[A].Type == 230 ||
+           NPC[A].Type == 232 || NPC[A].Type == 233 || NPC[A].Type == 234 || NPC[A].Type == 237 ||
+           NPC[A].Type == 263 || NPC[A].Type == 338 || NPC[A].Type == 375) // Goomba / Rex
         {
             if(B == 1 && NPC[A].Type != 229 && NPC[A].Type != 236 && NPC[A].Type != 230 && NPC[A].Type != 232 && NPC[A].Type != 233 && NPC[A].Type != 234)
             {
@@ -242,6 +247,8 @@ void KillNPC(int A, int B)
                     NewEffect(126, NPC[A].Location);
                 else if(NPC[A].Type == 338)
                     NewEffect(168, NPC[A].Location);
+                else if(NPC[A].Type == 375)
+                    NewEffect(188, NPC[A].Location);
                 else if(NPC[A].Type == 293)
                     NewEffect(149, NPC[A].Location);
                 else

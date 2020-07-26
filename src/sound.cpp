@@ -93,7 +93,7 @@ struct SFX_t
 static std::unordered_map<std::string, Music_t> music;
 static std::unordered_map<std::string, SFX_t>   sound;
 
-static const int maxSfxChannels = 91;
+static const int maxSfxChannels = 101;
 
 int CustomWorldMusicId()
 {

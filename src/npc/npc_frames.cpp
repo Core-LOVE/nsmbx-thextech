@@ -1839,17 +1839,53 @@ void NPCFrames(int A)
         else if(NPC[A].Special > 100)
             NPC[A].Frame = 2;
     }
-    else if(NPC[A].Type == 323) // arrow platform hor
-    {
-        if(NPC[A].Direction == 1)
-            NPC[A].Frame = 1;
-        else
-            NPC[A].Frame = 0;
-    }
-    else if(NPC[A].Type == 324 || NPC[A].Type == 325) // arrow platform ver
+    else if(NPC[A].Type == 323 || NPC[A].Type == 373) // arrow platform hor and baron von zepplin
     {
         NPC[A].Frame = 0;
+        if(NPC[A].Direction == 1)
+            NPC[A].Frame = 1;
     }
+    else if(NPC[A].Type == 376) // nipper spore
+    {
+        NPC[A].FrameCount++;
+        if(NPC[A].FrameCount > 9)
+        {
+            NPC[A].Frame++;
+            if(NPC[A].Frame >= 4)
+                NPC[A].Frame = 0;
+            NPC[A].FrameCount = 0;
+        }
+    }
+    else if(NPC[A].Type == 377) // smw bob-omb
+    {
+        if(NPC[A].Special2 == 0)
+        {
+            if(NPC[A].Direction == -1)
+            {
+                if(NPC[A].Frame >= 2)
+                    NPC[A].Frame = 0;
+                if(NPC[A].Frame < 0)
+                    NPC[A].Frame = 2;
+            }
+            else
+            {
+                if(NPC[A].Frame >= 4)
+                    NPC[A].Frame = 2;
+                if(NPC[A].Frame < 2)
+                    NPC[A].Frame = 2;
+            }
+        }
+        else
+        {
+            NPC[A].Frame = 4;
+            if(NPC[A].Direction == 1)
+                NPC[A].Frame = 5;
+        }
+    }
+    else if(NPC[A].Type == 324 || NPC[A].Type == 325) // arrow platform ver
+        NPC[A].Frame = 0;
+    else if(NPC[A].Type == 374)
+        NPC[A].Frame = (NPC[A].Special) + (NPC[A].Special2 * 3);
     else if(NPC[A].Type == 326)
     {
         if(NPC[A].Special3 > -1150)

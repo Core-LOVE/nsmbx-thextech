@@ -123,6 +123,15 @@ void UpdateEffectFrames()
                 e.Frame = e.Frame + 1;
             }
         }
+        else if(e.Type == 185) // feathers
+        {
+            e.FrameCount += 1;
+            if(e.FrameCount >= 8)
+            {
+                e.FrameCount = 0;
+                e.Frame = e.Frame + 1;
+            }
+        }
         else if(e.Type == 140 || e.Type == 150) // larry & wendy's shell
         {
             e.FrameCount += 1;
@@ -460,7 +469,7 @@ void UpdateEffectFrames()
                 e.FrameCount = -1;
             e.FrameCount += 1;
         }
-        else if(e.Type == 71 || e.Type == 148) // SMB3 Bomb Part 2
+        else if(e.Type == 71 || e.Type == 148 || e.Type == 189) // SMB3 Bomb Part 2
         {
             e.FrameCount += 1;
                 if(e.FrameCount >= 4)
@@ -660,6 +669,11 @@ void UpdateEffects()
             if(e.Frame == 11)
                 e.Life = 0;
         }
+        else if(e.Type == 185) // feathers
+        {
+            if(e.Frame >= 3)
+                e.Life = 0;
+        }
         else if(e.Type == 1 || e.Type == 21 || e.Type == 30 || e.Type == 51 || e.Type == 100 || e.Type == 135 || e.Type == 170) // Block break
         {
             e.Location.SpeedY = e.Location.SpeedY + 0.6;
@@ -740,7 +754,11 @@ void UpdateEffects()
             if(e.Location.SpeedY >= 10)
                 e.Location.SpeedY = 10;
         }
-        else if(e.Type == 8 || e.Type == 158 || e.Type == 159 || e.Type == 162 || e.Type == 9 || e.Type == 15 || e.Type == 16 || e.Type == 19 || e.Type == 173 || e.Type == 27 || e.Type == 146 || e.Type == 28 || e.Type == 165 || e.Type == 29 || e.Type == 153 || e.Type == 154 || e.Type == 32 || e.Type == 36 || e.Type == 47 || e.Type == 60 || e.Type == 95 || e.Type == 169 || e.Type == 168 || e.Type == 96 || e.Type == 109 || e.Type == 180) // Flying turtle shell / Bullet bill /hard thing
+        else if(e.Type == 8 || e.Type == 158 || e.Type == 159 || e.Type == 162 || e.Type == 9 || e.Type == 15 ||
+                e.Type == 16 || e.Type == 19 || e.Type == 173 || e.Type == 27 || e.Type == 146 || e.Type == 28 ||
+                e.Type == 165 || e.Type == 29 || e.Type == 153 || e.Type == 154 || e.Type == 32 || e.Type == 36 ||
+                e.Type == 47 || e.Type == 60 || e.Type == 95 || e.Type == 169 || e.Type == 168 || e.Type == 96 ||
+                e.Type == 109 || e.Type == 180 || e.Type == 188) // Flying turtle shell / Bullet bill /hard thing
         {
             e.Location.SpeedY = e.Location.SpeedY + 0.5;
             if(e.Location.SpeedY >= 10)
@@ -849,7 +867,7 @@ void UpdateEffects()
             e.Location.SpeedX = 0;
             e.Location.SpeedY = 0;
         }
-        else if(e.Type == 71 || e.Type == 148) // SMB3 Bomb Part 2
+        else if(e.Type == 71 || e.Type == 148 || e.Type == 189) // SMB3 Bomb Part 2
         {
             if(e.Type == 148 && (dRand() * 10.0) > 8.0)
             {
@@ -858,7 +876,8 @@ void UpdateEffects()
                 Effect[numEffects].Location.SpeedY = dRand() * 3 - 1.5;
             }
         }
-        else if(e.Type == 15 || e.Type == 16 || e.Type == 25 || e.Type == 48 || e.Type == 172 || e.Type == 49 || e.Type == 171 || e.Type == 50 || e.Type == 166 || e.Type == 68 || e.Type == 72 || e.Type == 89 || e.Type == 155 || e.Type == 156 || e.Type == 157 || e.Type == 90 || e.Type == 91 || e.Type == 92 || e.Type == 93 || e.Type == 94 || e.Type == 98 || e.Type == 99 || e.Type == 105 || e.Type == 138 || e.Type == 106 || e.Type == 141) // Bullet Bill / Hammer Bro
+        else if(e.Type == 15 || e.Type == 16 || e.Type == 25 || e.Type == 48 || e.Type == 172 ||
+                e.Type == 49 || e.Type == 171 || e.Type == 50 || e.Type == 166 || e.Type == 68 || e.Type == 72 || e.Type == 89 || e.Type == 155 || e.Type == 156 || e.Type == 157 || e.Type == 90 || e.Type == 91 || e.Type == 92 || e.Type == 93 || e.Type == 94 || e.Type == 98 || e.Type == 99 || e.Type == 105 || e.Type == 138 || e.Type == 106 || e.Type == 141) // Bullet Bill / Hammer Bro
         {
             e.Location.SpeedY = e.Location.SpeedY + 0.5;
             if(e.Location.SpeedY >= 10)
@@ -1256,7 +1275,7 @@ void NewEffect(int A, Location_t Location, float Direction, int NewNpc, bool Sha
         {
             for(B = 1; B <= numBackground; B++)
             {
-                if(Background[B].Type == 82 || Background[B].Type == 26 || Background[B].Type == 65 || Background[B].Type == 159 || Background[B].Type == 166 || Background[B].Type == 168)
+                if(BackgroundWater[Background[B].Type] == true)
                 {
                     for(int C = 1; C <= numPlayers; C++)
                     {
@@ -1510,7 +1529,7 @@ void NewEffect(int A, Location_t Location, float Direction, int NewNpc, bool Sha
 
 
     }
-    else if(A == 71) // SMB3 Bomb Part 2
+    else if(A == 71 || A == 189) // SMB3 Bomb Part 2
     {
         for(B = 1; B <= 6; B++)
         {
@@ -1567,7 +1586,12 @@ void NewEffect(int A, Location_t Location, float Direction, int NewNpc, bool Sha
         Effect[numEffects].Life = 150;
         Effect[numEffects].Type = A;
     }
-    else if(A == 4 || A == 7 || A == 8 || A == 158 || A == 162 || A == 167 || A == 159 || A == 9 || A == 19 || A == 180 || A == 173 || A == 22 || A == 26 || A == 101 || A == 102 || A == 27 || A == 168 || A == 146 || A == 28 || A == 165 || A == 29 || A == 153 || A == 154 || A == 31 || A == 32 || A == 145 || A == 33 || A == 34 || A == 36 || A == 38 || A == 40 || A == 42 || A == 44 || A == 46 || A == 47 || A == 53 || A == 60 || A == 9 || A == 6 || A == 95 || A == 169 || A == 96 || A == 110 || A == 117 || A == 121 || A == 127 || A == 142) // Flying goomba / turtle shell / hard thing shell
+    else if(A == 4 || A == 7 || A == 8 || A == 158 || A == 162 || A == 167 || A == 159 || A == 9 || A == 19 || A == 180 ||
+            A == 173 || A == 22 || A == 26 || A == 101 || A == 102 || A == 27 || A == 168 || A == 146 || A == 28 ||
+            A == 165 || A == 29 || A == 153 || A == 154 || A == 31 || A == 32 || A == 145 || A == 33 || A == 34 ||
+            A == 36 || A == 38 || A == 40 || A == 42 || A == 44 || A == 46 || A == 47 || A == 53 || A == 60 || A == 9 ||
+            A == 6 || A == 95 || A == 169 || A == 96 || A == 110 || A == 117 || A == 121 || A == 127 || A == 142 ||
+            A == 188) // Flying goomba / turtle shell / hard thing shell
     {
         numEffects++;
         Effect[numEffects].Shadow = Shadow;
@@ -1590,7 +1614,7 @@ void NewEffect(int A, Location_t Location, float Direction, int NewNpc, bool Sha
         Effect[numEffects].Type = A;
         if((Effect[numEffects].Type == 29 || Effect[numEffects].Type == 153 || Effect[numEffects].Type == 154) && Direction == -1)
             Effect[numEffects].Frame = 1;
-        if((Effect[numEffects].Type == 27 || Effect[numEffects].Type == 146 || Effect[numEffects].Type == 168) && Direction == 1)
+        if((Effect[numEffects].Type == 27 || Effect[numEffects].Type == 146 || Effect[numEffects].Type == 168 || Effect[numEffects].Type == 188) && Direction == 1)
             Effect[numEffects].Frame = 2;
         if(Effect[numEffects].Type == 36 && Direction == 1)
             Effect[numEffects].Frame = 1;
@@ -1699,6 +1723,20 @@ void NewEffect(int A, Location_t Location, float Direction, int NewNpc, bool Sha
         Effect[numEffects].Shadow = Shadow;
         Effect[numEffects].Location.Width = 120;
         Effect[numEffects].Location.Height = 100;
+        Effect[numEffects].Location.X = Location.X + Location.Width / 2.0 - Effect[numEffects].Location.Width / 2.0;
+        Effect[numEffects].Location.Y = Location.Y + Location.Height / 2.0 - Effect[numEffects].Location.Height / 2.0;
+        Effect[numEffects].Location.SpeedY = 0;
+        Effect[numEffects].Location.SpeedX = 0;
+        Effect[numEffects].Frame = 0;
+        Effect[numEffects].Life = 100;
+        Effect[numEffects].Type = A;
+    }
+    else if(A == 185) // Feathers
+    {
+        numEffects++;
+        Effect[numEffects].Shadow = Shadow;
+        Effect[numEffects].Location.Width = 34;
+        Effect[numEffects].Location.Height = 30;
         Effect[numEffects].Location.X = Location.X + Location.Width / 2.0 - Effect[numEffects].Location.Width / 2.0;
         Effect[numEffects].Location.Y = Location.Y + Location.Height / 2.0 - Effect[numEffects].Location.Height / 2.0;
         Effect[numEffects].Location.SpeedY = 0;

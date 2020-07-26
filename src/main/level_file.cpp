@@ -340,7 +340,7 @@ bool OpenLevelData(LevelData &lvl, const std::string FilePath)
 
         if(npc.Type == 359)
             maxAceCoins++;
-        if(npc.Type == 91 || npc.Type == 96 || npc.Type == 283 || npc.Type == 284)
+        if(npc.Type == 91 || npc.Type == 96 || npc.Type == 283 || npc.Type == 284 || npc.Type == 373)
         {
             npc.Special = n.contents;
             npc.DefaultSpecial = int(npc.Special);
@@ -358,7 +358,7 @@ bool OpenLevelData(LevelData &lvl, const std::string FilePath)
             npc.DefaultSpecial = int(npc.Special);
         }
 
-        if(npc.Type == 356)
+        if(npc.Type == 356 || npc.Type == 374)
         {
             npc.Special = n.special_data;
             npc.DefaultSpecial = int(npc.Special);

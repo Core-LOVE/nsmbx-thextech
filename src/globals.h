@@ -485,6 +485,7 @@ struct NPC_t
 //    Immune As Integer 'time that the NPC is immune
     int Immune = 0;
     int BlockSpot = 0;
+    bool IsGrabbable = false;
 //End Type
 };
 
@@ -796,6 +797,7 @@ struct BackgroundDefaults_t
     RangeArrI<bool, 0, maxBackgroundType, false> BackgroundFence;
     RangeArrI<bool, 0, maxBackgroundType, false> BackgroundNPCFence;
     RangeArrI<bool, 0, maxBackgroundType, false> Foreground;
+    RangeArrI<bool, 0, maxBackgroundType, false> BackgroundWater;
     RangeArrI<int, 1, maxBackgroundType, 0> BackgroundWidth;
     RangeArrI<int, 1, maxBackgroundType, 0> BackgroundHeight;
     RangeArrI<int, 0, maxBackgroundType, 1> BackgroundFrameAmount;
@@ -1493,6 +1495,7 @@ extern RangeArrI<int, 0, maxPlayerFrames, 0> WarioFrameX;
 extern RangeArrI<int, 0, maxPlayerFrames, 0> WarioFrameY;
 //Public BackgroundFence(0 To maxBackgroundType) As Boolean
 extern RangeArrI<bool, 0, maxBackgroundType, false> BackgroundFence;
+extern RangeArrI<bool, 0, maxBackgroundType, false> BackgroundWater;
 extern RangeArrI<bool, 0, maxBackgroundType, false> BackgroundNPCFence;
 extern RangeArrI<bool, 0, maxBackgroundType, false> BackgroundFreeze;
 //Public NPCFrameOffsetX(0 To maxNPCType) As Integer 'NPC frame offset X
@@ -1574,6 +1577,8 @@ extern RangeArrI<bool, 0, maxNPCType, false> NPCNoIceBall;
 //Public NPCNoGravity(0 To maxNPCType) As Boolean 'not affected by gravity
 extern RangeArrI<bool, 0, maxNPCType, false> NPCNoGravity;
 extern RangeArrI<bool, 0, maxNPCType, true> NPCDespawn;
+extern RangeArrI<bool, 0, maxNPCType, false> NPCGFXDirective;
+extern RangeArrI<bool, 0, maxNPCType, false> NPCInstantKill;
 
 //Public NPCFrame(0 To maxNPCType) As Integer
 extern RangeArrI<int, 0, maxNPCType, 0> NPCFrame;
@@ -1620,6 +1625,8 @@ struct NPCDefaults_t
     RangeArrI<bool, 0, maxNPCType, true> NPCSpinJumpHurt;
     RangeArrI<bool, 0, maxNPCType, true> NPCNoLava;
     RangeArrI<bool, 0, maxNPCType, false> NPCJumpBounce;
+    RangeArrI<bool, 0, maxNPCType, false> NPCGFXDirective;
+    RangeArrI<bool, 0, maxNPCType, false> NPCInstantKill;
 //    NPCNoClipping(0 To maxNPCType) As Boolean
     RangeArrI<bool, 0, maxNPCType, false> NPCNoClipping;
 //    NPCScore(0 To maxNPCType) As Integer

@@ -666,6 +666,13 @@ void UpdateGraphics(bool skipRepaint)
                             {
                                 DrawTexture(vScreenX[Z] + NPC[A].Location.X + NPCFrameOffsetX[NPC[A].Type], vScreenY[Z] + NPC[A].Location.Y + NPCFrameOffsetY[NPC[A].Type], NPC[A].Location.Width, NPC[A].Location.Height, GFXNPC[NPC[A].Type], 0, NPC[A].Frame * NPCHeight[NPC[A].Type], cn ,cn ,cn);
                             }
+                            else if(NPCGFXDirective[NPC[A].Type] == true)
+                            {
+                                if(NPC[A].Direction == -1)
+                                    DrawTexture(vScreenX[Z] + NPC[A].Location.X + NPCFrameOffsetX[NPC[A].Type] - NPCWidthGFX[NPC[A].Type] / 2.0 + NPC[A].Location.Width / 2.0, vScreenY[Z] + NPC[A].Location.Y + NPCFrameOffsetY[NPC[A].Type] - NPCHeightGFX[NPC[A].Type] + NPC[A].Location.Height, NPCWidthGFX[NPC[A].Type], NPCHeightGFX[NPC[A].Type], GFXNPC[NPC[A].Type], 0, NPC[A].Frame * NPCHeightGFX[NPC[A].Type], cn, cn, cn);
+                                else
+                                    frmMain.renderTextureI(vScreenX[Z] + NPC[A].Location.X + NPCFrameOffsetX[NPC[A].Type], vScreenY[Z] + NPC[A].Location.Y + NPCFrameOffsetY[NPC[A].Type], NPC[A].Location.Width, NPC[A].Location.Height, GFXNPC[NPC[A].Type], 0, 0, 0, nullptr, SDL_FLIP_HORIZONTAL, cn, cn, cn);
+                            }
                             else
                             {
                                 DrawTexture(vScreenX[Z] + NPC[A].Location.X + NPCFrameOffsetX[NPC[A].Type] - NPCWidthGFX[NPC[A].Type] / 2.0 + NPC[A].Location.Width / 2.0, vScreenY[Z] + NPC[A].Location.Y + NPCFrameOffsetY[NPC[A].Type] - NPCHeightGFX[NPC[A].Type] + NPC[A].Location.Height, NPCWidthGFX[NPC[A].Type], NPCHeightGFX[NPC[A].Type], GFXNPC[NPC[A].Type], 0, NPC[A].Frame * NPCHeightGFX[NPC[A].Type], cn, cn, cn);
@@ -1365,6 +1372,23 @@ void UpdateGraphics(bool skipRepaint)
                                     else
                                     {
                                         if(NPC[A].Type == 283 && NPC[A].Special > 0)
+                                        {
+                                            if(NPCWidthGFX[NPC[A].Special] == 0)
+                                            {
+                                                tempLocation.Width = NPCWidth[NPC[A].Special];
+                                                tempLocation.Height = NPCHeight[NPC[A].Special];
+                                            }
+                                            else
+                                            {
+                                                tempLocation.Width = NPCWidthGFX[NPC[A].Special];
+                                                tempLocation.Height = NPCHeightGFX[NPC[A].Special];
+                                            }
+                                            tempLocation.X = NPC[A].Location.X + NPC[A].Location.Width / 2.0 - tempLocation.Width / 2.0;
+                                            tempLocation.Y = NPC[A].Location.Y + NPC[A].Location.Height / 2.0 - tempLocation.Height / 2.0;
+                                            B = EditorNPCFrame(static_cast<int>(floor(static_cast<double>(NPC[A].Special))), NPC[A].Direction);
+                                            DrawTexture(vScreenX[Z] + tempLocation.X + NPCFrameOffsetX[NPC[A].Type], vScreenY[Z] + tempLocation.Y, tempLocation.Width, tempLocation.Height, GFXNPC[NPC[A].Special], 0, B * tempLocation.Height);
+                                        }
+                                        else if(NPC[A].Type == 373 && NPC[A].Special > 0)
                                         {
                                             if(NPCWidthGFX[NPC[A].Special] == 0)
                                             {
@@ -2728,7 +2752,7 @@ void UpdateGraphics(bool skipRepaint)
                     }
                     else
                     {
-                        if(n.Type == 283 && n.Special > 0)
+                        if((n.Type == 283 || n.Type == 373) && n.Special > 0)
                         {
                             if(NPCWidthGFX[n.Special] == 0)
                             {
