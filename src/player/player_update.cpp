@@ -3655,7 +3655,7 @@ void UpdatePlayer()
                 tempHit = false; // Used for JUMP detection
                 tempHit2 = false;
 
-                for(int tempNumNPCsMax = numNPCs, B = 1; B <= tempNumNPCsMax; B++)
+                for(int B = 1; B <= numNPCs; B++)
                 {
                     if(NPC[B].Active && NPC[B].Killed == 0 && NPC[B].Effect != 5 && NPC[B].Effect != 6)
                     {
@@ -3817,17 +3817,7 @@ void UpdatePlayer()
                                                 else
                                                     NPCHit(B, 8, A);
                                             }
-                                            if(NPC[B].Killed == 8 || NPCIsCheep[NPC[B].Type] || NPC[B].Type == 179 ||
-                                               NPC[B].Type == 37 || NPC[B].Type == 180 || NPC[B].Type == 38 ||
-                                               NPC[B].Type == 42 || NPC[B].Type == 43 || NPC[B].Type == 44 ||
-                                               NPC[B].Type == 8 || NPC[B].Type == 12 || NPC[B].Type == 36 ||
-                                               NPC[B].Type == 51 || NPC[B].Type == 52 || NPC[B].Type == 53 ||
-                                               NPC[B].Type == 54 || NPC[B].Type == 74 || NPC[B].Type == 93 ||
-                                               NPC[B].Type == 200 || NPC[B].Type == 205 || NPC[B].Type == 207 ||
-                                               NPC[B].Type == 201 || NPC[B].Type == 199 || NPC[B].Type == 245 ||
-                                               NPC[B].Type == 256 || NPC[B].Type == 261 || NPC[B].Type == 275 ||
-                                               NPC[B].Type == 285 || NPC[B].Type == 286 || NPC[B].Type == 270 ||
-                                               NPC[B].Type == 294) // tap
+                                            if(NPC[B].Killed == 8 || NPCIsCheep[NPC[B].Type] || NPCSpinJumpHurt[NPC[B].Type]) // tap
                                             {
                                                 if(NPC[B].Killed == 8 && Player[A].Mount == 1 && Player[A].MountType == 2)
                                                 {
@@ -4157,13 +4147,23 @@ void UpdatePlayer()
 
                                                         // the n00bcollision function reduces the size of the npc's hit box before it damages the player
                                                         if(n00bCollision(Player[A].Location, NPC[B].Location, Player[A].Section))
-                                                            PlayerHurt(A);
+                                                        {
+                                                            if(!NPCInstantKill[NPC[B].Type])
+                                                                PlayerHurt(A);
+                                                            else
+                                                                PlayerDead(A);
+                                                        }
                                                     }
                                                 }
                                                 else if(NPC[B].Type == 308 && NPC[B].Special2 == 2) // Also special code for Spiky Sphere (yellow)
                                                 {
                                                      if(n00bCollision(Player[A].Location, NPC[B].Location, Player[A].Section))
-                                                         PlayerHurt(A);
+                                                     {
+                                                         if(!NPCInstantKill[NPC[B].Type])
+                                                             PlayerHurt(A);
+                                                         else
+                                                             PlayerDead(A);
+                                                     }
                                                 }
                                                 else if(NPC[B].Type == 15) // Special code for BOOM BOOM
                                                 {
@@ -4177,7 +4177,12 @@ void UpdatePlayer()
                                                     else if(NPC[B].Special != 4)
                                                     {
                                                         if(n00bCollision(Player[A].Location, NPC[B].Location, Player[A].Section))
-                                                            PlayerHurt(A);
+                                                        {
+                                                            if(!NPCInstantKill[NPC[B].Type])
+                                                                PlayerHurt(A);
+                                                            else
+                                                                PlayerDead(A);
+                                                        }
                                                     }
                                                 }
                                                 else if((NPC[B].Type == 137) || NPC[B].Type == 166)
@@ -4231,19 +4236,20 @@ void UpdatePlayer()
                                     }
                                     else if(!(NPC[B].Type == 15 && NPC[B].Special == 4)) // Player touched an NPC
                                     {
+
+/* If (.CanGrabNPCs = True Or NPCIsGrabbable(NPC(B).Type) = True Or (NPC(B).Effect = 2 And NPCIsABonus(NPC(B).Type) = False)) And (NPC(B).Effect = 0 Or NPC(B).Effect = 2) Or (NPCIsAShell(NPC(B).Type) And FreezeNPCs = True) Then      'GRAB EVERYTHING
+*/
                                         // grab code
                                         if(
-                                                ((
-                                                         Player[A].CanGrabNPCs ||
-                                                         NPCIsGrabbable[NPC[B].Type] ||
-                                                         (NPC[B].Effect == 2 && !NPCIsABonus[NPC[B].Type])
-                                                 ) && (NPC[B].Effect == 0 || NPC[B].Effect == 2)) ||
-                                                (NPCIsAShell[NPC[B].Type] && FreezeNPCs)
-                                                ) // GRAB EVERYTHING
+                                            ((Player[A].CanGrabNPCs || NPC[B].IsGrabbable || NPCIsGrabbable[NPC[B].Type] || (NPC[B].Effect == 2 && !NPCIsABonus[NPC[B].Type])) && (NPC[B].Effect == 0 || NPC[B].Effect == 2)) ||
+                                             (NPCIsAShell[NPC[B].Type] && FreezeNPCs)
+                                        ) // GRAB EVERYTHING
                                         {
-                                            if(Player[A].Controls.Run && Player[A].State != 9)
+                                            if(Player[A].Controls.Run)
                                             {
-                                                if((HitSpot == 2 && Player[A].Direction == -1) || (HitSpot == 4 && Player[A].Direction == 1) || (NPC[B].Type == 22 || NPC[B].Type == 49 || NPC[B].Effect == 2 || (NPCIsVeggie[NPC[B].Type && NPC[B].CantHurtPlayer != A])))
+                                                if((HitSpot == 2 && Player[A].Direction == -1) ||
+                                                   (HitSpot == 4 && Player[A].Direction == 1) ||
+                                                   (NPC[B].Type == 22 || NPC[B].Type == 49 || NPC[B].Effect == 2 || (NPCIsVeggie[NPC[B].Type] && NPC[B].CantHurtPlayer != A)))
                                                 {
                                                     if(Player[A].HoldingNPC == 0)
                                                     {
@@ -4310,7 +4316,12 @@ void UpdatePlayer()
                                                 if(NPC[B].CantHurtPlayer != A && !FreezeNPCs && NPC[B].Type != 195)
                                                 {
                                                     if(n00bCollision(Player[A].Location, NPC[B].Location, Player[A].Section))
-                                                        PlayerHurt(A);
+                                                    {
+                                                        if(!NPCInstantKill[NPC[B].Type])
+                                                            PlayerHurt(A);
+                                                        else
+                                                            PlayerDead(A);
+                                                    }
                                                 }
                                             }
                                         }
@@ -4346,7 +4357,10 @@ void UpdatePlayer()
                                                                 {
                                                                     if(BattleMode && NPC[B].HoldingPlayer != A && NPC[B].HoldingPlayer > 0 && Player[A].Immune == 0)
                                                                         NPCHit(B, 5, B);
-                                                                    PlayerHurt(A);
+                                                                    if(!NPCInstantKill[NPC[B].Type])
+                                                                        PlayerHurt(A);
+                                                                    else
+                                                                        PlayerDead(A);
                                                                 }
                                                             }
                                                             else
@@ -4393,7 +4407,12 @@ void UpdatePlayer()
                                                     if(NPC[B].Type == 58 || NPC[B].Type == 21 || NPC[B].Type == 67 || NPC[B].Type == 68 || NPC[B].Type == 69 || NPC[B].Type == 70 || (NPC[B].Type >= 78 && NPC[B].Type <= 83))
                                                     {
                                                         if(NPC[B].Location.SpeedY >= Physics.NPCGravity * 20)
-                                                            PlayerHurt(A);
+                                                        {
+                                                            if(!NPCInstantKill[NPC[B].Type])
+                                                                PlayerHurt(A);
+                                                            else
+                                                                PlayerDead(A);
+                                                        }
                                                     }
                                                 }
                                                 else
@@ -4745,7 +4764,7 @@ void UpdatePlayer()
                     if((NPC[B].Type == 295 || NPC[B].Type == 297) && Player[A].Location.SpeedY > 0)
                         NPC[B].Special = 1;
                     if(NPC[B].Type == 104 && Player[A].Location.SpeedY > 0)
-                        NPC[B].Direction = 1;
+                        NPC[B].Direction = 1;      
                     if((NPC[B].Type == 190 || NPC[B].Type == 298) && NPC[B].Special == 0)
                     {
                         NPC[B].Special = 1;

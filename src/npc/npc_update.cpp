@@ -3813,6 +3813,17 @@ void UpdateNPCs()
                         }
                     }
                 }
+                if(NPC[A].tempBlock > 0 && NPC[A].Type == 374)
+                {
+                    if(NPC[A].Special2 == 1)
+                    {
+                        Block[NPC[A].tempBlock].Location.Y = NPC[A].Location.Y + 16;
+                    }
+                    else
+                    {
+                        Block[NPC[A].tempBlock].Location.Y = NPC[A].Location.Y;
+                    }
+                }
                 if(NPC[A].tempBlock > 0 && (NPC[A].Type < 60 || NPC[A].Type > 66) && NPC[A].Type != 57)
                 {
                     if((NPC[A].Type < 78 || NPC[A].Type > 83) && NPC[A].Type != 26)

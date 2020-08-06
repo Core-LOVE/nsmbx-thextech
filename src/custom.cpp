@@ -84,6 +84,8 @@ void SaveNPCDefaults()
         NPCDefaults.NPCNoIceBall[A] = NPCNoIceBall[A];
         NPCDefaults.NPCNoGravity[A] = NPCNoGravity[A];
         NPCDefaults.NPCDespawn[A] = NPCDespawn[A];
+        NPCDefaults.NPCGFXDirective[A] = NPCGFXDirective[A];
+        NPCDefaults.NPCInstantKill[A] = NPCInstantKill[A];
         NPCFrameSpeed[A] = 8;
     }
 }
@@ -134,6 +136,8 @@ void LoadNPCDefaults()
         NPCNoIceBall[A] = NPCDefaults.NPCNoIceBall[A];
         NPCNoGravity[A] = NPCDefaults.NPCNoGravity[A];
         NPCDespawn[A] = NPCDefaults.NPCDespawn[A];
+        NPCGFXDirective[A] = NPCDefaults.NPCGFXDirective[A];
+        NPCInstantKill[A] = NPCDefaults.NPCInstantKill[A];
         NPCFrame[A] = 0;
         NPCFrameSpeed[A] = 8;
         NPCFrameStyle[A] = 0;
@@ -217,6 +221,8 @@ void LoadCustomNPC(int A, std::string cFileName)
     boolVAR(npc, "nolava", NPCNoLava[A]);
     boolVAR(npc, "despawn", NPCDespawn[A]);
     boolVAR(npc, "isheavy", NPCIsHeavy[A]);
+    boolVAR(npc, "directivegfx", NPCGFXDirective[A]);
+    boolVAR(npc, "instantkill", NPCInstantKill[A]);
 
     if(npc.en_nohurt)
         NPCWontHurt[A] = npc.nohurt;

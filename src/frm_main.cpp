@@ -121,7 +121,6 @@ bool FrmMain::initSDL(const CmdLineSetup_t &setup)
     SDL_ClearError();
 
     SDL_GL_ResetAttributes();
-
     m_window = SDL_CreateWindow(m_windowTitle.c_str(),
                               SDL_WINDOWPOS_CENTERED,
                               SDL_WINDOWPOS_CENTERED,

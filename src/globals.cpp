@@ -202,6 +202,8 @@ RangeArrI<bool, 0, maxNPCType, false> NPCNoLava;
 RangeArrI<bool, 0, maxNPCType, false> NPCNoIceBall;
 RangeArrI<bool, 0, maxNPCType, false> NPCNoGravity;
 RangeArrI<bool, 0, maxNPCType, true> NPCDespawn;
+RangeArrI<bool, 0, maxNPCType, false> NPCGFXDirective;
+RangeArrI<bool, 0, maxNPCType, false> NPCInstantKill;
 
 RangeArrI<int, 0, maxNPCType, 0> NPCFrame;
 RangeArrI<int, 0, maxNPCType, 0> NPCFrameSpeed;
@@ -252,6 +254,7 @@ RangeArrI<int, 0, 100, 0> SpecialFrame;
 RangeArr<float, 0, 100> SpecialFrameCount;
 RangeArrI<bool, 1, maxBackgroundType, false> BackgroundHasNoMask;
 RangeArrI<bool, 0, maxBackgroundType, false> Foreground;
+RangeArrI<bool, 0, maxBackgroundType, false> BackgroundWater;
 RangeArrI<int, 1, maxBackgroundType, 0> BackgroundWidth;
 RangeArrI<int, 1, maxBackgroundType, 0> BackgroundHeight;
 RangeArrI<int, 1, maxBackgroundType, 0> BackgroundFrame;

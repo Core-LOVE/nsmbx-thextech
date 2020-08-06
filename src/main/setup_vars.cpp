@@ -66,6 +66,9 @@ void SetupVars()
     EffectWidth[171] = 80;
     EffectHeight[171] = 96;
 
+    EffectWidth[185] = 34;
+    EffectHeight[185] = 30;
+
     EffectWidth[145] = 32;
     EffectHeight[145] = 60;
 
@@ -74,6 +77,9 @@ void SetupVars()
 
     EffectWidth[170] = 16;
     EffectHeight[170] = 16;
+
+    EffectWidth[189] = 14;
+    EffectHeight[189] = 16;
 
     EffectWidth[71] = 16;
     EffectHeight[71] = 16;
@@ -1264,6 +1270,7 @@ void SetupVars()
     NPCFrameOffsetY[125] = 2;
     NPCJumpHurt[261] = true;
     NPCNoFireBall[261] = true;
+    NPCNoFireBall[375] = true;
     NPCNoFireBall[318] = true;
     NPCNoGravity[314] = true;
     NPCNoGravity[317] = true;
@@ -1370,6 +1377,15 @@ void SetupVars()
         NPCNoIceBall[A] = true;
         NPCNoYoshi[A] = true;
     }
+
+    NPCFrame[375] = 2; // yi nipper plant
+    NPCFrameStyle[375] = 1;
+    NPCFrameSpeed[375] = 6;
+
+    NPCHeight[376] = 52; // nipper spore
+    NPCNoGravity[376] = true;
+    NPCWontHurt[376] = true;
+    NPCJumpHurt[376] = true;
 
     NPCWidth[346] = 32; // Starman
     NPCHeight[346] = 32;
@@ -1527,6 +1543,17 @@ void SetupVars()
     NPCNoIceBall[314] = true;
 
     NPCNoIceBall[247] = true;
+
+    NPCWidth[374] = 64; // YI number platform
+    NPCHeight[374] = 64;
+    NPCHeightGFX[374] = 48;
+    NPCFrameOffsetY[374] = -6;
+    NPCCanWalkOn[374] = true;
+    NPCIsAHit1Block[374] = true;
+    NPCNoGravity[374] = true;
+    NPCNoClipping[374] = true;
+    NPCWontHurt[374] = true;
+    NPCJumpBounce[374] = true;
 
     NPCWidth[359] = 32; // SMA4 Advanced Coin
     NPCHeight[359] = 52;
@@ -2157,6 +2184,14 @@ void SetupVars()
     NPCJumpHurt[270] = true;
     NPCNoClipping[270] = true;
 
+    NPCFrameOffsetY[373] = -48; // baron von zepplin
+    NPCHeight[373] = 48;
+    NPCHeightGFX[373] = 32;
+    NPCJumpHurt[373] = false;
+    NPCWontHurt[373] = true;
+    NPCNoGravity[373] = true;
+    NPCNoClipping[373] = true;
+
     NPCWidth[370] = 64; // sma4 arrow lift
     NPCHeight[370] = 64;
     NPCNoClipping[370] = true;
@@ -2533,6 +2568,7 @@ void SetupVars()
     NPCSpinJumpHurt[205] = false;
     NPCSpinJumpHurt[207] = false;
     NPCSpinJumpHurt[261] = false;
+    NPCSpinJumpHurt[375] = false;
     NPCSpinJumpHurt[270] = false;
     NPCSpinJumpHurt[340] = false;
     for(int A = 200; A <= 201; ++A)
@@ -2724,6 +2760,14 @@ void SetupVars()
     BackgroundHasNoMask[141] = true;
     BackgroundHasNoMask[144] = true;
     BackgroundHasNoMask[145] = true;
+
+    BackgroundWater[82] = true;
+    BackgroundWater[26] = true;
+    BackgroundWater[65] = true;
+    BackgroundWater[159] = true;
+    BackgroundWater[166] = true;
+    BackgroundWater[168] = true;
+
     BlockOnlyHitspot1[69] = true;
     BlockOnlyHitspot1[706] = true;
 
@@ -2956,6 +3000,14 @@ void SetupVars()
     {
         EffectDefaults.EffectHeight[A] = EffectHeight[A];
         EffectDefaults.EffectWidth[A] = EffectWidth[A];
+        if(EffectHeight[A] > 0)
+        {
+            EffectDefaults.EffectFrames[A] = GFXEffectHeight[A] / EffectHeight[A];
+            if(EffectDefaults.EffectFrames[A] <= 0)
+                EffectDefaults.EffectFrames[A] = 1;
+        }
+        else
+            EffectDefaults.EffectFrames[A] = 1;
     }
 
     For(A, 1, maxWeatherType)

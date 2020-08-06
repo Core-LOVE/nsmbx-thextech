@@ -1748,6 +1748,91 @@ void NPCSpecial(int A)
         }
 
     }
+    else if(NPC[A].Type == 377) // bob omb (smw)
+    {
+        if(NPC[A].Special2 == 0)
+            NPC[A].Location.SpeedX = 1 * NPC[A].Direction;
+
+        NPC[A].Special++;
+        if(NPC[A].Special > 256)
+            NPC[A].Special2 = 1;
+    }
+    else if(NPC[A].Type == 376) // nipper spore
+    {
+        if(NPC[A].Location.SpeedY < 1.25)
+            NPC[A].Location.SpeedY += Physics.NPCGravity / 2;
+        else
+            NPC[A].Location.SpeedY = 1.25;
+
+        if(NPC[A].Frame == 1)
+            NPC[A].Location.SpeedX += 0.075;
+        else if(NPC[A].Frame == 3)
+            NPC[A].Location.SpeedX -= 0.075;
+        else
+            NPC[A].Location.SpeedX *= 0.75;
+
+        for(int B = 1; B <= numBlock; B++)
+        {
+            if(Block[B].Hidden == false && BlockNoClipping[Block[B].Type] == false && BlockNPCNoClipping[Block[B].Type] == false && BlockIsSizable[Block[B].Type] == false && BlockOnlyHitspot1[Block[B].Type] == false)
+            {
+                tempLocation2 = Block[B].Location;
+                tempLocation2.X -= 2;
+                tempLocation2.Y -= 2;
+                tempLocation2.Width += 2;
+                tempLocation2.Height += 2;
+                if(CheckCollision(NPC[A].Location, tempLocation2, NPC[A].Section) == true &&
+                FindCollision(NPC[A].Location, tempLocation2, NPC[A].Section) == 1)
+                {
+                    tempLocation = NPC[A].Location;
+                    tempLocation.Y += NPC[A].Location.Height - 32;
+                    NewEffect(131, tempLocation);
+                    numNPCs++;
+                    NPC[numNPCs] = NPC_t();
+                    NPC[numNPCs].Type = 375;
+                    NPC[numNPCs].Location.Height = NPCWidth[NPC[numNPCs].Type];
+                    NPC[numNPCs].Location.Width = NPCHeight[NPC[numNPCs].Type];
+                    NPC[numNPCs].Location.X = NPC[A].Location.X;
+                    NPC[numNPCs].Location.Y = NPC[A].Location.Y + (NPC[A].Location.Height - NPCHeight[NPC[numNPCs].Type]);
+                    NPC[numNPCs].Section = NPC[A].Section;
+                    NPC[numNPCs].Layer = "Spawned NPCs";
+                    NPC[numNPCs].Active = true;
+                    NPC[numNPCs].Direction = NPC[A].Direction;
+                    NPC[numNPCs].TimeLeft = 100;
+                    NPC[numNPCs].Inert = false;
+                    NPC[A].Killed = 9;
+                }
+            }
+        }
+    }
+    else if(NPC[A].Type == 375) // yi nipper plant
+    {
+        if(NPC[A].Stuck == false)
+        {
+            if(NPC[A].Special2 == 0.0)
+            {
+                if(NPC[A].Location.X < NPC[A].DefaultLocation.X - 132 && NPC[A].Direction == -1)
+                    NPC[A].Special2 = 45;
+                else if(NPC[A].Location.X > NPC[A].DefaultLocation.X + 132 && NPC[A].Direction == 1)
+                    NPC[A].Special2 = 45;
+                NPC[A].Location.SpeedX = 1.32 * NPC[A].Direction;
+                if(fEqual(float(NPC[A].Location.SpeedY), Physics.NPCGravity))
+                    NPC[A].Location.SpeedY = -1.5;
+            }
+            else
+            {
+                NPC[A].Special2 = NPC[A].Special2 - 1;
+                if(fEqual(float(NPC[A].Location.SpeedY), Physics.NPCGravity))
+                    NPC[A].Location.SpeedX = 0;
+                if(NPC[A].Special2 == 0.0)
+                {
+                    if(NPC[A].Location.X < NPC[A].DefaultLocation.X)
+                        NPC[A].Direction = 1;
+                    else
+                        NPC[A].Direction = -1;
+                }
+            }
+        }
+    }
     else if(NPC[A].Type == 261) // muncher thing
     {
         if(NPC[A].Special == 0)
@@ -1797,10 +1882,6 @@ void NPCSpecial(int A)
                 }
             }
         }
-
-
-
-
     }
     else if(NPC[A].Type == 260) // Firebar
     {
@@ -4884,6 +4965,49 @@ void SpecialNPC(int A)
             NPC[numNPCs].TimeLeft = 100;
             NPC[numNPCs].Section = NPC[A].Section;
             NPC[A].Special3 = 2;
+        }
+    }
+    else if(NPC[A].Type == 374) // YI Number platform
+    {
+        if(NPC[A].Special > -1)
+        {
+            for(int i = 1; i <= numPlayers; i++)
+            {
+                if(CheckCollision(Player[i].Location, NPC[A].Location, NPC[A].Section) == true &&
+                FindCollision(Player[i].Location, NPC[A].Location, NPC[A].Section) == 1)
+                {
+                    if(NPC[A].Special2 == 0)
+                    {
+                        PlaySound(100);
+                        NPC[A].Special2 = 1;
+                        break;
+                    }
+                }
+                else if(CheckCollision(Player[i].Location, NPC[A].Location, NPC[A].Section) == false)
+                {
+                    if(NPC[A].Special2 == 1)
+                    {
+                        NPC[A].Special--;
+                        NPC[A].Special2 = 0;
+                        break;
+                    }
+                }
+            }
+        }
+        else if(NPC[A].Special < 0)
+        {
+            PlaySound(101);
+            NPC[A].Killed = 9;
+            tempLocation = NPC[A].Location;
+            tempLocation.X += NPCWidth[NPC[A].Type] / 4.0;
+            tempLocation.Y += NPCHeight[NPC[A].Type] / 4.0;
+            for(int i = -360; i <= 360; i += EffectWidth[131])
+            {
+                NewEffect(131, tempLocation);
+                Effect[numEffects].Location.SpeedX = cos(i) * 2;
+                Effect[numEffects].Location.SpeedY = sin(i) * 4;
+            }
+            NewEffect(73, tempLocation);
         }
     }
     else if(NPC[A].Type == 34) // Leaf
