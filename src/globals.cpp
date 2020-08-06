@@ -609,6 +609,7 @@ int BattleIntro = 0;
 int BattleOutro = 0;
 std::string LevelName;
 std::string GameVersion;
+
 bool WindowChanged = true;
 
 int ScreenW = 800;
@@ -634,6 +635,8 @@ void ReadMainIni()
         config.endGroup();
     }
 }
+
+bool LoadWindow = false;
 
 void DoEvents()
 {
