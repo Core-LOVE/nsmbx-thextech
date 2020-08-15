@@ -3009,7 +3009,8 @@ void UpdateNPCs()
                                                                 }
                                                                 if(NPCIsAShell[NPC[A].Type] || (NPC[A].Type == 45 && NPC[A].Special == 1) || NPC[A].Type == 263)
                                                                 {
-                                                                    BlockHitHard(B);
+                                                                    if(!BlockNoIceBrick[Block[B].Type])
+                                                                        BlockHitHard(B);
                                                                     if(BlockBrick[Block[B].Type] == true)
                                                                         NPC[A].TimeLeft = Physics.NPCTimeOffScreen;
                                                                 }

@@ -1153,6 +1153,9 @@ void SetupVars()
     NPCWidth[104] = 96; // SMB3 Platform
     NPCHeight[104] = 32;
     NPCNoYoshi[104] = true;
+    NPCWidth[378] = 64; // SMB2 Water Log
+    NPCNoYoshi[378] = true;
+    NPCNoGravity[378] = true;
     NPCWidth[297] = 96; // Flimsy Lift Platform
     NPCHeight[297] = 32;
     NPCNoYoshi[297] = true;
@@ -1914,6 +1917,7 @@ void SetupVars()
     NPCMovesPlayer[329] = true;
     NPCIsABlock[329] = true;
     NPCCanWalkOn[104] = true;
+    NPCCanWalkOn[378] = true;
     NPCCanWalkOn[297] = true;
     NPCCanWalkOn[105] = true;
     NPCCanWalkOn[295] = true;
@@ -1967,6 +1971,7 @@ void SetupVars()
     NPCNoClipping[91] = true;
     NPCNoClipping[93] = true;
     NPCNoClipping[104] = true;
+    NPCNoClipping[378] = true;
     NPCNoClipping[297] = true;
     NPCNoClipping[105] = true;
     NPCNoClipping[295] = true;
@@ -2050,6 +2055,7 @@ void SetupVars()
     NPCWontHurt[99] = true;
     NPCWontHurt[100] = true;
     NPCWontHurt[104] = true;
+    NPCWontHurt[378] = true;
     NPCWontHurt[297] = true;
     NPCWontHurt[105] = true;
     NPCWontHurt[295] = true;
@@ -2112,6 +2118,7 @@ void SetupVars()
     NPCIsAHit1Block[64] = true;
     NPCIsAHit1Block[66] = true;
     NPCIsAHit1Block[104] = true;
+    NPCWontHurt[378] = true;
     NPCIsAHit1Block[297] = true;
     NPCIsAHit1Block[105] = true;
     NPCIsAHit1Block[295] = true;
@@ -2770,6 +2777,11 @@ void SetupVars()
 
     BlockOnlyHitspot1[69] = true;
     BlockOnlyHitspot1[706] = true;
+
+    BackgroundDoorEffect[88] = 54;
+    BackgroundDoorEffect[87] = 55;
+    BackgroundDoorEffect[107] = 59;
+    BackgroundDoorEffect[141] = 103;
 
     Foreground[187] = true;
     Foreground[188] = true;

@@ -4263,19 +4263,13 @@ void SuperWarp(int A)
                         {
                             if((CheckCollision(warp.Entrance, Background[C].Location, plr.Section) | CheckCollision(warp.Exit, Background[C].Location, plr.Section)) != 0)
                             {
-                                if(Background[C].Type == 88)
-                                    NewEffect(54, Background[C].Location);
-                                else if(Background[C].Type == 87)
-                                    NewEffect(55, Background[C].Location);
-                                else if(Background[C].Type == 107)
-                                    NewEffect(59, Background[C].Location);
-                                else if(Background[C].Type == 141)
+                                if(BackgroundDoorEffect[Background[C].Type] != 0)
                                 {
                                     Location_t bLoc = Background[C].Location;
                                     bLoc.X = bLoc.X + bLoc.Width / 2.0;
-                                    bLoc.Width = 104;
+                                    bLoc.Width = EffectWidth[BackgroundDoorEffect[Background[C].Type]];
                                     bLoc.X = bLoc.X - bLoc.Width / 2.0;
-                                    NewEffect(103, bLoc);
+                                    NewEffect(BackgroundDoorEffect[Background[C].Type], bLoc);
                                 }
                             }
                         }

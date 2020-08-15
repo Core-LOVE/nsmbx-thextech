@@ -486,6 +486,7 @@ struct NPC_t
     int Immune = 0;
     int BlockSpot = 0;
     bool IsGrabbable = false;
+    bool Behind = false;
 //End Type
 };
 
@@ -802,6 +803,7 @@ struct BackgroundDefaults_t
     RangeArrI<int, 1, maxBackgroundType, 0> BackgroundHeight;
     RangeArrI<int, 0, maxBackgroundType, 1> BackgroundFrameAmount;
     RangeArrI<int, 0, maxBackgroundType, 8> BackgroundFrameSpeed;
+    RangeArrI<int, 0, maxBackgroundType, 8> BackgroundDoorEffect;
 };
 
 extern BackgroundDefaults_t BackgroundDefaults;
@@ -834,6 +836,7 @@ struct BlockDefaults_t
     RangeArrI<bool, 0, maxBlockType, false> BlockConnecting;
     RangeArrI<bool, 0, maxBlockType, false> BlockExplodable;
     RangeArrI<bool, 0, maxBlockType, false> BlockHammer;
+    RangeArrI<bool, 0, maxBlockType, false> BlockNoIceBrick;
 };
 
 extern BlockDefaults_t BlockDefaults;
@@ -1498,6 +1501,7 @@ extern RangeArrI<bool, 0, maxBackgroundType, false> BackgroundFence;
 extern RangeArrI<bool, 0, maxBackgroundType, false> BackgroundWater;
 extern RangeArrI<bool, 0, maxBackgroundType, false> BackgroundNPCFence;
 extern RangeArrI<bool, 0, maxBackgroundType, false> BackgroundFreeze;
+extern RangeArrI<int, 0, maxBackgroundType, 8> BackgroundDoorEffect;
 //Public NPCFrameOffsetX(0 To maxNPCType) As Integer 'NPC frame offset X
 extern RangeArrI<int, 0, maxNPCType, 0> NPCFrameOffsetX;
 //Public NPCFrameOffsetY(0 To maxNPCType) As Integer 'NPC frame offset Y
@@ -1855,6 +1859,8 @@ extern RangeArrI<bool, 0, maxBlockType, false> BlockConnecting;
 extern RangeArrI<bool, 0, maxBlockType, false> BlockExplodable;
 //Public BlockHammer(0 to maxBlockType) As Boolean 'block is destroyable with hammer or tanooki suit
 extern RangeArrI<bool, 0, maxBlockType, false> BlockHammer;
+extern RangeArrI<bool, 0, maxBlockType, false> BlockNoIceBrick;
+
 //Public CoinFrame(1 To 10) As Integer 'What frame the coin is on
 extern RangeArrI<int, 1, 10, 0> CoinFrame;
 //Public CoinFrame2(1 To 10) As Integer 'Counter to update the coin frames

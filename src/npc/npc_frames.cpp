@@ -122,7 +122,7 @@ void NPCFrames(int A)
             NPC[A].Type == 197 || NPCIsAVine[NPC[A].Type] || NPC[A].Type == 237 || NPC[A].Type == 239 ||
             NPC[A].Type == 240 || NPC[A].Type == 250 || NPC[A].Type == 289 || NPC[A].Type == 290 || NPC[A].Type == 300 ||
             NPC[A].Type == 306 || NPC[A].Type == 307 || NPC[A].Type == 336 || (NPC[A].Type >= 348 && NPC[A].Type <= 354) ||
-            NPC[A].Type == 366) // no frames
+            NPC[A].Type == 366 || NPC[A].Type == 368) // no frames
     {
         if(!(NPC[A].Type == 86 || NPC[A].Type == 284 || NPC[A].Type == 47) && A == 0) // Reset Frame to 0 unless a specific NPC type
             NPC[A].Frame = 0;

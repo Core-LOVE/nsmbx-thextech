@@ -1773,7 +1773,7 @@ void NPCSpecial(int A)
 
         for(int B = 1; B <= numBlock; B++)
         {
-            if(Block[B].Hidden == false && BlockNoClipping[Block[B].Type] == false && BlockNPCNoClipping[Block[B].Type] == false && BlockIsSizable[Block[B].Type] == false && BlockOnlyHitspot1[Block[B].Type] == false)
+            if(Block[B].Hidden == false && BlockNoClipping[Block[B].Type] == false && BlockNPCNoClipping[Block[B].Type] == false)
             {
                 tempLocation2 = Block[B].Location;
                 tempLocation2.X -= 2;
@@ -1808,29 +1808,9 @@ void NPCSpecial(int A)
     {
         if(NPC[A].Stuck == false)
         {
-            if(NPC[A].Special2 == 0.0)
-            {
-                if(NPC[A].Location.X < NPC[A].DefaultLocation.X - 132 && NPC[A].Direction == -1)
-                    NPC[A].Special2 = 45;
-                else if(NPC[A].Location.X > NPC[A].DefaultLocation.X + 132 && NPC[A].Direction == 1)
-                    NPC[A].Special2 = 45;
-                NPC[A].Location.SpeedX = 1.32 * NPC[A].Direction;
-                if(fEqual(float(NPC[A].Location.SpeedY), Physics.NPCGravity))
-                    NPC[A].Location.SpeedY = -1.5;
-            }
-            else
-            {
-                NPC[A].Special2 = NPC[A].Special2 - 1;
-                if(fEqual(float(NPC[A].Location.SpeedY), Physics.NPCGravity))
-                    NPC[A].Location.SpeedX = 0;
-                if(NPC[A].Special2 == 0.0)
-                {
-                    if(NPC[A].Location.X < NPC[A].DefaultLocation.X)
-                        NPC[A].Direction = 1;
-                    else
-                        NPC[A].Direction = -1;
-                }
-            }
+            NPC[A].Location.SpeedX = 1.5 * NPC[A].Direction;
+            if(fEqual(float(NPC[A].Location.SpeedY), Physics.NPCGravity))
+                NPC[A].Location.SpeedY = -1.5;
         }
     }
     else if(NPC[A].Type == 261) // muncher thing
@@ -4835,7 +4815,7 @@ void SpecialNPC(int A)
     }
     else if(NPC[A].Type == 367) // stinger
     {
-        NPC[A].Special3++;
+        NPC[A].Special3 += 0.5;
         if(NPC[A].Special != 2)
             NPC[A].Location.SpeedX = 2.5 * NPC[A].Direction;
         else
@@ -4852,8 +4832,8 @@ void SpecialNPC(int A)
 
         for(int i = 1; i <= numPlayers; i++)
         {
-            tempLocation.Width = NPC[A].Location.Width;
-            tempLocation.Height = NPC[A].Location.Height;
+            tempLocation.Width = NPC[A].Location.Width * 4;
+            tempLocation.Height = NPC[A].Location.Height * 4;
             tempLocation.X = NPC[A].Location.X + (NPC[A].Location.Width * NPC[A].Direction);
             tempLocation.Y = NPC[A].Location.Y + NPC[A].Location.Height;
             if(CheckCollision(tempLocation, Player[i].Location,
@@ -4896,10 +4876,10 @@ void SpecialNPC(int A)
                         C = -0.00001f;
                     NPC[numNPCs].Location.SpeedY = (double(D) / double(C)) * NPC[numNPCs].Location.SpeedX;
 
-                    if(NPC[numNPCs].Location.SpeedY > 2)
-                        NPC[numNPCs].Location.SpeedY = 2;
-                    else if(NPC[numNPCs].Location.SpeedY < -2)
-                        NPC[numNPCs].Location.SpeedY = -2;
+                    if(NPC[numNPCs].Location.SpeedY > 1)
+                        NPC[numNPCs].Location.SpeedY = 1;
+                    else if(NPC[numNPCs].Location.SpeedY < -1)
+                        NPC[numNPCs].Location.SpeedY = -1;
 
                     NPC[numNPCs].Location.X = NPC[numNPCs].Location.X + NPC[numNPCs].Location.SpeedX * 3;
                     NPC[numNPCs].Location.Y = NPC[numNPCs].Location.Y + NPC[numNPCs].Location.SpeedY * 3;
@@ -4912,6 +4892,8 @@ void SpecialNPC(int A)
                     break;
                 if(NPC[A].Special == 1)
                     NPC[A].Special = 0;
+                if(NPC[A].Special2 != 0)
+                    NPC[A].Special2 = 0;
             }
         }
     }
@@ -6295,6 +6277,15 @@ void SpecialNPC(int A)
             NPC[A].Location.SpeedX = 0;
 
 
+    }
+    else if(NPC[A].Type == 378) // smb2 water log
+    {
+        if(NPC[A].Effect2 != 0)
+            NPC[A].Behind = true;
+        else
+            NPC[A].Behind = false;
+
+        NPC[A].Location.SpeedY = 2;
     }
     else if(NPC[A].Type == 284) // smw lakitu
     {

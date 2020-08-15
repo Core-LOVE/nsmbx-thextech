@@ -3809,7 +3809,7 @@ void UpdatePlayer()
                                         {
                                             if(Player[A].Mount == 1 || Player[A].Mount == 2 || Player[A].Stoned)
                                                 NPCHit(B, 8, A);
-                                            else if(NPCSpinJumpHurt[NPC[B].Type] == true && NPCCanWalkOn[NPC[B].Type] == false)
+                                            else if(NPCSpinJumpHurt[NPC[B].Type] && NPCCanWalkOn[NPC[B].Type] == false)
                                             {
                                                 if(Player[A].Wet > 0 && (NPCIsCheep[NPC[B].Type] || NPC[B].Type == 231 || NPC[B].Type == 235))
                                                 {
@@ -3817,36 +3817,26 @@ void UpdatePlayer()
                                                 else
                                                     NPCHit(B, 8, A);
                                             }
-                                            if(NPC[B].Killed == 8 || NPCIsCheep[NPC[B].Type] || NPCSpinJumpHurt[NPC[B].Type]) // tap
+                                            if(NPC[B].Killed == 8 || NPCIsCheep[NPC[B].Type] || !NPCSpinJumpHurt[NPC[B].Type]) // tap
                                             {
                                                 if(NPC[B].Killed == 8 && Player[A].Mount == 1 && Player[A].MountType == 2)
                                                 {
-                                                    numNPCs++;
-                                                    NPC[numNPCs] = NPC_t();
-                                                    NPC[numNPCs].Active = true;
-                                                    NPC[numNPCs].TimeLeft = 100;
-                                                    NPC[numNPCs].Section = Player[A].Section;
-                                                    NPC[numNPCs].Type = 13;
-                                                    NPC[numNPCs].Special = Player[A].Character;
-                                                    NPC[numNPCs].Location.Height = NPCHeight[NPC[numNPCs].Type];
-                                                    NPC[numNPCs].Location.Width = NPCWidth[NPC[numNPCs].Type];
-                                                    NPC[numNPCs].Location.Y = Player[A].Location.Height + Player[A].Location.Y - NPC[numNPCs].Location.Height;
-                                                    NPC[numNPCs].Location.X = Player[A].Location.X + Player[A].Location.Width / 2.0 - NPC[numNPCs].Location.Width / 2.0;
-                                                    NPC[numNPCs].Location.SpeedX = 4;
-                                                    NPC[numNPCs].Location.SpeedY = 10;
-                                                    numNPCs++;
-                                                    NPC[numNPCs] = NPC_t();
-                                                    NPC[numNPCs].Active = true;
-                                                    NPC[numNPCs].TimeLeft = 100;
-                                                    NPC[numNPCs].Section = Player[A].Section;
-                                                    NPC[numNPCs].Type = 13;
-                                                    NPC[numNPCs].Special = Player[A].Character;
-                                                    NPC[numNPCs].Location.Height = NPCHeight[NPC[numNPCs].Type];
-                                                    NPC[numNPCs].Location.Width = NPCWidth[NPC[numNPCs].Type];
-                                                    NPC[numNPCs].Location.Y = Player[A].Location.Height + Player[A].Location.Y - NPC[numNPCs].Location.Height;
-                                                    NPC[numNPCs].Location.X = Player[A].Location.X + Player[A].Location.Width / 2.0 - NPC[numNPCs].Location.Width / 2.0;
-                                                    NPC[numNPCs].Location.SpeedX = -4;
-                                                    NPC[numNPCs].Location.SpeedY = 10;
+                                                    for(int i= -1; i<= 1; i += 2)
+                                                    {
+                                                        numNPCs++;
+                                                        NPC[numNPCs] = NPC_t();
+                                                        NPC[numNPCs].Active = true;
+                                                        NPC[numNPCs].TimeLeft = 100;
+                                                        NPC[numNPCs].Section = Player[A].Section;
+                                                        NPC[numNPCs].Type = 13;
+                                                        NPC[numNPCs].Special = Player[A].Character;
+                                                        NPC[numNPCs].Location.Height = NPCHeight[NPC[numNPCs].Type];
+                                                        NPC[numNPCs].Location.Width = NPCWidth[NPC[numNPCs].Type];
+                                                        NPC[numNPCs].Location.Y = Player[A].Location.Height + Player[A].Location.Y - NPC[numNPCs].Location.Height;
+                                                        NPC[numNPCs].Location.X = Player[A].Location.X + Player[A].Location.Width / 2.0 - NPC[numNPCs].Location.Width / 2.0;
+                                                        NPC[numNPCs].Location.SpeedX = 4 * i;
+                                                        NPC[numNPCs].Location.SpeedY = 10;
+                                                    }
                                                 }
                                                 if(NPC[B].Killed == 0 && Player[A].SpinJump == 0)
                                                     PlaySound(2);

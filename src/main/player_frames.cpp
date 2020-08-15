@@ -1239,6 +1239,7 @@ void SetupPlayerFrames()
         LinkFrameY[A] = LinkFrameY[A - 400];
     }
     //propeller suit
+    MarioFrameX[982] -= 25;
     MarioFrameX[983] -= 13;
     MarioFrameX[984] -= 13;
     MarioFrameX[1017] -= 13;
@@ -1247,6 +1248,7 @@ void SetupPlayerFrames()
     MarioFrameY[1007] -= 8;
     MarioFrameY[993] -= 8;
 
+    MarioFrameX[1016] -= 12;
     For(A, 750, 850)
     {
         MarioFrameX[A] = MarioFrameX[A - 400];

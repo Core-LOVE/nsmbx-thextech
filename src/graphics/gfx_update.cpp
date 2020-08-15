@@ -140,7 +140,7 @@ void UpdateGraphics(bool skipRepaint)
 
                 for(A = 1; A <= numNPCs; A++)
                 {
-                    if(vScreenCollision(Z, NPC[A].Location) && !NPC[A].Hidden)
+                    if(vScreenCollision(Z, NPC[A].Location) && !NPC[A].Hidden && !NPC[A].Behind)
                     {
                         if(NPC[A].Reset[Z] || NPC[A].Active)
                         {
@@ -1669,7 +1669,26 @@ void UpdateGraphics(bool skipRepaint)
         }
 
 
-
+        for(A = 1; A <= numNPCs; A++) // background NPCs
+        {
+            float cn = NPC[A].Shadow ? 0.f : 1.f;
+            if(NPC[A].Effect == 0)
+            {
+                if(NPC[A].HoldingPlayer == 0)
+                {
+                    if(!NPCIsACoin[NPC[A].Type])
+                    {
+                        if(vScreenCollision(Z, NPC[A].Location) && !NPC[A].Hidden && NPC[A].Behind)
+                        {
+                            if(NPC[A].Active)
+                            {
+                                DrawTexture(vScreenX[Z] + NPC[A].Location.X + (NPCFrameOffsetX[NPC[A].Type] * -NPC[A].Direction) - NPCWidthGFX[NPC[A].Type] / 2.0 + NPC[A].Location.Width / 2.0, vScreenY[Z] + NPC[A].Location.Y + NPCFrameOffsetY[NPC[A].Type] - NPCHeightGFX[NPC[A].Type] + NPC[A].Location.Height, NPCWidthGFX[NPC[A].Type], NPCHeightGFX[NPC[A].Type], GFXNPC[NPC[A].Type], 0, NPC[A].Frame * NPCHeightGFX[NPC[A].Type], cn, cn, cn);
+                            }
+                        }
+                    }
+                }
+            }
+        }
 //'normal player draw code
 //        For A = numPlayers To 1 Step -1 'Players in front of blocks
         for(int A = numPlayers; A >= 1; A--)// Players in front of blocks
@@ -1702,6 +1721,7 @@ void UpdateGraphics(bool skipRepaint)
 //        Else
 
         { // NOT AN EDITOR
+
             for(A = LastBackground + 1; A <= numBackground; A++) // Foreground objects
             {
                 if(vScreenCollision(Z, Background[A].Location) && !Background[A].Hidden)
@@ -1721,7 +1741,7 @@ void UpdateGraphics(bool skipRepaint)
                 {
                     if(!NPCIsACoin[NPC[A].Type])
                     {
-                        if(vScreenCollision(Z, NPC[A].Location) && !NPC[A].Hidden)
+                        if(vScreenCollision(Z, NPC[A].Location) && !NPC[A].Hidden && !NPC[A].Behind)
                         {
                             if(NPC[A].Active)
                             {
@@ -1935,7 +1955,7 @@ void UpdateGraphics(bool skipRepaint)
 
                 For(A, 1, numNPCs) // Display NPCs that got dropped from the container
                 {
-                    if(NPC[A].Effect == 2)
+                    if(NPC[A].Effect == 2 && !NPC[A].Behind)
                     {
                         if(std::fmod(NPC[A].Effect2, 3) != 0.0)
                         {
