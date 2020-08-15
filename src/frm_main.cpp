@@ -58,9 +58,9 @@ static SDL_bool IsFullScreen(SDL_Window *win)
 
 FrmMain::FrmMain()
 {
-    std::string mainIni = AppPath + "main.ini";
-    IniProcessing config(mainIni);
-    config.beginGroup("main");
+
+    std::string mainIn = AppPath + "main.ini";
+    IniProcessing config(mainIn);
     ScaleWidth = ScreenW;
     ScaleHeight = ScreenH;
     std::string gversion = "Super Mario ReInvent - 1.1.0";
@@ -124,7 +124,7 @@ bool FrmMain::initSDL(const CmdLineSetup_t &setup)
     m_window = SDL_CreateWindow(m_windowTitle.c_str(),
                               SDL_WINDOWPOS_CENTERED,
                               SDL_WINDOWPOS_CENTERED,
-                              ScaleWidth, ScaleHeight,
+                              ScreenW, ScreenH,
                               SDL_WINDOW_RESIZABLE |
                               SDL_WINDOW_HIDDEN |
                               SDL_WINDOW_ALLOW_HIGHDPI);
@@ -144,9 +144,9 @@ bool FrmMain::initSDL(const CmdLineSetup_t &setup)
     }
 
 #ifdef __EMSCRIPTEN__ //Set canvas be 1/2 size for a faster rendering
-    SDL_SetWindowMinimumSize(m_window, ScaleWidth / 2, ScaleHeight / 2);
+    SDL_SetWindowMinimumSize(m_window, ScreenW / 2, ScreenH / 2);
 #else
-    SDL_SetWindowMinimumSize(m_window, ScaleWidth, ScaleHeight);
+    SDL_SetWindowMinimumSize(m_window, ScreenW, ScreenH);
 #endif //__EMSCRIPTEN__
 
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
@@ -548,6 +548,7 @@ void FrmMain::eventResize()
 
 int FrmMain::setFullScreen(bool fs)
 {
+
     if(m_window == nullptr)
         return -1;
 
@@ -575,7 +576,7 @@ int FrmMain::setFullScreen(bool fs)
                 return -1;
             }
 #ifdef __EMSCRIPTEN__
-            SDL_SetWindowSize(m_window, ScaleWidth, ScaleHeight);
+            SDL_SetWindowSize(m_window, ScreenW, ScreenH);
 #endif
             return 0;
         }
@@ -595,15 +596,14 @@ void FrmMain::repaint()
     int w, h, off_x, off_y, wDst, hDst;
     float scale_x, scale_y;
 
-
     SDL_SetRenderTarget(m_gRenderer, nullptr);
 
     // Get the size of surface where to draw the scene
     SDL_GetRendererOutputSize(m_gRenderer, &w, &h);
 
     // Calculate the size difference factor
-    scale_x = float(w) / ScaleWidth;
-    scale_y = float(h) / ScaleHeight;
+    scale_x = float(w) / ScreenW;
+    scale_y = float(h) / ScreenH;
 
     wDst = w;
     hDst = h;
@@ -611,13 +611,13 @@ void FrmMain::repaint()
     // Keep aspect ratio
     if(scale_x > scale_y) // Width more than height
     {
-        wDst = int(scale_y * ScaleWidth);
-        hDst = int(scale_y * ScaleHeight);
+        wDst = int(scale_y * ScreenW);
+        hDst = int(scale_y * ScreenH);
     }
     else if(scale_x < scale_y) // Height more than width
     {
-        hDst = int(scale_x * ScaleHeight);
-        wDst = int(scale_x * ScaleWidth);
+        hDst = int(scale_x * ScreenW);
+        wDst = int(scale_x * ScreenH);
     }
 
     // Align the rendering scene to the center of screen
@@ -628,7 +628,7 @@ void FrmMain::repaint()
     SDL_RenderClear(m_gRenderer);
 
     SDL_Rect destRect = {off_x, off_y, wDst, hDst};
-    SDL_Rect sourceRect = {0, 0, ScaleWidth, ScaleHeight};
+    SDL_Rect sourceRect = {0, 0, ScreenW, ScreenH};
 
     SDL_SetTextureColorMod(m_tBuffer, 255, 255, 255);
     SDL_SetTextureAlphaMod(m_tBuffer, 255);
@@ -644,7 +644,6 @@ void FrmMain::repaint()
 
 void FrmMain::updateViewport()
 {
-
     float w, w1, h, h1;
     int   wi, hi;
 
@@ -667,8 +666,8 @@ void FrmMain::updateViewport()
     w1 = w;
     h1 = h;
 
-    scale_x = w / ScaleWidth;
-    scale_y = h / ScaleHeight;
+    scale_x = w / ScreenW;
+    scale_y = h / ScreenH;
     viewport_scale_x = scale_x;
     viewport_scale_y = scale_y;
 
@@ -677,13 +676,13 @@ void FrmMain::updateViewport()
 
     if(scale_x > scale_y)
     {
-        w1 = scale_y * ScaleWidth;
-        viewport_scale_x = w1 / ScaleWidth;
+        w1 = scale_y * ScreenW;
+        viewport_scale_x = w1 / ScreenW;
     }
     else if(scale_x < scale_y)
     {
-        h1 = scale_x * ScaleHeight;
-        viewport_scale_y = h1 / ScaleHeight;
+        h1 = scale_x * ScreenW;
+        viewport_scale_y = h1 / ScreenH;
     }
 
     offset_x = (w - w1) / 2;
@@ -1059,7 +1058,9 @@ void FrmMain::makeShot()
     if(!m_gRenderer || !m_tBuffer)
         return;
 
-    const int w = ScreenW, h = ScreenH;
+    const int w = ScreenW;
+    const int h = ScreenH;
+
     uint8_t *pixels = new uint8_t[size_t(4 * w * h)];
     getScreenPixelsRGBA(0, 0, w, h, pixels);
     PGE_GL_shoot *shoot = new PGE_GL_shoot();

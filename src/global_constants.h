@@ -26,6 +26,8 @@
 #ifndef LIMITS_H
 #define LIMITS_H
 
+#include <IniProcessor/ini_processing.h>
+
 //Public Const MaxSavedEvents As Integer = 200
 const int MaxSavedEvents = 200;
 

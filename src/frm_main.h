@@ -56,7 +56,6 @@ public:
     int ScaleWidth = 800;
     int ScaleHeight = 600;
 
-
     SDL_RendererFlip Flip = SDL_FLIP_NONE;
 
     int MousePointer = 0;
