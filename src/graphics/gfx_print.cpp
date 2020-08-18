@@ -152,4 +152,22 @@ void SuperPrint(std::string SuperWords, int Font, float X, float Y,
             }
         }
     }
+    else if (Font == 7)
+    {
+        std::string Words = SuperWords;
+        std::transform(Words.begin(), Words.end(), Words.begin(), [](unsigned char c){ return std::toupper(c); });
+        for(auto c : Words)
+        {
+            if(c >= 33 && c <= 126)
+            {
+                C = (c - 33) * 32;
+                DrawTextureF(int(X + B), int(Y), 18, 16, Font2[5], 2, C, r, g, b, a);
+                B += 18;
+                if(c == 'M')
+                    B += 2;
+            } else {
+                B += 16;
+            }
+        }
+    }
 }

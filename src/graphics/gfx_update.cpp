@@ -2085,15 +2085,24 @@ void UpdateGraphics(bool skipRepaint)
 
             else if(!GameOutro)
             {
+                if(MenuMode != 0)
+                    MenuAlpha = 0.5;
+                else
+                    MenuAlpha = 0;
+
                 if(MenuMode != 1 && MenuMode != 2 && MenuMode != 4)
                     worldCurs = 0;
 
                 int menuFix = -44; // for Input Settings
 
-                DrawTexture(0, 0, MenuGFX[1].w, MenuGFX[1].h, MenuGFX[1], 0, 0);
                 DrawTexture(ScreenW / 2 - MenuGFX[2].w / 2, 70,
-                        MenuGFX[2].w, MenuGFX[2].h, MenuGFX[2], 0, 0);
-                SuperPrint("Made By Core", 3, 20, 570);
+                        MenuGFX[2].w, MenuGFX[2].h, MenuGFX[2], 0, 0,
+                        1, 1, 1, 1 - MenuAlpha);
+                SuperPrint("discord.gg/RMYdYfX", 7, ScreenW - ((strlen("discord.gg/RMYdYfX") * 32) / 1.075), 570);
+
+                frmMain.renderRect(0, 0, ScreenW, ScreenH, 0.f, 0.f, 0.f, MenuAlpha);
+
+                DrawTexture(0, 0, MenuGFX[1].w, MenuGFX[1].h, MenuGFX[1], 0, 0);
 
                 if(MenuMode == 0)
                 {
@@ -2101,7 +2110,8 @@ void UpdateGraphics(bool skipRepaint)
                     SuperPrint("2 PLAYER GAME", 3, 300, 380);
                     SuperPrint("BATTLE GAME", 3, 300, 410);
                     SuperPrint("OPTIONS", 3, 300, 440);
-                    SuperPrint("EXIT", 3, 300, 470);
+                    SuperPrint("MODIFICATIONS", 3, 300, 470);
+                    SuperPrint("EXIT", 3, 300, 500);
                     DrawTexture(300 - 20, 350 + (MenuCursor * 30), 16, 16, MCursor[0], 0, 0);
                 }
                 // Character select

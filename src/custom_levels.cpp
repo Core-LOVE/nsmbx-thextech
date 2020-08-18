@@ -71,6 +71,13 @@ void FindCustomLevels(/*std::string cFilePath*/)
             LoadCustomLevel(A, LevelIniPathC);
         if(Files::fileExists(LevelPathC))
             LoadCustomLevel(A, LevelPathC);
+
+        std::string g_path = FileNamePath + "level-global.txt";
+        std::string g_pathC = FileNamePath + FileName + "/" + "level-global.txt";
+        if(Files::fileExists(g_path))
+            LoadCustomLevel(A, g_path);
+        if(Files::fileExists(g_pathC))
+            LoadCustomLevel(A, g_pathC);
     }
 }
 void LoadCustomLevel(int A, std::string cFileName)

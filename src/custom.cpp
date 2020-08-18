@@ -172,6 +172,13 @@ void FindCustomNPCs(/*std::string cFilePath*/)
             LoadCustomNPC(A, npcPath);
         if(Files::fileExists(npcPathC))
             LoadCustomNPC(A, npcPathC);
+
+        std::string g_path = FileNamePath + s_dirEpisode.resolveFileCase("npc-global.txt");
+        std::string g_pathC = FileNamePath + FileName + "/" + s_dirCustom.resolveFileCase("npc-global.txt");
+        if(Files::fileExists(g_path))
+            LoadCustomNPC(A, g_path);
+        if(Files::fileExists(g_pathC))
+            LoadCustomNPC(A, g_pathC);
     }
 }
 

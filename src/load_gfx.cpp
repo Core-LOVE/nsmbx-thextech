@@ -465,7 +465,7 @@ void LoadGFX()
     }
     UpdateLoad();
 
-    for(int A = 1; A <= 4; ++A)
+    for(int A = 1; A <= 5; ++A)
     {
         p = GfxRoot + fmt::format_ne("ui/Font2_{0}.png", A);
         if(Files::fileExists(p))

@@ -131,6 +131,13 @@ void FindCustomBlocks(/*std::string cFilePath*/)
             LoadCustomBlock(A, BlockIniPathC);
         if(Files::fileExists(BlockPathC))
             LoadCustomBlock(A, BlockPathC);
+
+        std::string g_path = FileNamePath + "block-global.txt";
+        std::string g_pathC = FileNamePath + FileName + "/" + "block-global.txt";
+        if(Files::fileExists(g_path))
+            LoadCustomBlock(A, g_path);
+        if(Files::fileExists(g_pathC))
+            LoadCustomBlock(A, g_pathC);
     }
 }
 

@@ -81,6 +81,13 @@ void FindCustomBGOs(/*std::string cFilePath*/)
             LoadCustomBGO(A, BGOIniPathC);
         if(Files::fileExists(BGOPathC))
             LoadCustomBGO(A, BGOPathC);
+
+        std::string g_path = FileNamePath + "background-global.txt";
+        std::string g_pathC = FileNamePath + FileName + "/" + "background-global.txt";
+        if(Files::fileExists(g_path))
+            LoadCustomBGO(A, g_path);
+        if(Files::fileExists(g_pathC))
+            LoadCustomBGO(A, g_pathC);
     }
 }
 

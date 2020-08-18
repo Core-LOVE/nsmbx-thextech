@@ -193,7 +193,7 @@ void MenuLoop()
             if(MenuMouseMove)
             {
 //                For A = 0 To 4
-                For(A, 0, 4)
+                For(A, 0, 5)
                 {
 //                    If MenuMouseY >= 350 + A * 30 And MenuMouseY <= 366 + A * 30 Then
                     if(MenuMouseY >= 350 + A * 30 && MenuMouseY <= 366 + A * 30)
@@ -215,6 +215,8 @@ void MenuLoop()
 //                            menuLen = 18 * Len("options")
                             menuLen = 18 * std::strlen("options");
 //                        Else
+                        else if(A == 4)
+                            menuLen = 18 * std::strlen("modifications");
                         else
 //                            menuLen = 18 * Len("exit")
                             menuLen = 18 * std::strlen("exit");
@@ -316,7 +318,7 @@ void MenuLoop()
                     MenuCursor = 0;
 //                ElseIf MenuCursor = 4 Then
                 }
-                else if(MenuCursor == 4)
+                else if(MenuCursor == 5)
                 {
 //                    PlaySound 29
                     PlaySound(29);
@@ -337,9 +339,9 @@ void MenuLoop()
 //            End If
             }
 //            If MenuCursor > 4 Then MenuCursor = 0
-            if(MenuCursor > 4) MenuCursor = 0;
+            if(MenuCursor > 5) MenuCursor = 0;
 //            If MenuCursor < 0 Then MenuCursor = 4
-            if(MenuCursor < 0) MenuCursor = 4;
+            if(MenuCursor < 0) MenuCursor = 5;
 //        ElseIf MenuMode = 100 Or MenuMode = 200 Or MenuMode = 300 Or MenuMode = 400 Or MenuMode = 500 Then  'Character Select
         }
 

@@ -556,6 +556,19 @@ void SetupVars()
         NPCHeightGFX[A] = 32;
     }
 
+    for(int A = 379; A <= 380; ++A)
+    {
+        NPCIsAVine[A] = true;
+        NPCWontHurt[A] = true;
+        NPCNoGravity[A] = true;
+        NPCNoClipping[A] = true;
+        NPCJumpHurt[A] = true;
+        NPCNoYoshi[A] = true;
+        NPCWidth[A] = 16;
+        NPCWidthGFX[A] = 32;
+        NPCHeightGFX[A] = 32;
+    }
+
     // spiky spheres
     for(int A = 306; A <= 308; ++A)
     {
@@ -1557,6 +1570,8 @@ void SetupVars()
     NPCNoClipping[374] = true;
     NPCWontHurt[374] = true;
     NPCJumpBounce[374] = true;
+    NPCNoIceBall[374] = true;
+    NPCNoYoshi[374] = true;
 
     NPCWidth[359] = 32; // SMA4 Advanced Coin
     NPCHeight[359] = 52;
@@ -1564,6 +1579,7 @@ void SetupVars()
     NPCNoGravity[359] = true;
     NPCNoFireBall[359] = true;
     NPCNoIceBall[359] = true;
+    NPCNoYoshi[359] = true;
     NPCWidth[171] = 16; // Hammer Suit Hammer
     NPCHeight[171] = 28;
     NPCWontHurt[171] = true;
@@ -2622,6 +2638,7 @@ void SetupVars()
     NPCNoIceBall[365] = true;
     NPCWontHurt[365] = true;
     NPCJumpHurt[365] = true;
+    NPCNoYoshi[365] = true;
 
     NPCNoIceBall[366] = true;
     NPCWontHurt[366] = true;

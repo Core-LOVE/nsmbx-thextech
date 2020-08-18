@@ -2040,6 +2040,7 @@ extern Physics_t Physics;
 extern int MenuCursor;
 //Public MenuMode As Integer
 extern int MenuMode;
+extern double MenuAlpha;
 //Public MenuCursorCanMove As Boolean
 extern bool MenuCursorCanMove;
 //Public MenuCursorCanMove2 As Boolean 'Joystick
@@ -2296,7 +2297,7 @@ extern StdPicture Chat;
 extern RangeArr<StdPicture, 0, 2> Container;
 extern RangeArr<StdPicture, 1, 4> ECursor;
 extern RangeArr<StdPicture, 0, 9> Font1;
-extern RangeArr<StdPicture, 1, 4> Font2;
+extern RangeArr<StdPicture, 1, 5> Font2;
 extern StdPicture Font2S;
 extern RangeArr<StdPicture, 1, 2> Heart;
 extern RangeArr<StdPicture, 0, 11> Interface;
