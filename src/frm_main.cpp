@@ -81,7 +81,7 @@ Uint8 FrmMain::getKeyState(SDL_Scancode key)
     return 0;
 }
 
-bool FrmMain::initSDL(const CmdLineSetup_t &setup)
+bool FrmMain::initSDL(const CmdLineSetup_t &setup, int w, int h)
 {
     bool res = false;
 
@@ -124,7 +124,7 @@ bool FrmMain::initSDL(const CmdLineSetup_t &setup)
     m_window = SDL_CreateWindow(m_windowTitle.c_str(),
                               SDL_WINDOWPOS_CENTERED,
                               SDL_WINDOWPOS_CENTERED,
-                              ScreenW, ScreenH,
+                              w, h,
                               SDL_WINDOW_RESIZABLE |
                               SDL_WINDOW_HIDDEN |
                               SDL_WINDOW_ALLOW_HIGHDPI);

@@ -212,6 +212,8 @@ void NPCHit(int A, int B, int C)
         }
     }
 
+    if(NPC[C].Type == 171 && NPCNoHammer[NPC[A].Type])
+        return;
 
     if(B == 1 && NPCJumpHurt[NPC[A].Type] && NPC[A].Type != 283) // Things that don't die from jumping
         return;

@@ -204,6 +204,7 @@ RangeArrI<bool, 0, maxNPCType, false> NPCNoGravity;
 RangeArrI<bool, 0, maxNPCType, true> NPCDespawn;
 RangeArrI<bool, 0, maxNPCType, false> NPCGFXDirective;
 RangeArrI<bool, 0, maxNPCType, false> NPCInstantKill;
+RangeArrI<bool, 0, maxNPCType, false> NPCNoHammer;
 
 RangeArrI<int, 0, maxNPCType, 0> NPCFrame;
 RangeArrI<int, 0, maxNPCType, 0> NPCFrameSpeed;
@@ -583,6 +584,8 @@ StdPicture LoadCoin;
 StdPicture Loader;
 RangeArr<StdPicture, 0, 3> MCursor;
 RangeArr<StdPicture, 1, 5> MenuGFX;
+RangeArr<StdPicture, 0, 4> Logo;
+int LogoNum = 1;
 RangeArr<StdPicture, 2, 2> Mount;
 RangeArr<StdPicture, 0, 7> nCursor;
 StdPicture TextBox;
@@ -631,15 +634,15 @@ void LevelTimer_t::reset()
 
 void ReadMainIni()
 {
-    if(WindowChanged)
-    {
-        std::string mainIni = AppPath + "main.ini";
-        IniProcessing config(mainIni);
-        config.beginGroup("main");
-        config.read("ScreenW", ScreenW, ScreenW);
-        config.read("ScreenH", ScreenH, ScreenH);
-        config.endGroup();
-    }
+    std::string mainIni = AppPath + "main.ini";
+    IniProcessing config(mainIni);
+    config.beginGroup("main");
+    config.read("ScreenW", ScreenW, ScreenW);
+    config.read("ScreenH", ScreenH, ScreenH);
+    frmMain.ScaleWidth = ScreenW;
+    frmMain.ScaleHeight = ScreenH;
+    frmMain.resizeWindow(ScreenW, ScreenH);
+    config.endGroup();
 }
 
 bool LoadWindow = false;

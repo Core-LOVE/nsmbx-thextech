@@ -824,6 +824,18 @@ void NPCSpecial(int A)
         }
 
     }
+    else if(NPC[A].Type == 382) // small heart (smb2)
+    {
+        NPC[A].Location.SpeedY = -0.5;
+        NPC[A].Location.SpeedX = 0.25 * NPC[A].Direction;
+        NPC[A].Special++;
+        if(NPC[A].Special > 100)
+        {
+            NPC[A].Special = 0;
+            NPC[A].Direction = -NPC[A].Direction;
+            NPC[A].Location.SpeedX = 0.25 * NPC[A].Direction;
+        }
+    }
     else if(NPC[A].Type == 275) // fire plant thing
     {
         if(NPC[A].Special == 0.0)
@@ -1452,7 +1464,7 @@ void NPCSpecial(int A)
             if(CheckCollision(NPC[A].Location, NPC[B].Location, NPC[A].Section) == true &&
                NPC[A].Special3 == 1)
             {
-                if(NPC[B].Type != 359)
+                if(NPC[B].Type != 359 || NPC[B].Type == 383)
                 {
                     if(NPCIsACoin[NPC[B].Type] == true)
                         NPCHit(B, 10, A);

@@ -2095,8 +2095,8 @@ void UpdateGraphics(bool skipRepaint)
 
                 int menuFix = -44; // for Input Settings
 
-                DrawTexture(ScreenW / 2 - MenuGFX[2].w / 2, 70,
-                        MenuGFX[2].w, MenuGFX[2].h, MenuGFX[2], 0, 0,
+                DrawTexture(ScreenW / 2 - Logo[LogoNum].w / 2, (ScreenH / 2.0) - Logo[LogoNum].h - (Logo[LogoNum].h / 4.0),
+                        Logo[LogoNum].w, Logo[LogoNum].h, Logo[LogoNum], 0, 0,
                         1, 1, 1, 1 - MenuAlpha);
                 SuperPrint("discord.gg/RMYdYfX", 7, ScreenW - ((strlen("discord.gg/RMYdYfX") * 32) / 1.075), 570);
 
@@ -2315,6 +2315,7 @@ void UpdateGraphics(bool skipRepaint)
     //                    End If
     //                    SuperPrint "VIEW CREDITS", 3, 300, 440
                     SuperPrint("VIEW CREDITS", 3, 300, 440);
+                    SuperPrint("CHANGE LOGO", 3, 300, 470);
     //                    BitBlt myBackBuffer, 300 - 20, 350 + (MenuCursor * 30), 16, 16, MCursorMask(0).hdc, 0, 0, vbSrcAnd
     //                    BitBlt myBackBuffer, 300 - 20, 350 + (MenuCursor * 30), 16, 16, MCursor(0).hdc, 0, 0, vbSrcPaint
                     DrawTexture(300 - 20, 350 + (MenuCursor * 30),

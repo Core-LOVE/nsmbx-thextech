@@ -338,7 +338,7 @@ bool OpenLevelData(LevelData &lvl, const std::string FilePath)
             npc.Type = 1;
         }
 
-        if(npc.Type == 359)
+        if(npc.Type == 359 || npc.Type == 383)
             maxAceCoins++;
         if(npc.Type == 91 || npc.Type == 96 || npc.Type == 283 || npc.Type == 284 || npc.Type == 373)
         {

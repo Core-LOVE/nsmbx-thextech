@@ -66,7 +66,8 @@ public:
 
     Uint8 getKeyState(SDL_Scancode key);
 
-    bool initSDL(const CmdLineSetup_t &setup);
+    bool initSDL(const CmdLineSetup_t &setup, int w, int h);
+    bool returnWindow();
     void freeSDL();
 
     void show();

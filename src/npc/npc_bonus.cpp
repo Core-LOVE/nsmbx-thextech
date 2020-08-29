@@ -255,6 +255,28 @@ void TouchBonus(int A, int B)
             CheckpointsList.push_back(cp);
             return;
         }
+        if(NPC[B].Type == 382) // player touched small heart
+        {
+            PlaySound(102);
+            if(Player[A].Character == 3 || Player[A].Character == 4 || Player[A].Character == 5 || Player[A].Character == 7)
+            {
+                Player[A].Hearts = Player[A].Hearts + 1;
+                if(Player[A].Hearts > 3)
+                    Player[A].Hearts = 3;
+            }
+            if(Player[A].State == 1)
+            {
+                PlaySound(6);
+                Player[A].CanFly3 = false;
+                Player[A].CanFly = false;
+                if(Player[A].Duck)
+                    UnDuck(A);
+                Player[A].Frame = 1;
+                Player[A].Effect = 1;
+                if(Player[A].Mount > 0)
+                    UnDuck(A);
+            }
+        }
         if(NPC[B].Type == 188) // player touched the 3up moon
         {
             NPC[B].Killed = 9;
@@ -585,13 +607,22 @@ void TouchBonus(int A, int B)
             if(NPC[B].Effect != 2)
                 MoreScore(6, NPC[B].Location);
         }
-        else if(NPC[B].Type == 359)
+        else if(NPC[B].Type == 359 || NPC[B].Type == 383)
         {
             numAceCoins++;
             if(numAceCoins >= maxAceCoins)
                 MoreScore(10, Player[A].Location);
             PlaySound(59);
-            NewEffect(179, NPC[B].Location, NPC[B].Frame);
+            if(NPC[B].Type != 383)
+                NewEffect(179, NPC[B].Location, NPC[B].Frame);
+            else
+            {
+                for(int C = 1; C <= NPCHeight[NPC[B].Type] / 24; C++)
+                {
+                    NewEffect(78, newLoc(NPC[B].Location.X + (dRand() * NPC[B].Location.Width),
+                                          NPC[B].Location.Y + (dRand() * NPC[B].Location.Height)));
+                }
+            }
         }
         else if(NPCIsACoin[NPC[B].Type] && NPC[B].Type == 369) // Bonus is a sonic red ring
         {

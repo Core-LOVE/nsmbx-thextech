@@ -1573,6 +1573,14 @@ void SetupVars()
     NPCNoIceBall[374] = true;
     NPCNoYoshi[374] = true;
 
+    NPCWidth[382] = 20; // SMB2 Small heart
+    NPCHeight[382] = 26;
+    NPCNoGravity[382] = true;
+    NPCNoClipping[382] = true;
+    NPCNoIceBall[382] = true;
+    NPCIsABonus[382] = true;
+    NPCNoFireBall[382] = true;
+
     NPCWidth[359] = 32; // SMA4 Advanced Coin
     NPCHeight[359] = 52;
     NPCIsABonus[359] = true;
@@ -1580,6 +1588,15 @@ void SetupVars()
     NPCNoFireBall[359] = true;
     NPCNoIceBall[359] = true;
     NPCNoYoshi[359] = true;
+
+    NPCWidth[383] = 32; // SMB2 Ace Coin
+    NPCHeight[383] = 48;
+    NPCIsABonus[383] = true;
+    NPCNoGravity[383] = true;
+    NPCNoFireBall[383] = true;
+    NPCNoIceBall[383] = true;
+    NPCNoYoshi[383] = true;
+
     NPCWidth[171] = 16; // Hammer Suit Hammer
     NPCHeight[171] = 28;
     NPCWontHurt[171] = true;

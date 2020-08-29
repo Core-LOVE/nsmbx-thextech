@@ -967,7 +967,7 @@ void MenuLoop()
             if(MenuMouseMove == true)
             {
 //                For A = 0 To 3
-                For(A, 0, 3)
+                For(A, 0, 4)
                 {
 //                    If MenuMouseY >= 350 + A * 30 And MenuMouseY <= 366 + A * 30 Then
                     if(MenuMouseY >= 350 + A * 30 && MenuMouseY <= 366 + A * 30)
@@ -993,7 +993,11 @@ void MenuLoop()
                                 menuLen = 18 * std::strlen("fullscreen mode");
 //                            End If
 //                        Else
-                        } else {
+                        }
+                        else if(A == 3)
+                            menuLen = 18 * std::strlen("CHANGE LOGO");
+                        else
+                        {
 //                            menuLen = 18 * Len("view credits") - 2
                             menuLen = 18 * std::strlen("view credits") - 2;
 //                        End If
@@ -1078,6 +1082,15 @@ void MenuLoop()
                         SetupCredits();
 //                    End If
                     }
+                    else if(MenuCursor == 4)
+                    {
+                        PlaySound(29);
+                        LogoNum++;
+                        if(LogoNum >= 5)
+                            LogoNum = 1;
+                        if(LogoNum < 1)
+                            LogoNum = 4;
+                    }
 //                End If
                 }
 //            End If
@@ -1085,11 +1098,11 @@ void MenuLoop()
 //            If MenuMode = 3 Then
             if(MenuMode == 3) {
 //                If MenuCursor > 3 Then MenuCursor = 0
-                if(MenuCursor > 3)
+                if(MenuCursor > 4)
                     MenuCursor = 0;
 //                If MenuCursor < 0 Then MenuCursor = 3
                 if(MenuCursor < 0)
-                    MenuCursor = 3;
+                    MenuCursor = 4;
 //            End If
             }
 

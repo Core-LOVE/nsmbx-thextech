@@ -86,6 +86,7 @@ void SaveNPCDefaults()
         NPCDefaults.NPCDespawn[A] = NPCDespawn[A];
         NPCDefaults.NPCGFXDirective[A] = NPCGFXDirective[A];
         NPCDefaults.NPCInstantKill[A] = NPCInstantKill[A];
+        NPCDefaults.NPCNoHammer[A] = NPCNoHammer[A];
         NPCFrameSpeed[A] = 8;
     }
 }
@@ -138,6 +139,7 @@ void LoadNPCDefaults()
         NPCDespawn[A] = NPCDefaults.NPCDespawn[A];
         NPCGFXDirective[A] = NPCDefaults.NPCGFXDirective[A];
         NPCInstantKill[A] = NPCDefaults.NPCInstantKill[A];
+        NPCNoHammer[A] = NPCDefaults.NPCNoHammer[A];
         NPCFrame[A] = 0;
         NPCFrameSpeed[A] = 8;
         NPCFrameStyle[A] = 0;
@@ -230,6 +232,7 @@ void LoadCustomNPC(int A, std::string cFileName)
     boolVAR(npc, "isheavy", NPCIsHeavy[A]);
     boolVAR(npc, "directivegfx", NPCGFXDirective[A]);
     boolVAR(npc, "instantkill", NPCInstantKill[A]);
+    boolVAR(npc, "nohammer", NPCNoHammer[A]);
 
     if(npc.en_nohurt)
         NPCWontHurt[A] = npc.nohurt;

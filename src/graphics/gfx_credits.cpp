@@ -88,7 +88,6 @@ void DoCredits()
                 }
                 else // Otherwise, play the music that set by level
                     StartMusic(0, 2000);
-
             }
         }
     }

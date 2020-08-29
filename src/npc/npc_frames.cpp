@@ -190,6 +190,13 @@ void NPCFrames(int A)
         if(NPC[A].Type == 279 && NPC[A].Direction == 1)
             NPC[A].Frame = NPC[A].Frame + 4;
     }
+    else if(NPC[A].Type == 382)
+    {
+        if(NPC[A].Location.SpeedX < 0)
+            NPC[A].Frame = 1;
+        else if(NPC[A].Location.SpeedX >= 0)
+            NPC[A].Frame = 0;
+    }
     else if(NPC[A].Type == 356) // bumpty
     {
         if(NPC[A].Special == -2)

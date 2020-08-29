@@ -1583,6 +1583,7 @@ extern RangeArrI<bool, 0, maxNPCType, false> NPCNoGravity;
 extern RangeArrI<bool, 0, maxNPCType, true> NPCDespawn;
 extern RangeArrI<bool, 0, maxNPCType, false> NPCGFXDirective;
 extern RangeArrI<bool, 0, maxNPCType, false> NPCInstantKill;
+extern RangeArrI<bool, 0, maxNPCType, false> NPCNoHammer;
 
 //Public NPCFrame(0 To maxNPCType) As Integer
 extern RangeArrI<int, 0, maxNPCType, 0> NPCFrame;
@@ -1631,6 +1632,7 @@ struct NPCDefaults_t
     RangeArrI<bool, 0, maxNPCType, false> NPCJumpBounce;
     RangeArrI<bool, 0, maxNPCType, false> NPCGFXDirective;
     RangeArrI<bool, 0, maxNPCType, false> NPCInstantKill;
+    RangeArrI<bool, 0, maxNPCType, false> NPCNoHammer;
 //    NPCNoClipping(0 To maxNPCType) As Boolean
     RangeArrI<bool, 0, maxNPCType, false> NPCNoClipping;
 //    NPCScore(0 To maxNPCType) As Integer
@@ -2305,6 +2307,8 @@ extern StdPicture LoadCoin;
 extern StdPicture Loader;
 extern RangeArr<StdPicture, 0, 3> MCursor;
 extern RangeArr<StdPicture, 1, 5> MenuGFX;
+extern RangeArr<StdPicture, 0, 4> Logo;
+extern int LogoNum;
 extern RangeArr<StdPicture, 2, 2> Mount;
 extern RangeArr<StdPicture, 0, 7> nCursor;
 extern StdPicture TextBox;

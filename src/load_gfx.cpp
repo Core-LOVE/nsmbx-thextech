@@ -535,6 +535,20 @@ void LoadGFX()
     }
     UpdateLoad();
 
+    for(int A = 0; A <= 4; ++A)
+    {
+        p = GfxRoot + fmt::format_ne("ui/Logo{0}.png", A);
+        if(Files::fileExists(p))
+        {
+            Logo[A] = frmMain.lazyLoadPicture(p);
+        }
+        else
+        {
+            break;
+        }
+    }
+    UpdateLoad();
+
     for(int A = 0; A <= 7; ++A)
     {
         p = GfxRoot + fmt::format_ne("ui/nCursor{0}.png", A);
@@ -1077,6 +1091,8 @@ void UnloadWorldCustomGFX()
 
 void UpdateLoad()
 {
+    void ReadMainIni();
+
     std::string state;
     bool draw = false;
     if(IntProc::isEnabled())
@@ -1104,9 +1120,6 @@ void UpdateLoad()
 
     if(draw)
     {
-        CurPos.X = MenuMouseX;
-        CurPos.Y = MenuMouseY;
-
         frmMain.clearBuffer();
         if(!state.empty())
             SuperPrint(state, 6, 8, 8);
