@@ -1610,6 +1610,12 @@ void SetupVars()
     NPCIsAShell[174] = true;
     NPCIsAShell[195] = true;
 
+    NPCWontHurt[371] = true; // cuccos
+    NPCFrameOffsetY[371] = 2;
+    NPCJumpHurt[371] = true;
+    NPCIsGrabbable[371] = true;
+    NPCNoGravity[371] = true;
+
     NPCHeightGFX[372] = 42; // propeller mushroom
     NPCHeight[372] = 42;
     NPCWidth[372] = 32;

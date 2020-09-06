@@ -104,7 +104,7 @@ void SetupCredits()
 #ifdef ENABLE_OLD_CREDITS
     AddCredit("New Super Mario Bros. X");
 #else
-    AddCredit("New Super Mario Bros. X");
+    AddCredit("Super Mario ReInvent");
 #endif
     AddCredit("");
     AddCredit("");
@@ -139,6 +139,8 @@ void SetupCredits()
     AddCredit("SetaYoshi");
     AddCredit("MrDoubleA");
     AddCredit("Wohlstand");
+    AddCredit("4masty");
+    AddCredit("Idunn");
     AddCredit("");
 #endif
 

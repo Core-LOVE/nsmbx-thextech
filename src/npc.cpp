@@ -156,7 +156,6 @@ void Bomb(Location_t Location, int Game, int ImmunePlayer)
     double A = 0;
     double B = 0;
     double C = 0;
-    Location_t tempLocation;
 
     NPC[0].Multiplier = 0;
     if(Game == 0)
@@ -4695,6 +4694,55 @@ void SpecialNPC(int A)
             }
         }
     }
+    else if(NPC[A].Type == 371) // cucos
+    {
+        NPC[A].Location.SpeedY += Physics.NPCGravity / 2.0;
+
+        if(NPC[A].Location.SpeedY > 0.3)
+        {
+            NPC[A].Special = 2;
+            NPC[A].Special4 = (dRand() * 25) + 25;
+        }
+
+        if(NPC[A].Special2 == 0 && NPC[A].Location.SpeedY == Physics.NPCGravity)
+        {
+            NPC[A].Special3++;
+            if(NPC[A].Special3 > NPC[A].Special4)
+            {
+                NPC[A].Special3 = -(dRand() * 13);
+                NPC[A].Special4 = (dRand() * 25) + 25;
+            }
+            else if(NPC[A].Special3 < 0)
+                NPC[A].Special = 1;
+
+            if(NPC[A].Special3 >= 0)
+                NPC[A].Special = 0;
+        }
+        else if(NPC[A].Special2 != 0)
+        {
+            if(NPC[A].Special != 2)
+            {
+                NPC[A].Location.SpeedY = -4.5;
+                NPC[A].Location.SpeedX = 4.5 * NPC[A].Direction;
+                NPC[A].Special = 2;
+            }
+        }
+
+        for(int i = 1; i <= numPlayers; i++)
+        {
+            tempLocation = Player[i].Location;
+            tempLocation.X -= 64;
+            tempLocation.Y -= 64;
+            tempLocation.Width += 128;
+            tempLocation.Height += 128;
+
+            if(CheckCollision(NPC[A].Location, tempLocation, NPC[A].Section) && NPC[A].Special2 != 1)
+            {
+                NewEffect(185, NPC[A].Location);
+                NPC[A].Special2 = 1;
+            }
+        }
+    }
     else if(NPC[A].Type == 25)
     {
         C = 0;
@@ -4832,7 +4880,13 @@ void SpecialNPC(int A)
             NPC[A].Location.SpeedX = 2.5 * NPC[A].Direction;
         else
             NPC[A].Location.SpeedX = 0;
-
+        if(NPC[A].Special3 <= 160)
+        {
+            if(NPC[A].Special2 < 0)
+                NPC[A].Special = 1;
+            else if(NPC[A].Special2 >= 0)
+                NPC[A].Special = 0;
+        }
         if(NPC[A].Special3 > 160)
             NPC[A].Special = 2;
         if(NPC[A].Special3 > 172)
@@ -4844,16 +4898,15 @@ void SpecialNPC(int A)
 
         for(int i = 1; i <= numPlayers; i++)
         {
-            tempLocation.Width = NPC[A].Location.Width * 4;
-            tempLocation.Height = NPC[A].Location.Height * 4;
-            tempLocation.X = NPC[A].Location.X + (NPC[A].Location.Width * NPC[A].Direction);
-            tempLocation.Y = NPC[A].Location.Y + NPC[A].Location.Height;
-            if(CheckCollision(tempLocation, Player[i].Location,
-            NPC[A].Section) == true)
+            tempLocation = Player[i].Location;
+
+            tempLocation.X -= 128;
+            tempLocation.Y -= 128;
+            tempLocation.Width += 256;
+            tempLocation.Height += 256;
+
+            if(CheckCollision(NPC[A].Location, tempLocation, NPC[A].Section))
             {
-                if(NPC[A].Special == 2)
-                    break;
-                NPC[A].Special = 1;
                 if(NPC[A].Special2 >= 0)
                 {
                     numNPCs++;
@@ -4900,12 +4953,8 @@ void SpecialNPC(int A)
             }
             else
             {
-                if(NPC[A].Special == 2)
-                    break;
-                if(NPC[A].Special == 1)
-                    NPC[A].Special = 0;
-                if(NPC[A].Special2 != 0)
-                    NPC[A].Special2 = 0;
+                if(NPC[A].Special2 < 0)
+                    NPC[A].Special2++;
             }
         }
     }

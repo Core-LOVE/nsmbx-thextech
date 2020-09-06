@@ -466,6 +466,15 @@ void NPCHit(int A, int B, int C)
             return;
         }
     }
+    else if(NPC[A].Type == 371) // cuccos
+    {
+        if(NPC[C].Type == 13)
+        {
+            NPC[A].Special2 = 1;
+            NPC[A].Location.SpeedY = -7.75;
+            NPC[A].Direction = -NPC[A].Direction;
+        }
+    }
     else if(NPC[A].Type == 268 || NPC[A].Type == 281 || NPC[A].Type == 302)
     {
         if(B != 7 && B != 1 && B != 2 && B != 8)
