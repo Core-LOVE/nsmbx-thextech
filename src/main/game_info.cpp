@@ -44,8 +44,8 @@ void initGameInfo()
     g_gameInfo.title = "Super Mario Bros. X";
     g_gameInfo.titleWindow = "Super Mario Bros. X - Version 1.3 - www.SuperMarioBrothers.org";
 #   else
-    g_gameInfo.title = "The X-Tech Engine";
-    g_gameInfo.titleWindow = fmt::format_ne("X-Tech v{0}", V_LATEST_STABLE);
+    g_gameInfo.title = "Super Mario ReInvent";
+    g_gameInfo.titleWindow = fmt::format_ne("Super Mario ReInvent - {0}", NSMBX_VERSION_STRING);
 #   endif
 #endif /* CUSTOM_GAME_NAME_TITLE */
 
@@ -54,8 +54,10 @@ void initGameInfo()
     g_gameInfo.characterName[3] = "Peach";
     g_gameInfo.characterName[4] = "Toad";
     g_gameInfo.characterName[5] = "Link";
+    g_gameInfo.characterName[6] = "Waluigi";
+    g_gameInfo.characterName[7] = "Yoshi";
 
-    g_gameInfo.creditsFont = 4;
+    g_gameInfo.creditsFont = 3;
 
 #ifdef CUSTOM_CREDITS_URL
     g_gameInfo.creditsHomePage = CUSTOM_CREDITS_URL;
@@ -76,7 +78,7 @@ void initGameInfo()
         {
             if(config.hasKey("title"))
                 config.read("title", g_gameInfo.title, g_gameInfo.title);
-            g_gameInfo.titleWindow = fmt::format_ne("{0} - (X-Tech v{1})", g_gameInfo.title, V_LATEST_STABLE);
+            g_gameInfo.titleWindow = fmt::format_ne("{0} - (SMR {1})", g_gameInfo.title, NSMBX_VERSION_STRING);
         }
         config.endGroup();
 
