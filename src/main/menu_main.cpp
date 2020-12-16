@@ -36,6 +36,7 @@ void initMainMenu()
     g_mainMenu.main2PlayerGame = "2 Player Game";
     g_mainMenu.mainBattleGame = "Battle Game";
     g_mainMenu.mainOptions = "Options";
+    g_mainMenu.mainModifications = "Modifications";
     g_mainMenu.mainExit = "Exit";
 
     for(int i = 1; i <= numCharacters; ++i)

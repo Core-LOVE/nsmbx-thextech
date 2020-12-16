@@ -57,14 +57,14 @@ static struct PlayerBackup
 
 typedef RangeArrI<int, 0, maxPlayerFrames, 0> PlayerOffsetArray;
 
-static PlayerOffsetArray *s_playerFrameX[numCharacters + 1] = {
-    nullptr, &MarioFrameX, &LuigiFrameX, &PeachFrameX, &ToadFrameX, &LinkFrameX
+static PlayerOffsetArray *s_playerFrameX[] = {
+    nullptr, &MarioFrameX, &LuigiFrameX, &PeachFrameX, &ToadFrameX, &LinkFrameX, &WaluigiFrameX, &YoshiFrameX, &WarioFrameX, nullptr
 };
-static PlayerOffsetArray *s_playerFrameY[numCharacters + 1] = {
-    nullptr, &MarioFrameY, &LuigiFrameY, &PeachFrameY, &ToadFrameY, &LinkFrameY
+static PlayerOffsetArray *s_playerFrameY[] = {
+    nullptr, &MarioFrameY, &LuigiFrameY, &PeachFrameY, &ToadFrameY, &LinkFrameY, &WaluigiFrameY, &YoshiFrameY, &WarioFrameY, nullptr
 };
 
-const char *s_playerFileName[] = {nullptr, "mario", "luigi", "peach", "toad", "link", "waluigi", "yoshi2", nullptr};
+const char *s_playerFileName[] = {nullptr, "mario", "luigi", "peach", "toad", "link", "waluigi", "yoshi2", "wario", nullptr};
 
 
 static struct NPCDefaults_t

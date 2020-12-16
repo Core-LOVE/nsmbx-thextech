@@ -36,6 +36,7 @@ struct MainMenuContent
     std::string main2PlayerGame;
     std::string mainBattleGame;
     std::string mainOptions;
+    std::string mainModifications;
     std::string mainExit;
 
     RangeArr<std::string, 1, numCharacters> selectPlayer;

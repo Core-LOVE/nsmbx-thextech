@@ -1496,6 +1496,8 @@ extern RangeArrI<int, 0, maxPlayerFrames, 0> LinkFrameX;
 extern RangeArrI<int, 0, maxPlayerFrames, 0> LinkFrameY;
 extern RangeArrI<int, 0, maxPlayerFrames, 0> WaluigiFrameX;
 extern RangeArrI<int, 0, maxPlayerFrames, 0> WaluigiFrameY;
+extern RangeArrI<int, 0, maxPlayerFrames, 0> YoshiFrameX;
+extern RangeArrI<int, 0, maxPlayerFrames, 0> YoshiFrameY;
 extern RangeArrI<int, 0, maxPlayerFrames, 0> WarioFrameX;
 extern RangeArrI<int, 0, maxPlayerFrames, 0> WarioFrameY;
 //Public BackgroundFence(0 To maxBackgroundType) As Boolean

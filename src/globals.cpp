@@ -155,6 +155,8 @@ RangeArrI<int, 0, maxPlayerFrames, 0> LinkFrameX;
 RangeArrI<int, 0, maxPlayerFrames, 0> LinkFrameY;
 RangeArrI<int, 0, maxPlayerFrames, 0> WaluigiFrameX;
 RangeArrI<int, 0, maxPlayerFrames, 0> WaluigiFrameY;
+RangeArrI<int, 0, maxPlayerFrames, 0> YoshiFrameX;
+RangeArrI<int, 0, maxPlayerFrames, 0> YoshiFrameY;
 RangeArrI<int, 0, maxPlayerFrames, 0> WarioFrameX;
 RangeArrI<int, 0, maxPlayerFrames, 0> WarioFrameY;
 RangeArrI<bool, 0, maxBackgroundType, false> BackgroundFence;

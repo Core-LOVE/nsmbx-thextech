@@ -2145,7 +2145,8 @@ void UpdateGraphics(bool skipRepaint)
                     SuperPrint(g_mainMenu.main2PlayerGame, 3, 300, 380);
                     SuperPrint(g_mainMenu.mainBattleGame, 3, 300, 410);
                     SuperPrint(g_mainMenu.mainOptions, 3, 300, 440);
-                    SuperPrint(g_mainMenu.mainExit, 3, 300, 470);
+                    SuperPrint(g_mainMenu.mainModifications, 3, 300, 470);
+                    SuperPrint(g_mainMenu.mainExit, 3, 300, 500);
                     DrawTexture(300 - 20, 350 + (MenuCursor * 30), 16, 16, MCursor[0], 0, 0);
                 }
                 // Character select
