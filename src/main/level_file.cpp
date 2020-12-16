@@ -833,6 +833,7 @@ void ClearLevel()
     NPCScore[274] = 6;
     LevelName.clear();
     LoadNPCDefaults();
+    LoadPlayerDefaults();
     LoadBackgroundDefaults();
     LoadBlockDefaults();
     LoadWeatherDefaults();

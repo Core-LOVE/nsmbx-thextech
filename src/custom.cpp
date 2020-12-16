@@ -26,6 +26,7 @@
 #include "globals.h"
 #include "custom.h"
 
+#include <IniProcessor/ini_processing.h>
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
 #include <Utils/dir_list_ci.h>
@@ -36,58 +37,225 @@
 static DirListCI s_dirEpisode;
 static DirListCI s_dirCustom;
 
+static struct PlayerBackup
+{
+    struct FramePos
+    {
+        int x;
+        int y;
+    } p[maxPlayerFrames + 1];
+
+    struct Calibration
+    {
+        int w;
+        int h;
+        int h_duck;
+        int grubX;
+        int grubY;
+    } c[numStates];
+} s_playerFramesBackup[numCharacters];
+
+typedef RangeArrI<int, 0, maxPlayerFrames, 0> PlayerOffsetArray;
+
+static PlayerOffsetArray *s_playerFrameX[numCharacters + 1] = {
+    nullptr, &MarioFrameX, &LuigiFrameX, &PeachFrameX, &ToadFrameX, &LinkFrameX
+};
+static PlayerOffsetArray *s_playerFrameY[numCharacters + 1] = {
+    nullptr, &MarioFrameY, &LuigiFrameY, &PeachFrameY, &ToadFrameY, &LinkFrameY
+};
+
+const char *s_playerFileName[] = {nullptr, "mario", "luigi", "peach", "toad", "link", "waluigi", "yoshi2", nullptr};
+
+
+static struct NPCDefaults_t
+{
+    RangeArrI<int, 0, maxNPCType, 0> NPCFrameOffsetX;
+    RangeArrI<int, 0, maxNPCType, 0> NPCFrameOffsetY;
+    RangeArrI<int, 0, maxNPCType, 0> NPCWidth;
+    RangeArrI<int, 0, maxNPCType, 0> NPCHeight;
+    RangeArrI<int, 0, maxNPCType, 0> NPCWidthGFX;
+    RangeArrI<int, 0, maxNPCType, 0> NPCHeightGFX;
+    RangeArrI<bool, 0, maxNPCType, false> NPCIsAShell;
+    RangeArrI<bool, 0, maxNPCType, false> NPCIsABlock;
+    RangeArrI<bool, 0, maxNPCType, false> NPCIsAHit1Block;
+    RangeArrI<bool, 0, maxNPCType, false> NPCIsABonus;
+    RangeArrI<bool, 0, maxNPCType, false> NPCIsACoin;
+    RangeArrI<bool, 0, maxNPCType, false> NPCIsAVine;
+    RangeArrI<bool, 0, maxNPCType, false> NPCIsAnExit;
+    RangeArrI<bool, 0, maxNPCType, false> NPCIsAParaTroopa;
+    RangeArrI<bool, 0, maxNPCType, false> NPCIsCheep;
+    RangeArrI<bool, 0, maxNPCType, false> NPCJumpHurt;
+    RangeArrI<bool, 0, maxNPCType, false> NPCNoClipping;
+    RangeArrI<int, 0, maxNPCType, 0> NPCScore;
+    RangeArrI<bool, 0, maxNPCType, false> NPCCanWalkOn;
+    RangeArrI<bool, 0, maxNPCType, false> NPCGrabFromTop;
+    RangeArrI<bool, 0, maxNPCType, false> NPCTurnsAtCliffs;
+    RangeArrI<bool, 0, maxNPCType, false> NPCWontHurt;
+    RangeArrI<bool, 0, maxNPCType, false> NPCMovesPlayer;
+    RangeArrI<bool, 0, maxNPCType, false> NPCStandsOnPlayer;
+    RangeArrI<bool, 0, maxNPCType, false> NPCIsGrabbable;
+    RangeArrI<bool, 0, maxNPCType, false> NPCIsBoot;
+    RangeArrI<bool, 0, maxNPCType, false> NPCIsYoshi;
+    RangeArrI<bool, 0, maxNPCType, false> NPCIsToad;
+    RangeArrI<bool, 0, maxNPCType, false> NPCNoYoshi;
+    RangeArrI<bool, 0, maxNPCType, false> NPCForeground;
+    RangeArrI<bool, 0, maxNPCType, false> NPCIsABot;
+    RangeArrI<bool, 0, maxNPCType, false> NPCDefaultMovement;
+    RangeArrI<bool, 0, maxNPCType, false> NPCIsVeggie;
+    RangeArr<float, 0, maxNPCType> NPCSpeedvar;
+    RangeArrI<bool, 0, maxNPCType, false> NPCNoFireBall;
+    RangeArrI<bool, 0, maxNPCType, false> NPCNoIceBall;
+    RangeArrI<bool, 0, maxNPCType, false> NPCNoGravity;
+
+    RangeArrI<bool, 0, maxNPCType, true> NPCSpinJumpHurt;
+    RangeArrI<bool, 0, maxNPCType, true> NPCNoLava;
+    RangeArrI<bool, 0, maxNPCType, false> NPCJumpBounce;
+    RangeArrI<bool, 0, maxNPCType, false> NPCGFXDirective;
+    RangeArrI<bool, 0, maxNPCType, false> NPCInstantKill;
+    RangeArrI<bool, 0, maxNPCType, false> NPCNoHammer;
+    RangeArrI<bool, 0, maxNPCType, true> NPCDespawn;
+    RangeArrI<bool, 0, maxNPCType, true> NPCIsHeavy;
+
+    RangeArrI<int, 0, maxNPCType, 0> NPCFrame;
+    RangeArrI<int, 0, maxNPCType, 0> NPCFrameSpeed;
+    RangeArrI<int, 0, maxNPCType, 0> NPCFrameStyle;
+//End Type
+} s_NPCDefaults;
+
+
 void LoadCustomNPC(int A, std::string cFileName);
+void LoadCustomPlayer(int character, int state, std::string cFileName);
+
+
+void SavePlayerDefaults()
+{
+    pLogDebug("Saving Player defaults...");
+
+    const std::string GfxRoot = AppPath + "graphics/";
+    std::string playerPathG;
+
+    // Load global customization configs first
+    for(int C = 1; C <= numCharacters; ++C)
+    {
+        for(int S = 1; S <= numStates; ++S)
+        {
+            // Global override of player setup
+            playerPathG = GfxRoot + fmt::format_ne("{1}/{1}-{0}.ini", S, s_playerFileName[C]);
+            if(Files::fileExists(playerPathG))
+                LoadCustomPlayer(C, S, playerPathG);
+        }
+    }
+
+    // Then, backup all parameters
+    for(int p = 1; p <= numCharacters; ++p)
+    {
+        auto &pb = s_playerFramesBackup[p - 1];
+        for(int j = 0; j <= maxPlayerFrames; ++j)
+        {
+            pb.p[j].x = (*s_playerFrameX[p])[j];
+            pb.p[j].y = (*s_playerFrameY[p])[j];
+        }
+
+        for(int j = 1; j <= numStates; ++j)
+        {
+            pb.c[j - 1].w = Physics.PlayerWidth[p][j];
+            pb.c[j - 1].h = Physics.PlayerHeight[p][j];
+            pb.c[j - 1].h_duck = Physics.PlayerDuckHeight[p][j];
+            pb.c[j - 1].grubX = Physics.PlayerGrabSpotX[p][j];
+            pb.c[j - 1].grubY = Physics.PlayerGrabSpotY[p][j];
+        }
+    }
+}
+
+void LoadPlayerDefaults()
+{
+    pLogDebug("Restoring Player defaults...");
+
+    for(int p = 1; p <= numCharacters; ++p)
+    {
+        auto &pb = s_playerFramesBackup[p - 1];
+        for(int j = 0; j <= maxPlayerFrames; ++j)
+        {
+            (*s_playerFrameX[p])[j] = pb.p[j].x;
+            (*s_playerFrameY[p])[j] = pb.p[j].y;
+        }
+
+        for(int j = 1; j <= numStates; ++j)
+        {
+            Physics.PlayerWidth[p][j] = pb.c[j - 1].w;
+            Physics.PlayerHeight[p][j] = pb.c[j - 1].h;
+            Physics.PlayerDuckHeight[p][j] = pb.c[j - 1].h_duck;
+            Physics.PlayerGrabSpotX[p][j] = pb.c[j - 1].grubX;
+            Physics.PlayerGrabSpotY[p][j] = pb.c[j - 1].grubY;
+        }
+    }
+}
 
 void SaveNPCDefaults()
 {
-    int A = 0;
-    for(A = 1; A <= maxNPCType; A++)
+    const std::string GfxRoot = AppPath + "graphics/";
+    std::string npcPathG;
+
+    NPCFrame.fill(0);
+    NPCFrameSpeed.fill(8);
+    NPCFrameStyle.fill(0);
+
+    for(int A = 1; A <= maxNPCType; A++)
     {
-        NPCDefaults.NPCFrameOffsetX[A] = NPCFrameOffsetX[A];
-        NPCDefaults.NPCFrameOffsetY[A] = NPCFrameOffsetY[A];
-        NPCDefaults.NPCWidth[A] = NPCWidth[A];
-        NPCDefaults.NPCHeight[A] = NPCHeight[A];
-        NPCDefaults.NPCWidthGFX[A] = NPCWidthGFX[A];
-        NPCDefaults.NPCHeightGFX[A] = NPCHeightGFX[A];
-        NPCDefaults.NPCIsAShell[A] = NPCIsAShell[A];
-        NPCDefaults.NPCIsABlock[A] = NPCIsABlock[A];
-        NPCDefaults.NPCIsAHit1Block[A] = NPCIsAHit1Block[A];
-        NPCDefaults.NPCIsABonus[A] = NPCIsABonus[A];
-        NPCDefaults.NPCIsACoin[A] = NPCIsACoin[A];
-        NPCDefaults.NPCIsAVine[A] = NPCIsAVine[A];
-        NPCDefaults.NPCIsAnExit[A] = NPCIsAnExit[A];
-        NPCDefaults.NPCIsAParaTroopa[A] = NPCIsAParaTroopa[A];
-        NPCDefaults.NPCIsCheep[A] = NPCIsCheep[A];
-        NPCDefaults.NPCIsHeavy[A] = NPCIsHeavy[A];
-        NPCDefaults.NPCJumpHurt[A] = NPCJumpHurt[A];
-        NPCDefaults.NPCSpinJumpHurt[A] = NPCSpinJumpHurt[A];
-        NPCDefaults.NPCJumpBounce[A] = NPCJumpBounce[A];
-        NPCDefaults.NPCNoClipping[A] = NPCNoClipping[A];
-        NPCDefaults.NPCScore[A] = NPCScore[A];
-        NPCDefaults.NPCCanWalkOn[A] = NPCCanWalkOn[A];
-        NPCDefaults.NPCGrabFromTop[A] = NPCGrabFromTop[A];
-        NPCDefaults.NPCTurnsAtCliffs[A] = NPCTurnsAtCliffs[A];
-        NPCDefaults.NPCWontHurt[A] = NPCWontHurt[A];
-        NPCDefaults.NPCMovesPlayer[A] = NPCMovesPlayer[A];
-        NPCDefaults.NPCStandsOnPlayer[A] = NPCStandsOnPlayer[A];
-        NPCDefaults.NPCIsGrabbable[A] = NPCIsGrabbable[A];
-        NPCDefaults.NPCIsBoot[A] = NPCIsBoot[A];
-        NPCDefaults.NPCIsYoshi[A] = NPCIsYoshi[A];
-        NPCDefaults.NPCIsToad[A] = NPCIsToad[A];
-        NPCDefaults.NPCNoYoshi[A] = NPCNoYoshi[A];
-        NPCDefaults.NPCForeground[A] = NPCForeground[A];
-        NPCDefaults.NPCIsABot[A] = NPCIsABot[A];
-        NPCDefaults.NPCDefaultMovement[A] = NPCDefaultMovement[A];
-        NPCDefaults.NPCIsVeggie[A] = NPCIsVeggie[A];
-        NPCDefaults.NPCSpeedvar[A] = NPCSpeedvar[A];
-        NPCDefaults.NPCNoFireBall[A] = NPCNoFireBall[A];
-        NPCDefaults.NPCNoIceBall[A] = NPCNoIceBall[A];
-        NPCDefaults.NPCNoGravity[A] = NPCNoGravity[A];
-        NPCDefaults.NPCDespawn[A] = NPCDespawn[A];
-        NPCDefaults.NPCGFXDirective[A] = NPCGFXDirective[A];
-        NPCDefaults.NPCInstantKill[A] = NPCInstantKill[A];
-        NPCDefaults.NPCNoHammer[A] = NPCNoHammer[A];
-        NPCFrameSpeed[A] = 8;
+        // Global override of NPC setup
+        npcPathG = GfxRoot + fmt::format_ne("npc/npc-{0}.txt", A);
+
+        if(Files::fileExists(npcPathG))
+            LoadCustomNPC(A, npcPathG);
+
+        s_NPCDefaults.NPCFrameOffsetX[A] = NPCFrameOffsetX[A];
+        s_NPCDefaults.NPCFrameOffsetY[A] = NPCFrameOffsetY[A];
+        s_NPCDefaults.NPCWidth[A] = NPCWidth[A];
+        s_NPCDefaults.NPCHeight[A] = NPCHeight[A];
+        s_NPCDefaults.NPCWidthGFX[A] = NPCWidthGFX[A];
+        s_NPCDefaults.NPCHeightGFX[A] = NPCHeightGFX[A];
+        s_NPCDefaults.NPCIsAShell[A] = NPCIsAShell[A];
+        s_NPCDefaults.NPCIsABlock[A] = NPCIsABlock[A];
+        s_NPCDefaults.NPCIsAHit1Block[A] = NPCIsAHit1Block[A];
+        s_NPCDefaults.NPCIsABonus[A] = NPCIsABonus[A];
+        s_NPCDefaults.NPCIsACoin[A] = NPCIsACoin[A];
+        s_NPCDefaults.NPCIsAVine[A] = NPCIsAVine[A];
+        s_NPCDefaults.NPCIsAnExit[A] = NPCIsAnExit[A];
+        s_NPCDefaults.NPCIsAParaTroopa[A] = NPCIsAParaTroopa[A];
+        s_NPCDefaults.NPCIsCheep[A] = NPCIsCheep[A];
+        s_NPCDefaults.NPCIsHeavy[A] = NPCIsHeavy[A];
+        s_NPCDefaults.NPCJumpHurt[A] = NPCJumpHurt[A];
+        s_NPCDefaults.NPCSpinJumpHurt[A] = NPCSpinJumpHurt[A];
+        s_NPCDefaults.NPCJumpBounce[A] = NPCJumpBounce[A];
+        s_NPCDefaults.NPCNoClipping[A] = NPCNoClipping[A];
+        s_NPCDefaults.NPCScore[A] = NPCScore[A];
+        s_NPCDefaults.NPCCanWalkOn[A] = NPCCanWalkOn[A];
+        s_NPCDefaults.NPCGrabFromTop[A] = NPCGrabFromTop[A];
+        s_NPCDefaults.NPCTurnsAtCliffs[A] = NPCTurnsAtCliffs[A];
+        s_NPCDefaults.NPCWontHurt[A] = NPCWontHurt[A];
+        s_NPCDefaults.NPCMovesPlayer[A] = NPCMovesPlayer[A];
+        s_NPCDefaults.NPCStandsOnPlayer[A] = NPCStandsOnPlayer[A];
+        s_NPCDefaults.NPCIsGrabbable[A] = NPCIsGrabbable[A];
+        s_NPCDefaults.NPCIsBoot[A] = NPCIsBoot[A];
+        s_NPCDefaults.NPCIsYoshi[A] = NPCIsYoshi[A];
+        s_NPCDefaults.NPCIsToad[A] = NPCIsToad[A];
+        s_NPCDefaults.NPCNoYoshi[A] = NPCNoYoshi[A];
+        s_NPCDefaults.NPCForeground[A] = NPCForeground[A];
+        s_NPCDefaults.NPCIsABot[A] = NPCIsABot[A];
+        s_NPCDefaults.NPCDefaultMovement[A] = NPCDefaultMovement[A];
+        s_NPCDefaults.NPCIsVeggie[A] = NPCIsVeggie[A];
+        s_NPCDefaults.NPCSpeedvar[A] = NPCSpeedvar[A];
+        s_NPCDefaults.NPCNoFireBall[A] = NPCNoFireBall[A];
+        s_NPCDefaults.NPCNoIceBall[A] = NPCNoIceBall[A];
+        s_NPCDefaults.NPCNoGravity[A] = NPCNoGravity[A];
+        s_NPCDefaults.NPCDespawn[A] = NPCDespawn[A];
+        s_NPCDefaults.NPCGFXDirective[A] = NPCGFXDirective[A];
+        s_NPCDefaults.NPCInstantKill[A] = NPCInstantKill[A];
+        s_NPCDefaults.NPCNoHammer[A] = NPCNoHammer[A];
+
+        s_NPCDefaults.NPCFrame[A] = NPCFrame[A];
+        s_NPCDefaults.NPCFrameSpeed[A] = NPCFrameSpeed[A];
+        s_NPCDefaults.NPCFrameStyle[A] = NPCFrameStyle[A];
     }
 }
 
@@ -96,80 +264,194 @@ void LoadNPCDefaults()
     int A = 0;
     for(A = 1; A <= maxNPCType; A++)
     {
-        NPCFrameOffsetX[A] = NPCDefaults.NPCFrameOffsetX[A];
-        NPCFrameOffsetY[A] = NPCDefaults.NPCFrameOffsetY[A];
-        NPCWidth[A] = NPCDefaults.NPCWidth[A];
-        NPCHeight[A] = NPCDefaults.NPCHeight[A];
-        NPCWidthGFX[A] = NPCDefaults.NPCWidthGFX[A];
-        NPCHeightGFX[A] = NPCDefaults.NPCHeightGFX[A];
-        NPCIsAShell[A] = NPCDefaults.NPCIsAShell[A];
-        NPCIsABlock[A] = NPCDefaults.NPCIsABlock[A];
-        NPCIsAHit1Block[A] = NPCDefaults.NPCIsAHit1Block[A];
-        NPCIsABonus[A] = NPCDefaults.NPCIsABonus[A];
-        NPCIsACoin[A] = NPCDefaults.NPCIsACoin[A];
-        NPCIsAVine[A] = NPCDefaults.NPCIsAVine[A];
-        NPCIsAnExit[A] = NPCDefaults.NPCIsAnExit[A];
-        NPCIsAParaTroopa[A] = NPCDefaults.NPCIsAParaTroopa[A];
-        NPCIsCheep[A] = NPCDefaults.NPCIsCheep[A];
-        NPCIsHeavy[A] = NPCDefaults.NPCIsHeavy[A];
-        NPCJumpHurt[A] = NPCDefaults.NPCJumpHurt[A];
-        NPCSpinJumpHurt[A] = NPCDefaults.NPCSpinJumpHurt[A];
-        NPCJumpBounce[A] = NPCDefaults.NPCJumpBounce[A];
-        NPCNoClipping[A] = NPCDefaults.NPCNoClipping[A];
-        NPCScore[A] = NPCDefaults.NPCScore[A];
-        NPCCanWalkOn[A] = NPCDefaults.NPCCanWalkOn[A];
-        NPCGrabFromTop[A] = NPCDefaults.NPCGrabFromTop[A];
-        NPCTurnsAtCliffs[A] = NPCDefaults.NPCTurnsAtCliffs[A];
-        NPCWontHurt[A] = NPCDefaults.NPCWontHurt[A];
-        NPCMovesPlayer[A] = NPCDefaults.NPCMovesPlayer[A];
-        NPCStandsOnPlayer[A] = NPCDefaults.NPCStandsOnPlayer[A];
-        NPCIsGrabbable[A] = NPCDefaults.NPCIsGrabbable[A];
-        NPCIsBoot[A] = NPCDefaults.NPCIsBoot[A];
-        NPCIsYoshi[A] = NPCDefaults.NPCIsYoshi[A];
-        NPCIsToad[A] = NPCDefaults.NPCIsToad[A];
-        NPCNoYoshi[A] = NPCDefaults.NPCNoYoshi[A];
-        NPCForeground[A] = NPCDefaults.NPCForeground[A];
-        NPCIsABot[A] = NPCDefaults.NPCIsABot[A];
-        NPCDefaultMovement[A] = NPCDefaults.NPCDefaultMovement[A];
-        NPCIsVeggie[A] = NPCDefaults.NPCIsVeggie[A];
-        NPCSpeedvar[A] = NPCDefaults.NPCSpeedvar[A];
-        NPCNoFireBall[A] = NPCDefaults.NPCNoFireBall[A];
-        NPCNoIceBall[A] = NPCDefaults.NPCNoIceBall[A];
-        NPCNoGravity[A] = NPCDefaults.NPCNoGravity[A];
-        NPCDespawn[A] = NPCDefaults.NPCDespawn[A];
-        NPCGFXDirective[A] = NPCDefaults.NPCGFXDirective[A];
-        NPCInstantKill[A] = NPCDefaults.NPCInstantKill[A];
-        NPCNoHammer[A] = NPCDefaults.NPCNoHammer[A];
-        NPCFrame[A] = 0;
-        NPCFrameSpeed[A] = 8;
-        NPCFrameStyle[A] = 0;
+        NPCFrameOffsetX[A] = s_NPCDefaults.NPCFrameOffsetX[A];
+        NPCFrameOffsetY[A] = s_NPCDefaults.NPCFrameOffsetY[A];
+        NPCWidth[A] = s_NPCDefaults.NPCWidth[A];
+        NPCHeight[A] = s_NPCDefaults.NPCHeight[A];
+        NPCWidthGFX[A] = s_NPCDefaults.NPCWidthGFX[A];
+        NPCHeightGFX[A] = s_NPCDefaults.NPCHeightGFX[A];
+        NPCIsAShell[A] = s_NPCDefaults.NPCIsAShell[A];
+        NPCIsABlock[A] = s_NPCDefaults.NPCIsABlock[A];
+        NPCIsAHit1Block[A] = s_NPCDefaults.NPCIsAHit1Block[A];
+        NPCIsABonus[A] = s_NPCDefaults.NPCIsABonus[A];
+        NPCIsACoin[A] = s_NPCDefaults.NPCIsACoin[A];
+        NPCIsAVine[A] = s_NPCDefaults.NPCIsAVine[A];
+        NPCIsAnExit[A] = s_NPCDefaults.NPCIsAnExit[A];
+        NPCIsAParaTroopa[A] = s_NPCDefaults.NPCIsAParaTroopa[A];
+        NPCIsCheep[A] = s_NPCDefaults.NPCIsCheep[A];
+        NPCIsHeavy[A] = s_NPCDefaults.NPCIsHeavy[A];
+        NPCJumpHurt[A] = s_NPCDefaults.NPCJumpHurt[A];
+        NPCSpinJumpHurt[A] = s_NPCDefaults.NPCSpinJumpHurt[A];
+        NPCJumpBounce[A] = s_NPCDefaults.NPCJumpBounce[A];
+        NPCNoClipping[A] = s_NPCDefaults.NPCNoClipping[A];
+        NPCScore[A] = s_NPCDefaults.NPCScore[A];
+        NPCCanWalkOn[A] = s_NPCDefaults.NPCCanWalkOn[A];
+        NPCGrabFromTop[A] = s_NPCDefaults.NPCGrabFromTop[A];
+        NPCTurnsAtCliffs[A] = s_NPCDefaults.NPCTurnsAtCliffs[A];
+        NPCWontHurt[A] = s_NPCDefaults.NPCWontHurt[A];
+        NPCMovesPlayer[A] = s_NPCDefaults.NPCMovesPlayer[A];
+        NPCStandsOnPlayer[A] = s_NPCDefaults.NPCStandsOnPlayer[A];
+        NPCIsGrabbable[A] = s_NPCDefaults.NPCIsGrabbable[A];
+        NPCIsBoot[A] = s_NPCDefaults.NPCIsBoot[A];
+        NPCIsYoshi[A] = s_NPCDefaults.NPCIsYoshi[A];
+        NPCIsToad[A] = s_NPCDefaults.NPCIsToad[A];
+        NPCNoYoshi[A] = s_NPCDefaults.NPCNoYoshi[A];
+        NPCForeground[A] = s_NPCDefaults.NPCForeground[A];
+        NPCIsABot[A] = s_NPCDefaults.NPCIsABot[A];
+        NPCDefaultMovement[A] = s_NPCDefaults.NPCDefaultMovement[A];
+        NPCIsVeggie[A] = s_NPCDefaults.NPCIsVeggie[A];
+        NPCSpeedvar[A] = s_NPCDefaults.NPCSpeedvar[A];
+        NPCNoFireBall[A] = s_NPCDefaults.NPCNoFireBall[A];
+        NPCNoIceBall[A] = s_NPCDefaults.NPCNoIceBall[A];
+        NPCNoGravity[A] = s_NPCDefaults.NPCNoGravity[A];
+        NPCDespawn[A] = s_NPCDefaults.NPCDespawn[A];
+        NPCGFXDirective[A] = s_NPCDefaults.NPCGFXDirective[A];
+        NPCInstantKill[A] = s_NPCDefaults.NPCInstantKill[A];
+        NPCNoHammer[A] = s_NPCDefaults.NPCNoHammer[A];
+
+        NPCFrame[A] = s_NPCDefaults.NPCFrame[A];
+        NPCFrameSpeed[A] = s_NPCDefaults.NPCFrameSpeed[A];
+        NPCFrameStyle[A] = s_NPCDefaults.NPCFrameStyle[A];
     }
+}
+
+void FindCustomPlayers()
+{
+    pLogDebug("Trying to load custom Player configs...");
+
+    std::string playerPath, playerPathC;
+    s_dirEpisode.setCurDir(FileNamePath);
+    s_dirCustom.setCurDir(FileNamePath + FileName);
+
+    for(int C = 1; C <= numCharacters; ++C)
+    {
+        for(int S = 1; S <= numStates; ++S)
+        {
+            // Episode-wide custom player setup
+            playerPath = FileNamePath + s_dirEpisode.resolveFileCase(fmt::format_ne("{1}-{0}.ini", S, s_playerFileName[C]));
+            // Level-wide custom player setup
+            playerPathC = FileNamePath + FileName + "/" + s_dirCustom.resolveFileCase(fmt::format_ne("{1}-{0}.ini", S, s_playerFileName[C]));
+
+            if(Files::fileExists(playerPath))
+                LoadCustomPlayer(C, S, playerPath);
+            if(Files::fileExists(playerPathC))
+                LoadCustomPlayer(C, S, playerPathC);
+        }
+    }
+}
+
+static inline int convIndexCoorToSpriteIndex(short x, short y)
+{
+    return (y + 10 * x) - 49;
+}
+
+void LoadCustomPlayer(int character, int state, std::string cFileName)
+{
+    pLogDebug("Loading %s...", cFileName.c_str());
+
+    IniProcessing hitBoxFile(cFileName);
+    if(!hitBoxFile.isOpened())
+    {
+        pLogWarning("Can't open the player calibration file: %s", cFileName.c_str());
+        return;
+    }
+
+    const short UNDEFINED = 0x7FFF;
+    short width = UNDEFINED;
+    short height = UNDEFINED;
+    short height_duck = UNDEFINED;
+    short grab_offset_x = UNDEFINED;
+    short grab_offset_y = UNDEFINED;
+    bool isUsed = true;
+    short offsetX = UNDEFINED;
+    short offsetY = UNDEFINED;
+
+    hitBoxFile.beginGroup("common");
+    //normal
+    hitBoxFile.read("width", width, UNDEFINED);
+    hitBoxFile.read("height", height, UNDEFINED);
+    //duck
+    hitBoxFile.read("height-duck", height_duck, UNDEFINED);
+
+    //grab offsets
+    hitBoxFile.read("grab-offset-x", grab_offset_x, UNDEFINED);
+    hitBoxFile.read("grab-offset-y", grab_offset_y, UNDEFINED);
+
+    hitBoxFile.endGroup();
+
+    for (int x = 0; x < 10; x++)
+    {
+        for (int y = 0; y < 10; y++)
+        {
+            isUsed = true;
+            offsetX = UNDEFINED;
+            offsetY = UNDEFINED;
+
+            std::string tFrame = fmt::format("frame-{0}-{1}", x, y);
+
+            if(!hitBoxFile.contains(tFrame))
+                continue; // Skip not existing frame
+
+            hitBoxFile.beginGroup(tFrame);
+            hitBoxFile.read("used", isUsed, true);
+            if(isUsed) //--> skip this frame
+            {
+                //Offset relative to
+                hitBoxFile.read("offsetX", offsetX, UNDEFINED);
+                hitBoxFile.read("offsetY", offsetY, UNDEFINED);
+                if(offsetX != UNDEFINED && offsetY != UNDEFINED)
+                {
+                    (*s_playerFrameX[character])[convIndexCoorToSpriteIndex(x, y) + state * 100] = -offsetX;
+                    (*s_playerFrameY[character])[convIndexCoorToSpriteIndex(x, y) + state * 100] = -offsetY;
+                }
+            }
+            hitBoxFile.endGroup();
+        }
+    }
+
+    if(width != UNDEFINED)
+        Physics.PlayerWidth[character][state] = width;
+    if(height != UNDEFINED)
+        Physics.PlayerHeight[character][state] = height;
+    if(height_duck != UNDEFINED)
+        Physics.PlayerDuckHeight[character][state] = height_duck;
+    if(grab_offset_x != UNDEFINED)
+        Physics.PlayerGrabSpotX[character][state] = grab_offset_x;
+    if(grab_offset_y != UNDEFINED)
+        Physics.PlayerGrabSpotY[character][state] = grab_offset_y;
 }
 
 void FindCustomNPCs(/*std::string cFilePath*/)
 {
+    pLogDebug("Trying to load custom NPC configs...");
+
+    const std::string GfxRoot = AppPath + "graphics/";
+    std::string npcPathG, npcPath, npcPathC;
     DirMan searchDir(FileNamePath);
-    std::set<std::string> existingFiles;
-    std::vector<std::string> files;
-    searchDir.getListOfFiles(files, {".txt"});
-    for(auto &p : files)
-        existingFiles.insert(FileNamePath + p);
+//    std::set<std::string> existingFiles;
+//    std::vector<std::string> files;
+//    searchDir.getListOfFiles(files, {".txt"});
+//    for(auto &p : files)
+//        existingFiles.insert(FileNamePath + p);
 
     s_dirEpisode.setCurDir(FileNamePath);
     s_dirCustom.setCurDir(FileNamePath + FileName);
 
-    if(DirMan::exists(FileNamePath + FileName))
-    {
-        DirMan searchDataDir(FileNamePath + FileName);
-        searchDataDir.getListOfFiles(files, {".png", ".gif"});
-        for(auto &p : files)
-            existingFiles.insert(FileNamePath + FileName  + "/"+ p);
-    }
+//    if(DirMan::exists(FileNamePath + FileName))
+//    {
+//        DirMan searchDataDir(FileNamePath + FileName);
+//        searchDataDir.getListOfFiles(files, {".png", ".gif"});
+//        for(auto &p : files)
+//            existingFiles.insert(FileNamePath + FileName  + "/"+ p);
+//    }
 
     for(int A = 1; A < maxNPCType; ++A)
     {
-        std::string npcPath = FileNamePath + s_dirEpisode.resolveFileCase(fmt::format_ne("npc-{0}.txt", A));
-        std::string npcPathC = FileNamePath + FileName + "/" + s_dirCustom.resolveFileCase(fmt::format_ne("npc-{0}.txt", A));
+        // Episode-wide custom NPC setup
+        npcPath = FileNamePath + s_dirEpisode.resolveFileCase(fmt::format_ne("npc-{0}.txt", A));
+        // Level-wide custom NPC setup
+        npcPathC = FileNamePath + FileName + "/" + s_dirCustom.resolveFileCase(fmt::format_ne("npc-{0}.txt", A));
+
         if(Files::fileExists(npcPath))
             LoadCustomNPC(A, npcPath);
         if(Files::fileExists(npcPathC))

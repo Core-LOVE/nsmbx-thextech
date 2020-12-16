@@ -23,28 +23,27 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef CUSTOM_H
-#define CUSTOM_H
+#ifndef MENU_MAIN_H
+#define MENU_MAIN_H
 
 #include <string>
+#include "global_constants.h"
+#include "range_arr.hpp"
 
+struct MainMenuContent
+{
+    std::string main1PlayerGame;
+    std::string main2PlayerGame;
+    std::string mainBattleGame;
+    std::string mainOptions;
+    std::string mainExit;
 
-void SavePlayerDefaults();
-void LoadPlayerDefaults();
+    RangeArr<std::string, 1, numCharacters> selectPlayer;
 
-// Public Sub SaveNPCDefaults()
-void SaveNPCDefaults();
+};
 
-// Public Sub LoadNPCDefaults()
-void LoadNPCDefaults();
+extern MainMenuContent g_mainMenu;
 
+extern void initMainMenu();
 
-void FindCustomPlayers();
-// Public Sub FindCustomNPCs(Optional cFilePath As String = "")
-//void FindCustomNPCs(std::string cFilePath = "");
-void FindCustomNPCs();
-
-// Private Sub LoadCustomNPC(A As Integer, cFileName As String)
-
-
-#endif // CUSTOM_H
+#endif // MENU_MAIN_H

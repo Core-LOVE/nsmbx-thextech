@@ -24,6 +24,7 @@
  */
 
 #include "game_main.h"
+#include "main/game_info.h"
 #include <SDL2/SDL.h>
 #include <AppPath/app_path.h>
 #include <tclap/CmdLine.h>
@@ -149,6 +150,12 @@ int main(int argc, char**argv)
                             "Copyright (c) 2020-2020 Vitaly Novichkov <admin@wohlnet.ru>\n"
                             "This program is distributed under the MIT license\n", ' ', "1.3");
 
+        TCLAP::ValueArg<std::string> customAssetsPath("c", "assets-root", "Specify the different assets root directory to play",
+                                                      false, "",
+                                                      "directory path",
+                                                      cmd);
+
+
         TCLAP::SwitchArg switchFrameSkip("f", "frameskip", "Enable frame skipping mode", false);
         TCLAP::SwitchArg switchNoSound("s", "no-sound", "Disable sound", false);
         TCLAP::SwitchArg switchNoPause("p", "never-pause", "Never pause game when window losts a focus", false);
@@ -206,6 +213,14 @@ int main(int argc, char**argv)
 
         cmd.parse(argc, argv);
 
+        std::string customAssets = customAssetsPath.getValue();
+
+        if(!customAssets.empty())
+        {
+            AppPathManager::setAssetsRoot(customAssets);
+            AppPath = AppPathManager::assetsRoot();
+        }
+
         setup.frameSkip = switchFrameSkip.getValue();
         setup.noSound   = switchNoSound.getValue();
         setup.neverPause = switchNoPause.getValue();
@@ -260,6 +275,8 @@ int main(int argc, char**argv)
         std::cerr.flush();
         return 2;
     }
+
+    initGameInfo();
 
     // set this flag before SDL initialization to allow game be quit when closing a window before a loading process will be completed
     GameIsActive = true;

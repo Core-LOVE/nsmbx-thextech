@@ -29,6 +29,7 @@
 #include "../editor.h"
 #include "../npc.h"
 #include "../location.h"
+#include "../main/menu_main.h"
 
 #include <fmt_format_ne.h>
 #include <Utils/maths.h>
@@ -782,6 +783,7 @@ void UpdateGraphics(bool skipRepaint)
                         PlayerWarpGFX(A, tempLocation, X2, Y2);
                         DrawTexture(vScreenX[Z] + tempLocation.X, vScreenY[Z] + tempLocation.Y, tempLocation.Width, tempLocation.Height, GFXYoshiT[B], X2, Y2 + 32 * Player[A].YoshiTFrame);
                     }
+
                     if(Player[A].Character == 1)
                     {
                         if(Player[A].Mount == 1)
@@ -875,7 +877,13 @@ void UpdateGraphics(bool skipRepaint)
                             Y2 = 0;
                             X2 = 0;
                             PlayerWarpGFX(A, tempLocation, X2, Y2);
-                            DrawTexture(vScreenX[Z] + tempLocation.X, vScreenY[Z] + tempLocation.Y, tempLocation.Width, tempLocation.Height, GFXPeach[Player[A].State], pfrX(100 + Player[A].Frame * Player[A].Direction) + X2, pfrY(100 + Player[A].Frame * Player[A].Direction) + Y2);
+                            DrawTexture(vScreenX[Z] + tempLocation.X,
+                                        vScreenY[Z] + tempLocation.Y,
+                                        tempLocation.Width,
+                                        tempLocation.Height,
+                                        GFXPeach[Player[A].State],
+                                        pfrX(100 + Player[A].Frame * Player[A].Direction) + X2,
+                                        pfrY(100 + Player[A].Frame * Player[A].Direction) + Y2);
                             tempLocation = Player[A].Location;
                             tempLocation.Height = 32;
                             tempLocation.Width = 32;
@@ -884,7 +892,13 @@ void UpdateGraphics(bool skipRepaint)
                             Y2 = 0;
                             X2 = 0;
                             PlayerWarpGFX(A, tempLocation, X2, Y2);
-                            DrawTexture(vScreenX[Z] + tempLocation.X, vScreenY[Z] + tempLocation.Y, tempLocation.Width, tempLocation.Height, Boot[Player[A].MountType], X2, Y2 + 32 * Player[A].MountFrame, c, c, c);
+                            DrawTexture(vScreenX[Z] + tempLocation.X,
+                                        vScreenY[Z] + tempLocation.Y,
+                                        tempLocation.Width,
+                                        tempLocation.Height,
+                                        Boot[Player[A].MountType],
+                                        X2,
+                                        Y2 + 32 * Player[A].MountFrame, c, c, c);
                         }
                         else
                         {
@@ -2045,6 +2059,7 @@ void UpdateGraphics(bool skipRepaint)
                         do
                         {
                             B = 0;
+#if 0 // Old line breaking algorithm
                             for(A = 1; A <= int(SuperText.size()); A++)
                             {
                                 if(SuperText[size_t(A) - 1] == ' ' || A == int(SuperText.size()))
@@ -2055,14 +2070,34 @@ void UpdateGraphics(bool skipRepaint)
                                         break;
                                 }
                             }
+#else // Better line breaking algorithm
+                            for(A = 1; A <= int(SuperText.size()) && A < 27; A++)
+                            {
+                                auto c = SuperText[size_t(A) - 1];
+                                if(A == int(SuperText.size()))
+                                {
+                                    if(A < 28)
+                                        B = A;
+                                }
+                                else if(c == ' ')
+                                    B = A;
+                                else if(c == '\n')
+                                {
+                                    B = A;
+                                    break;
+                                }
+                            }
+#endif
 
                             if(B == 0)
                                 B = A;
 
                             tempText = SuperText.substr(0, size_t(B));
-                            SuperText = SuperText.substr(size_t(B), SuperText.length());
+//                            SuperText = SuperText.substr(size_t(B), SuperText.length());
+                            SuperText.erase(0, size_t(B));
+
                             DrawTexture(400 - TextBox.w / 2 + X, BoxY + Y + Y,
-                                                  TextBox.w, 20, TextBox, 0, 20);
+                                        TextBox.w, 20, TextBox, 0, 20);
                             if(SuperText.length() == 0 && !tempBool)
                             {
                                 SuperPrint(tempText,
@@ -2106,12 +2141,11 @@ void UpdateGraphics(bool skipRepaint)
 
                 if(MenuMode == 0)
                 {
-                    SuperPrint("1 PLAYER GAME", 3, 300, 350);
-                    SuperPrint("2 PLAYER GAME", 3, 300, 380);
-                    SuperPrint("BATTLE GAME", 3, 300, 410);
-                    SuperPrint("OPTIONS", 3, 300, 440);
-                    SuperPrint("MODIFICATIONS", 3, 300, 470);
-                    SuperPrint("EXIT", 3, 300, 500);
+                    SuperPrint(g_mainMenu.main1PlayerGame, 3, 300, 350);
+                    SuperPrint(g_mainMenu.main2PlayerGame, 3, 300, 380);
+                    SuperPrint(g_mainMenu.mainBattleGame, 3, 300, 410);
+                    SuperPrint(g_mainMenu.mainOptions, 3, 300, 440);
+                    SuperPrint(g_mainMenu.mainExit, 3, 300, 470);
                     DrawTexture(300 - 20, 350 + (MenuCursor * 30), 16, 16, MCursor[0], 0, 0);
                 }
                 // Character select
@@ -2123,7 +2157,7 @@ void UpdateGraphics(bool skipRepaint)
 
                     // TODO: Make a custom playable character names print here
                     if(!blockCharacter[1])
-                        SuperPrint("MARIO GAME", 3, 300, 350);
+                        SuperPrint(g_mainMenu.selectPlayer[1], 3, 300, 350);
                     else
                     {
                         A = A - 30;
@@ -2134,7 +2168,7 @@ void UpdateGraphics(bool skipRepaint)
                     }
 
                     if(!blockCharacter[2])
-                        SuperPrint("LUIGI GAME", 3, 300, 380 + A);
+                        SuperPrint(g_mainMenu.selectPlayer[2], 3, 300, 380 + A);
                     else
                     {
                         A = A - 30;
@@ -2145,7 +2179,7 @@ void UpdateGraphics(bool skipRepaint)
                     }
 
                     if(!blockCharacter[3])
-                        SuperPrint("PEACH GAME", 3, 300, 410 + A);
+                        SuperPrint(g_mainMenu.selectPlayer[3], 3, 300, 410 + A);
                     else
                     {
                         A = A - 30;
@@ -2156,7 +2190,7 @@ void UpdateGraphics(bool skipRepaint)
                     }
 
                     if(!blockCharacter[4])
-                        SuperPrint("TOAD GAME", 3, 300, 440 + A);
+                        SuperPrint(g_mainMenu.selectPlayer[4], 3, 300, 440 + A);
                     else
                     {
                         A = A - 30;
@@ -2167,7 +2201,7 @@ void UpdateGraphics(bool skipRepaint)
                     }
 
                     if(!blockCharacter[5])
-                        SuperPrint("LINK GAME", 3, 300, 470 + A);
+                        SuperPrint(g_mainMenu.selectPlayer[5], 3, 300, 470 + A);
                     else
                     {
                         A = A - 30;
@@ -2179,7 +2213,7 @@ void UpdateGraphics(bool skipRepaint)
 
 
                     if(!blockCharacter[6])
-                        SuperPrint("WALUIGI GAME", 3, 300, 500 + A);
+                        SuperPrint(g_mainMenu.selectPlayer[6], 3, 300, 500 + A);
                     else
                     {
                         A = A - 30;
@@ -2190,7 +2224,7 @@ void UpdateGraphics(bool skipRepaint)
                     }
 
                     if(!blockCharacter[7])
-                        SuperPrint("YOSHI GAME", 3, 300, 530 + A);
+                        SuperPrint(g_mainMenu.selectPlayer[7], 3, 300, 530 + A);
                     else
                     {
                         A = A - 30;

@@ -49,6 +49,8 @@
 #include "../version.h"
 
 #include "frm_main.h"
+#include "main/game_info.h"
+
 
 static SDL_bool IsFullScreen(SDL_Window *win)
 {
@@ -58,15 +60,10 @@ static SDL_bool IsFullScreen(SDL_Window *win)
 
 FrmMain::FrmMain()
 {
-
     std::string mainIn = AppPath + "main.ini";
     IniProcessing config(mainIn);
     ScaleWidth = ScreenW;
     ScaleHeight = ScreenH;
-    std::string gversion = "Super Mario ReInvent - 1.1.0";
-    config.read("Name", gversion, "Super Mario ReInvent - 1.1.0");
-    config.endGroup();
-    m_windowTitle = gversion;
 }
 
 SDL_Window *FrmMain::getWindow()
@@ -84,6 +81,8 @@ Uint8 FrmMain::getKeyState(SDL_Scancode key)
 bool FrmMain::initSDL(const CmdLineSetup_t &setup, int w, int h)
 {
     bool res = false;
+
+    m_windowTitle = g_gameInfo.titleWindow;
 
     LoadLogSettings(setup.interprocess, setup.verboseLogging);
     //Write into log the application start event

@@ -23,28 +23,21 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef CUSTOM_H
-#define CUSTOM_H
+#include <fmt_format_ne.h>
 
-#include <string>
+#include "menu_main.h"
+#include "game_info.h"
 
+MainMenuContent g_mainMenu;
 
-void SavePlayerDefaults();
-void LoadPlayerDefaults();
+void initMainMenu()
+{
+    g_mainMenu.main1PlayerGame = "1 Player Game";
+    g_mainMenu.main2PlayerGame = "2 Player Game";
+    g_mainMenu.mainBattleGame = "Battle Game";
+    g_mainMenu.mainOptions = "Options";
+    g_mainMenu.mainExit = "Exit";
 
-// Public Sub SaveNPCDefaults()
-void SaveNPCDefaults();
-
-// Public Sub LoadNPCDefaults()
-void LoadNPCDefaults();
-
-
-void FindCustomPlayers();
-// Public Sub FindCustomNPCs(Optional cFilePath As String = "")
-//void FindCustomNPCs(std::string cFilePath = "");
-void FindCustomNPCs();
-
-// Private Sub LoadCustomNPC(A As Integer, cFileName As String)
-
-
-#endif // CUSTOM_H
+    for(int i = 1; i <= numCharacters; ++i)
+        g_mainMenu.selectPlayer[i] = fmt::format_ne("{0} game", g_gameInfo.characterName[i]);
+}

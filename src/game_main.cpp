@@ -45,6 +45,7 @@
 #include "player.h"
 #include "sound.h"
 #include "editor.h"
+#include "custom.h"
 #include "main/level_file.h"
 
 #include "pseudo_vb.h"
@@ -519,6 +520,7 @@ int GameMain(const CmdLineSetup_t &setup)
                 OwedMountType[A] = 0;
             }
 
+            FindCustomPlayers();
             LoadCustomGFX();
             LoadCustomSound();
             SetupPlayers();

@@ -238,6 +238,7 @@ set(THEXTECH_SRC
     src/sound.cpp
     src/main/world_loop.cpp
     src/main/world_file.cpp
+    src/main/game_info.cpp
     src/main/game_loop.cpp
     src/main/player_frames.cpp
     src/main/setup_vars.cpp
@@ -246,6 +247,7 @@ set(THEXTECH_SRC
     src/main/main_config.cpp
     src/main/level_file.cpp
     src/main/menu_loop.cpp
+    src/main/menu_main.cpp
     src/main/cheat_code.cpp
     src/main/outro_loop.cpp
     src/graphics/gfx_update2.cpp
@@ -424,7 +426,7 @@ elseif(WIN32)
     # For MinGW toolchain, copy missing DLLs
     if(MINGW)
         function(find_mingw_dll _FieldName _FileName _DestList _SearchPaths)
-            find_file(MINGWDLL_${_FieldName} ${_FileName} PATHS "${_SearchPaths}")
+            find_file(MINGWDLL_${_FieldName} ${_FileName} PATH_SUFFIXES bin PATHS "${_SearchPaths}")
             if(MINGWDLL_${_FieldName})
                 list(APPEND ${_DestList} "${MINGWDLL_${_FieldName}}")
                 set(${_DestList} ${${_DestList}} PARENT_SCOPE)

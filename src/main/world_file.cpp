@@ -27,6 +27,7 @@
 #include "../game_main.h"
 #include "../load_gfx.h"
 #include "../sound.h"
+#include "../custom.h"
 #include "level_file.h"
 
 #include <Utils/strings.h>
@@ -347,6 +348,7 @@ void ClearWorld()
     UnloadCustomGFX();
     UnloadWorldCustomGFX();
     UnloadCustomSound();
+    LoadPlayerDefaults();
 //    if(LevelEditor == true)
 //    {
 //        frmLevelEditor::optCursor(14).Value = true;

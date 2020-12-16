@@ -32,6 +32,7 @@
 #include "../player.h"
 #include "../graphics.h"
 #include "../sound.h"
+#include "game_info.h"
 
 void OutroLoop()
 {
@@ -101,11 +102,8 @@ void SetupCredits()
     int A = 0;
     numCredits = 0;
 
-#ifdef ENABLE_OLD_CREDITS
-    AddCredit("New Super Mario Bros. X");
-#else
-    AddCredit("Super Mario ReInvent");
-#endif
+    AddCredit(g_gameInfo.title);
+
     AddCredit("");
     AddCredit("");
     AddCredit("");
@@ -114,6 +112,17 @@ void SetupCredits()
 #ifdef ENABLE_OLD_CREDITS
     AddCredit("Created By:");
 #else
+    if(!g_gameInfo.creditsGame.empty())
+    {
+        AddCredit("Game credits:");
+        for(auto &s : g_gameInfo.creditsGame)
+            AddCredit(s);
+        AddCredit("");
+        AddCredit("");
+        AddCredit("Engine credits:");
+        AddCredit("");
+    }
+
     AddCredit("Original VB6 code By:");
 #endif
     AddCredit("");
@@ -122,13 +131,13 @@ void SetupCredits()
     AddCredit("");
     AddCredit("");
 #ifndef ENABLE_OLD_CREDITS
-    AddCredit("Original C++ port By:");
+    AddCredit("C++ port of Engine By:");
     AddCredit("");
     AddCredit("Vitaly Novichkov");
     AddCredit("'Wohlstand'");
     AddCredit("");
     AddCredit("");
-    AddCredit("New NSMBX Team:");
+    AddCredit("Super Mario ReInvent Team:");
     AddCredit("");
     AddCredit("Ekaterina Bolyakova");
     AddCredit("'Core'");
@@ -245,6 +254,7 @@ void SetupCredits()
     AddCredit("and for him.");
     AddCredit("");
     AddCredit("Colossians 1:16");
+
     for(A = 1; A <= numCredits; A++)
     {
         Credit[A].Location.Width = Credit[A].Text.size() * 18;

@@ -3073,6 +3073,7 @@ void SetupVars()
     WeatherHeight[1] = 8;
     WeatherLife[1] = 400;
 
+    SavePlayerDefaults();
     SaveNPCDefaults();
     SaveBlockDefaults();
     SaveBackgroundDefaults();
@@ -3083,6 +3084,7 @@ void SetupVars()
     SaveTileDefaults();
     SaveWeatherDefaults();
 
+    FindCustomPlayers();
     FindCustomNPCs();
     FindCustomBlocks();
     FindCustomBGOs();

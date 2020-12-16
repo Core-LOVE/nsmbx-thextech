@@ -23,28 +23,29 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef CUSTOM_H
-#define CUSTOM_H
+#pragma once
+#ifndef GAME_INFO_H
+#define GAME_INFO_H
 
 #include <string>
+#include <vector>
+#include "global_constants.h"
+#include "range_arr.hpp"
 
+struct GameInfo
+{
+    std::string title;
+    std::string titleWindow;
+    std::string titleCredits;
+    RangeArr<std::string, 1, numCharacters> characterName;
 
-void SavePlayerDefaults();
-void LoadPlayerDefaults();
+    int creditsFont;
+    std::string creditsHomePage;
+    std::vector<std::string> creditsGame;
+};
 
-// Public Sub SaveNPCDefaults()
-void SaveNPCDefaults();
+extern GameInfo g_gameInfo;
 
-// Public Sub LoadNPCDefaults()
-void LoadNPCDefaults();
+extern void initGameInfo();
 
-
-void FindCustomPlayers();
-// Public Sub FindCustomNPCs(Optional cFilePath As String = "")
-//void FindCustomNPCs(std::string cFilePath = "");
-void FindCustomNPCs();
-
-// Private Sub LoadCustomNPC(A As Integer, cFileName As String)
-
-
-#endif // CUSTOM_H
+#endif // GAME_INFO_H
