@@ -77,6 +77,12 @@ void OpenConfig()
         config.beginGroup("main");
         config.read("release", FileRelease, curRelease);
         config.read("full-screen", resBool, false);
+        config.read("frame-skip", FrameSkip, FrameSkip);
+        config.read("show-fps", ShowFPS, ShowFPS);
+        config.endGroup();
+
+        config.beginGroup("gameplay");
+        config.read("ground-pound-by-alt-run", GameplayPoundByAltRun, false);
         config.endGroup();
 
         For(A, 1, 2)
@@ -121,11 +127,19 @@ void SaveConfig()
 //    Dim A As Integer
     std::string configPath = AppPathManager::settingsFileSTD();
     IniProcessing config(configPath);
+
     config.beginGroup("main");
     config.setValue("release", curRelease);
 #ifndef __EMSCRIPTEN__ // Don't remember fullscreen state for Emscripten!
     config.setValue("full-screen", resChanged);
 #endif
+    // TODO: Make sure, saving of those settings will not been confused by line arguments
+//    config.setValue("frame-skip", FrameSkip);
+//    config.setValue("show-fps", ShowFPS);
+    config.endGroup();
+
+    config.beginGroup("gameplay");
+    config.setValue("ground-pound-by-alt-run", GameplayPoundByAltRun);
     config.endGroup();
 
     For(A, 1, 2)
